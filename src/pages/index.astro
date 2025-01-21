@@ -1,0 +1,22 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import config from '../content/config/config.json';
+import client from '../../tina/__generated__/client';
+import HomePage from "../../tina/pages/HomePage.tsx";
+const data = await client.queries.page({relativePath: "home.mdx"});
+
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={config.seo.title} description={config.seo.description} />
+	</head>
+	<body>
+		<Header />
+		<HomePage {...data} client:tina />
+		<Footer />
+	</body>
+</html>

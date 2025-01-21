@@ -1,0 +1,28 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro"
+import client from "../../../tina/__generated__/client";
+import AdminBlogPost from "../../../tina/pages/AdminBlogPost";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: {
+			post,
+			getTinaProps: async () =>
+				client.queries.blog({
+					relativePath: post.data.tinaInfo.relativePath,
+				}),
+		},
+	}));
+}
+
+const { post, getTinaProps } = Astro.props;
+const tinaProps = await getTinaProps();
+---
+
+<BlogPost {...tinaProps}>
+		<AdminBlogPost {...tinaProps} client:tina/>
+</BlogPost>

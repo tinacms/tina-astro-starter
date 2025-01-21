@@ -1,0 +1,38 @@
+{
+  "seo": {
+    "title": "Astro Blog + Tina",
+    "description": "Welcome to my website!",
+    "siteOwner": "Your name here"
+  },
+  "nav": [
+    {
+      "title": "Home",
+      "link": "/"
+    },
+    {
+      "title": "Blog",
+      "link": "/blog"
+    },
+    {
+      "title": "About",
+      "link": "/about"
+    }
+  ],
+  "contactLinks": [
+    {
+      "title": "Twitter",
+      "link": "https://x.com/tinacms",
+      "icon": "TbBrandTwitter"
+    },
+    {
+      "title": "Docs",
+      "link": "https://tina.io/docs",
+      "icon": "TbBook2"
+    },
+    {
+      "title": "GitHub",
+      "link": "https://github.com/tinacms/tinacms",
+      "icon": "TbBrandGithub"
+    }
+  ]
+}

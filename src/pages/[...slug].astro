@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import client from "../../tina/__generated__/client";
+import Page from "../../tina/pages/Page";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import BaseHead from "../components/BaseHead.astro";
+import config from '../content/config/config.json';
+
+export async function getStaticPaths() {
+	const page = await getCollection("page");
+	return page.map((p) => ({
+		params: { slug: p.id },
+		props: {
+			getTinaProps: async () =>
+				client.queries.page({
+					relativePath: p.data.tinaInfo.relativePath,
+				}),
+		},
+	}));
+}
+
+const { getTinaProps } = Astro.props;
+const data = await getTinaProps();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={data.data.page.seoTitle} description={config.seo.description} />
+	</head>
+	<body>
+		<Header />
+				<Page {...data} client:tina />
+		<Footer />
+	</body>
+</html>
+

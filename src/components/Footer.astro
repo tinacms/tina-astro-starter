@@ -1,0 +1,40 @@
+---
+import config from "../content/config/config.json";
+import IconLink from "./react/IconLink";
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()}
+	{config.seo.siteOwner}. All rights reserved.
+	<div class="social-links">
+		{
+			config?.contactLinks?.map((link) => {
+				return (
+					<IconLink {...link} />
+				);
+			})
+		}
+	</div>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	.social-links {
+		display: flex;
+		justify-content: center;
+		gap: 1em;
+		margin-top: 1em;
+	}
+	.social-links a {
+		text-decoration: none;
+		color: rgb(var(--gray));
+	}
+	.social-links a:hover {
+		color: rgb(var(--gray-dark));
+	}
+</style>
