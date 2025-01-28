@@ -3,7 +3,7 @@ This is a [Tina CMS](https://tina.io/) starter project.
 # Astro + TinaCMS Starter Kit: Blog
 
 ```sh
-npx create-tina-app@latest --template astro-tina-starter
+npx create-tina-app@latest --template tina-astro-starter
 ```
 
 And start editing with TinaCMS at `/admin`! 
