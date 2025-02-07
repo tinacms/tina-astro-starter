@@ -3,38 +3,93 @@ import config from "../content/config/config.json";
 import IconLink from "./react/IconLink";
 const today = new Date();
 ---
-
-<footer>
-	&copy; {today.getFullYear()}
-	{config.seo.siteOwner}. All rights reserved.
-	<div class="social-links">
-		{
-			config?.contactLinks?.map((link) => {
-				return (
-					<IconLink {...link} />
-				);
-			})
-		}
+<div class="tina-footer">
+	<div class="tina-banner-content"><img src="/llama.svg" alt="Tina CMS Llama Logo" /><a href="https://tina.io" target="_blank" rel="noopener noreferrer">Powered by TinaCMS</a>
 	</div>
-</footer>
+</div>
+	<footer class="copyright-footer">
+		&copy; {today.getFullYear()}
+		{config.seo.siteOwner}. All rights reserved.
+		<div class="social-links">
+			{
+				config?.contactLinks?.map((link) => {
+					return (
+						<IconLink {...link} />
+					);
+				})
+			}
+		</div>
+	</footer>
+
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
+
+	.copyright-footer {
+		padding: 2em 1em 2em 1em;
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		color: rgb(var(--gray));
 		text-align: center;
 	}
+
 	.social-links {
 		display: flex;
 		justify-content: center;
 		gap: 1em;
 		margin-top: 1em;
 	}
+
 	.social-links a {
 		text-decoration: none;
 		color: rgb(var(--gray));
 	}
+
 	.social-links a:hover {
 		color: rgb(var(--gray-dark));
+	}
+
+	.tina-footer {
+		display: flex;
+		justify-content: center;
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+		background-image: linear-gradient(60deg, #000000 0%,  #EC4815 50%, #000000 100%);
+		padding: 1.5em 0;
+	}
+
+	.tina-banner-content {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		font-size: 1.2em;
+		position: relative;
+		z-index: 2;
+	}
+
+	.tina-footer::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -50%;
+		width: 200%;
+		height: 100%;
+		background-image: linear-gradient(60deg, #1F1E24 25%,   #EC4815 50%, #1F1E24 75%);
+		transition: transform 1s ease-in-out;
+		z-index: 1;
+	}
+
+	.tina-footer:has(.tina-banner-content a:hover)::before {
+		transform: scaleX(2);
+	}
+
+	.tina-banner-content img {
+		width: 30px;
+		height: auto;
+	}
+
+	.tina-banner-content a {
+		color: white;
+		text-decoration: none;
+		padding-top: 0.5em;
+		font-weight: bold;
 	}
 </style>
