@@ -1,1 +1,0 @@
-export declare const FixedToolbar: import("react").ForwardRefExoticComponent<Omit<Omit<import("@radix-ui/react-toolbar").ToolbarProps & import("react").RefAttributes<HTMLDivElement>, "ref"> & import("react").RefAttributes<HTMLDivElement>, "ref"> & import("react").RefAttributes<HTMLDivElement>>;
