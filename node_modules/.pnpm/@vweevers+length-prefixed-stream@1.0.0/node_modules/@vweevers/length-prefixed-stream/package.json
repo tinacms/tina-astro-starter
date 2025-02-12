@@ -1,0 +1,45 @@
+{
+  "name": "@vweevers/length-prefixed-stream",
+  "version": "1.0.0",
+  "description": "Streaming length prefixed buffers",
+  "main": "index.js",
+  "files": [
+    "decode.js",
+    "encode.js",
+    "example.js",
+    "index.js"
+  ],
+  "dependencies": {
+    "inherits": "^2.0.3",
+    "readable-stream": "^4.0.0",
+    "varint": "^5.0.0"
+  },
+  "devDependencies": {
+    "concat-stream": "^2.0.0",
+    "standard": "^17.0.0",
+    "tape": "^5.5.3"
+  },
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vweevers/length-prefixed-stream"
+  },
+  "keywords": [
+    "varint",
+    "length",
+    "prefixed",
+    "stream",
+    "streaming"
+  ],
+  "author": "Mathias Buus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vweevers/length-prefixed-stream/issues"
+  },
+  "homepage": "https://github.com/vweevers/length-prefixed-stream",
+  "engines": {
+    "node": ">=12"
+  }
+}

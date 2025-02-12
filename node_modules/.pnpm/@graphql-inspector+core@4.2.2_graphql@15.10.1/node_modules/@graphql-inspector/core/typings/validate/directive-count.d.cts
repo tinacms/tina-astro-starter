@@ -1,0 +1,10 @@
+import { DepGraph } from 'dependency-graph';
+import type { DocumentNode, FieldNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode, OperationDefinitionNode, Source } from 'graphql';
+import { GraphQLError } from 'graphql';
+export declare function validateDirectiveCount({ source, doc, maxDirectiveCount, fragmentGraph, }: {
+    source: Source;
+    doc: DocumentNode;
+    maxDirectiveCount: number;
+    fragmentGraph: DepGraph<FragmentDefinitionNode>;
+}): GraphQLError | void;
+export declare function countDirectives(node: FieldNode | FragmentDefinitionNode | InlineFragmentNode | OperationDefinitionNode | FragmentSpreadNode, getFragmentByName: (fragmentName: string) => FragmentDefinitionNode | undefined): number;

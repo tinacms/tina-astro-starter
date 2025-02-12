@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});const e=function(e,r){return e.slice(r-1).map(((t,n)=>e.slice(n,n+r)))};exports.ngraminator=function(r,t){return t.reduce(((t,n)=>[...e(r,n),...t]),[]).sort()};

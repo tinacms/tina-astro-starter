@@ -1,0 +1,40 @@
+h1, h2, h3, h4, h5, h6 {
+  margin-left:0px;
+}
+
+h2 {
+  line-height:1em;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#header {
+  padding-left:10px;
+}
+
+#addContainer {
+  background:#cccccc;
+  padding:10px;
+}
+
+#nGrams {
+  padding: 10px;
+  background: #eeeeee;
+}
+
+pre {
+  margin:10px 0 0 0;
+}
+#stopwordsRemoved span {
+  font-size:1.2rem;
+}
+
+input#text, input#integerArray {
+  width:100%;
+  font-size:1.2rem;
+  margin-left:0;
+}
+
+input#integerArray {
+  width: 200px;
+}

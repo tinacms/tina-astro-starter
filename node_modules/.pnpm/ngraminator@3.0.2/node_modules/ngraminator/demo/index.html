@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./mini-default.min.css">
+    <link rel="stylesheet" href="./mini-additions.css">
+    <script src="../dist/ngraminator.umd.min.js"></script>
+    <title>Ngraminator browser demo</title>
+  </head>
+
+  <body>
+    <div id="header">
+      <h1>Ngraminator demo</h1>
+    </div>
+
+    <div id="addContainer">
+      <h2>Some text</h2>
+      <input type="text" id="text" placeholder="Add some text" /><br />
+      <h2>Comma-separated list of numbers</h2>
+      <input type="text" id="integerArray" placeholder="i.e. 1,2,3" value="2,3,4"/><br />
+
+    </div>
+
+    <div id="nGrams">
+      <h2>N-grams</h2>
+      <div id="nGraminated"></div>
+    </div>
+
+    <script src="./ngraminator-app.js"></script>
+  </body>
+</html> 

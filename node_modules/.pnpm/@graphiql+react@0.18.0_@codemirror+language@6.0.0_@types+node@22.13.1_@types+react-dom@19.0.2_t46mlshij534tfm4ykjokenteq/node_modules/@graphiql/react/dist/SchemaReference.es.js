@@ -1,0 +1,2503 @@
+var Ye = Object.defineProperty;
+var r = (e, n) => Ye(e, "name", { value: n, configurable: !0 });
+import { getNamedType as H, GraphQLInputObjectType as ze, getNullableType as qe, GraphQLList as He, GraphQLEnumType as Xe, isCompositeType as We } from "graphql";
+import { f as Ze } from "./forEachState.es.js";
+const Ke = 10, xe = 2;
+function E(e) {
+  return K(e, []);
+}
+r(E, "inspect");
+function K(e, n) {
+  switch (typeof e) {
+    case "string":
+      return JSON.stringify(e);
+    case "function":
+      return e.name ? `[function ${e.name}]` : "[function]";
+    case "object":
+      return en(e, n);
+    default:
+      return String(e);
+  }
+}
+r(K, "formatValue");
+function en(e, n) {
+  if (e === null)
+    return "null";
+  if (n.includes(e))
+    return "[Circular]";
+  const t = [...n, e];
+  if (nn(e)) {
+    const i = e.toJSON();
+    if (i !== e)
+      return typeof i == "string" ? i : K(i, t);
+  } else if (Array.isArray(e))
+    return sn(e, t);
+  return tn(e, t);
+}
+r(en, "formatObjectValue");
+function nn(e) {
+  return typeof e.toJSON == "function";
+}
+r(nn, "isJSONable");
+function tn(e, n) {
+  const t = Object.entries(e);
+  return t.length === 0 ? "{}" : n.length > xe ? "[" + rn(e) + "]" : "{ " + t.map(
+    ([s, o]) => s + ": " + K(o, n)
+  ).join(", ") + " }";
+}
+r(tn, "formatObject");
+function sn(e, n) {
+  if (e.length === 0)
+    return "[]";
+  if (n.length > xe)
+    return "[Array]";
+  const t = Math.min(Ke, e.length), i = e.length - t, s = [];
+  for (let o = 0; o < t; ++o)
+    s.push(K(e[o], n));
+  return i === 1 ? s.push("... 1 more item") : i > 1 && s.push(`... ${i} more items`), "[" + s.join(", ") + "]";
+}
+r(sn, "formatArray");
+function rn(e) {
+  const n = Object.prototype.toString.call(e).replace(/^\[object /, "").replace(/]$/, "");
+  if (n === "Object" && typeof e.constructor == "function") {
+    const t = e.constructor.name;
+    if (typeof t == "string" && t !== "")
+      return t;
+  }
+  return n;
+}
+r(rn, "getObjectTag");
+function ue(e, n) {
+  if (!!!e)
+    throw new Error(
+      n ?? "Unexpected invariant triggered."
+    );
+}
+r(ue, "invariant");
+let I;
+(function(e) {
+  e.QUERY = "QUERY", e.MUTATION = "MUTATION", e.SUBSCRIPTION = "SUBSCRIPTION", e.FIELD = "FIELD", e.FRAGMENT_DEFINITION = "FRAGMENT_DEFINITION", e.FRAGMENT_SPREAD = "FRAGMENT_SPREAD", e.INLINE_FRAGMENT = "INLINE_FRAGMENT", e.VARIABLE_DEFINITION = "VARIABLE_DEFINITION", e.SCHEMA = "SCHEMA", e.SCALAR = "SCALAR", e.OBJECT = "OBJECT", e.FIELD_DEFINITION = "FIELD_DEFINITION", e.ARGUMENT_DEFINITION = "ARGUMENT_DEFINITION", e.INTERFACE = "INTERFACE", e.UNION = "UNION", e.ENUM = "ENUM", e.ENUM_VALUE = "ENUM_VALUE", e.INPUT_OBJECT = "INPUT_OBJECT", e.INPUT_FIELD_DEFINITION = "INPUT_FIELD_DEFINITION";
+})(I || (I = {}));
+function Ne(e) {
+  return e === 9 || e === 32;
+}
+r(Ne, "isWhiteSpace");
+function on(e) {
+  return e >= 48 && e <= 57;
+}
+r(on, "isDigit$1");
+function Fe(e) {
+  return e >= 97 && e <= 122 || // A-Z
+  e >= 65 && e <= 90;
+}
+r(Fe, "isLetter");
+function an(e) {
+  return Fe(e) || e === 95;
+}
+r(an, "isNameStart");
+function ln(e) {
+  return Fe(e) || on(e) || e === 95;
+}
+r(ln, "isNameContinue");
+function un(e, n) {
+  const t = e.replace(/"""/g, '\\"""'), i = t.split(/\r\n|[\n\r]/g), s = i.length === 1, o = i.length > 1 && i.slice(1).every((S) => S.length === 0 || Ne(S.charCodeAt(0))), l = t.endsWith('\\"""'), p = e.endsWith('"') && !l, d = e.endsWith("\\"), c = p || d, u = !(n != null && n.minimize) && // add leading and trailing new lines only if it improves readability
+  (!s || e.length > 70 || c || o || l);
+  let h = "";
+  const v = s && Ne(e.charCodeAt(0));
+  return (u && !v || o) && (h += `
+`), h += t, (u || c) && (h += `
+`), '"""' + h + '"""';
+}
+r(un, "printBlockString");
+function cn(e) {
+  return `"${e.replace(pn, dn)}"`;
+}
+r(cn, "printString");
+const pn = /[\x00-\x1f\x22\x5c\x7f-\x9f]/g;
+function dn(e) {
+  return fn[e.charCodeAt(0)];
+}
+r(dn, "escapedReplacer");
+const fn = [
+  "\\u0000",
+  "\\u0001",
+  "\\u0002",
+  "\\u0003",
+  "\\u0004",
+  "\\u0005",
+  "\\u0006",
+  "\\u0007",
+  "\\b",
+  "\\t",
+  "\\n",
+  "\\u000B",
+  "\\f",
+  "\\r",
+  "\\u000E",
+  "\\u000F",
+  "\\u0010",
+  "\\u0011",
+  "\\u0012",
+  "\\u0013",
+  "\\u0014",
+  "\\u0015",
+  "\\u0016",
+  "\\u0017",
+  "\\u0018",
+  "\\u0019",
+  "\\u001A",
+  "\\u001B",
+  "\\u001C",
+  "\\u001D",
+  "\\u001E",
+  "\\u001F",
+  "",
+  "",
+  '\\"',
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  // 2F
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  // 3F
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  // 4F
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "\\\\",
+  "",
+  "",
+  "",
+  // 5F
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  // 6F
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "\\u007F",
+  "\\u0080",
+  "\\u0081",
+  "\\u0082",
+  "\\u0083",
+  "\\u0084",
+  "\\u0085",
+  "\\u0086",
+  "\\u0087",
+  "\\u0088",
+  "\\u0089",
+  "\\u008A",
+  "\\u008B",
+  "\\u008C",
+  "\\u008D",
+  "\\u008E",
+  "\\u008F",
+  "\\u0090",
+  "\\u0091",
+  "\\u0092",
+  "\\u0093",
+  "\\u0094",
+  "\\u0095",
+  "\\u0096",
+  "\\u0097",
+  "\\u0098",
+  "\\u0099",
+  "\\u009A",
+  "\\u009B",
+  "\\u009C",
+  "\\u009D",
+  "\\u009E",
+  "\\u009F"
+];
+function g(e, n) {
+  if (!!!e)
+    throw new Error(n);
+}
+r(g, "devAssert");
+const Re = {
+  Name: [],
+  Document: ["definitions"],
+  OperationDefinition: [
+    "name",
+    "variableDefinitions",
+    "directives",
+    "selectionSet"
+  ],
+  VariableDefinition: ["variable", "type", "defaultValue", "directives"],
+  Variable: ["name"],
+  SelectionSet: ["selections"],
+  Field: ["alias", "name", "arguments", "directives", "selectionSet"],
+  Argument: ["name", "value"],
+  FragmentSpread: ["name", "directives"],
+  InlineFragment: ["typeCondition", "directives", "selectionSet"],
+  FragmentDefinition: [
+    "name",
+    // Note: fragment variable definitions are deprecated and will removed in v17.0.0
+    "variableDefinitions",
+    "typeCondition",
+    "directives",
+    "selectionSet"
+  ],
+  IntValue: [],
+  FloatValue: [],
+  StringValue: [],
+  BooleanValue: [],
+  NullValue: [],
+  EnumValue: [],
+  ListValue: ["values"],
+  ObjectValue: ["fields"],
+  ObjectField: ["name", "value"],
+  Directive: ["name", "arguments"],
+  NamedType: ["name"],
+  ListType: ["type"],
+  NonNullType: ["type"],
+  SchemaDefinition: ["description", "directives", "operationTypes"],
+  OperationTypeDefinition: ["type"],
+  ScalarTypeDefinition: ["description", "name", "directives"],
+  ObjectTypeDefinition: [
+    "description",
+    "name",
+    "interfaces",
+    "directives",
+    "fields"
+  ],
+  FieldDefinition: ["description", "name", "arguments", "type", "directives"],
+  InputValueDefinition: [
+    "description",
+    "name",
+    "type",
+    "defaultValue",
+    "directives"
+  ],
+  InterfaceTypeDefinition: [
+    "description",
+    "name",
+    "interfaces",
+    "directives",
+    "fields"
+  ],
+  UnionTypeDefinition: ["description", "name", "directives", "types"],
+  EnumTypeDefinition: ["description", "name", "directives", "values"],
+  EnumValueDefinition: ["description", "name", "directives"],
+  InputObjectTypeDefinition: ["description", "name", "directives", "fields"],
+  DirectiveDefinition: ["description", "name", "arguments", "locations"],
+  SchemaExtension: ["directives", "operationTypes"],
+  ScalarTypeExtension: ["name", "directives"],
+  ObjectTypeExtension: ["name", "interfaces", "directives", "fields"],
+  InterfaceTypeExtension: ["name", "interfaces", "directives", "fields"],
+  UnionTypeExtension: ["name", "directives", "types"],
+  EnumTypeExtension: ["name", "directives", "values"],
+  InputObjectTypeExtension: ["name", "directives", "fields"]
+}, hn = new Set(Object.keys(Re));
+function ve(e) {
+  const n = e == null ? void 0 : e.kind;
+  return typeof n == "string" && hn.has(n);
+}
+r(ve, "isNode");
+let Ee;
+(function(e) {
+  e.QUERY = "query", e.MUTATION = "mutation", e.SUBSCRIPTION = "subscription";
+})(Ee || (Ee = {}));
+let m;
+(function(e) {
+  e.NAME = "Name", e.DOCUMENT = "Document", e.OPERATION_DEFINITION = "OperationDefinition", e.VARIABLE_DEFINITION = "VariableDefinition", e.SELECTION_SET = "SelectionSet", e.FIELD = "Field", e.ARGUMENT = "Argument", e.FRAGMENT_SPREAD = "FragmentSpread", e.INLINE_FRAGMENT = "InlineFragment", e.FRAGMENT_DEFINITION = "FragmentDefinition", e.VARIABLE = "Variable", e.INT = "IntValue", e.FLOAT = "FloatValue", e.STRING = "StringValue", e.BOOLEAN = "BooleanValue", e.NULL = "NullValue", e.ENUM = "EnumValue", e.LIST = "ListValue", e.OBJECT = "ObjectValue", e.OBJECT_FIELD = "ObjectField", e.DIRECTIVE = "Directive", e.NAMED_TYPE = "NamedType", e.LIST_TYPE = "ListType", e.NON_NULL_TYPE = "NonNullType", e.SCHEMA_DEFINITION = "SchemaDefinition", e.OPERATION_TYPE_DEFINITION = "OperationTypeDefinition", e.SCALAR_TYPE_DEFINITION = "ScalarTypeDefinition", e.OBJECT_TYPE_DEFINITION = "ObjectTypeDefinition", e.FIELD_DEFINITION = "FieldDefinition", e.INPUT_VALUE_DEFINITION = "InputValueDefinition", e.INTERFACE_TYPE_DEFINITION = "InterfaceTypeDefinition", e.UNION_TYPE_DEFINITION = "UnionTypeDefinition", e.ENUM_TYPE_DEFINITION = "EnumTypeDefinition", e.ENUM_VALUE_DEFINITION = "EnumValueDefinition", e.INPUT_OBJECT_TYPE_DEFINITION = "InputObjectTypeDefinition", e.DIRECTIVE_DEFINITION = "DirectiveDefinition", e.SCHEMA_EXTENSION = "SchemaExtension", e.SCALAR_TYPE_EXTENSION = "ScalarTypeExtension", e.OBJECT_TYPE_EXTENSION = "ObjectTypeExtension", e.INTERFACE_TYPE_EXTENSION = "InterfaceTypeExtension", e.UNION_TYPE_EXTENSION = "UnionTypeExtension", e.ENUM_TYPE_EXTENSION = "EnumTypeExtension", e.INPUT_OBJECT_TYPE_EXTENSION = "InputObjectTypeExtension";
+})(m || (m = {}));
+const mn = Object.freeze({});
+function yn(e, n, t = Re) {
+  const i = /* @__PURE__ */ new Map();
+  for (const L of Object.values(m))
+    i.set(L, Tn(n, L));
+  let s, o = Array.isArray(e), l = [e], p = -1, d = [], c = e, u, h;
+  const v = [], S = [];
+  do {
+    p++;
+    const L = p === l.length, me = L && d.length !== 0;
+    if (L) {
+      if (u = S.length === 0 ? void 0 : v[v.length - 1], c = h, h = S.pop(), me)
+        if (o) {
+          c = c.slice();
+          let V = 0;
+          for (const [ie, ye] of d) {
+            const Te = ie - V;
+            ye === null ? (c.splice(Te, 1), V++) : c[Te] = ye;
+          }
+        } else {
+          c = Object.defineProperties(
+            {},
+            Object.getOwnPropertyDescriptors(c)
+          );
+          for (const [V, ie] of d)
+            c[V] = ie;
+        }
+      p = s.index, l = s.keys, d = s.edits, o = s.inArray, s = s.prev;
+    } else if (h) {
+      if (u = o ? p : l[p], c = h[u], c == null)
+        continue;
+      v.push(u);
+    }
+    let U;
+    if (!Array.isArray(c)) {
+      var T, _;
+      ve(c) || g(!1, `Invalid AST Node: ${E(c)}.`);
+      const V = L ? (T = i.get(c.kind)) === null || T === void 0 ? void 0 : T.leave : (_ = i.get(c.kind)) === null || _ === void 0 ? void 0 : _.enter;
+      if (U = V == null ? void 0 : V.call(n, c, u, h, v, S), U === mn)
+        break;
+      if (U === !1) {
+        if (!L) {
+          v.pop();
+          continue;
+        }
+      } else if (U !== void 0 && (d.push([u, U]), !L))
+        if (ve(U))
+          c = U;
+        else {
+          v.pop();
+          continue;
+        }
+    }
+    if (U === void 0 && me && d.push([u, c]), L)
+      v.pop();
+    else {
+      var R;
+      s = {
+        inArray: o,
+        index: p,
+        keys: l,
+        edits: d,
+        prev: s
+      }, o = Array.isArray(c), l = o ? c : (R = t[c.kind]) !== null && R !== void 0 ? R : [], p = -1, d = [], h && S.push(h), h = c;
+    }
+  } while (s !== void 0);
+  return d.length !== 0 ? d[d.length - 1][1] : e;
+}
+r(yn, "visit");
+function Tn(e, n) {
+  const t = e[n];
+  return typeof t == "object" ? t : typeof t == "function" ? {
+    enter: t,
+    leave: void 0
+  } : {
+    enter: e.enter,
+    leave: e.leave
+  };
+}
+r(Tn, "getEnterLeaveForKind");
+function k(e) {
+  return yn(e, vn);
+}
+r(k, "print");
+const Nn = 80, vn = {
+  Name: {
+    leave: (e) => e.value
+  },
+  Variable: {
+    leave: (e) => "$" + e.name
+  },
+  // Document
+  Document: {
+    leave: (e) => a(e.definitions, `
+
+`)
+  },
+  OperationDefinition: {
+    leave(e) {
+      const n = f("(", a(e.variableDefinitions, ", "), ")"), t = a(
+        [
+          e.operation,
+          a([e.name, n]),
+          a(e.directives, " ")
+        ],
+        " "
+      );
+      return (t === "query" ? "" : t + " ") + e.selectionSet;
+    }
+  },
+  VariableDefinition: {
+    leave: ({ variable: e, type: n, defaultValue: t, directives: i }) => e + ": " + n + f(" = ", t) + f(" ", a(i, " "))
+  },
+  SelectionSet: {
+    leave: ({ selections: e }) => D(e)
+  },
+  Field: {
+    leave({ alias: e, name: n, arguments: t, directives: i, selectionSet: s }) {
+      const o = f("", e, ": ") + n;
+      let l = o + f("(", a(t, ", "), ")");
+      return l.length > Nn && (l = o + f(`(
+`, X(a(t, `
+`)), `
+)`)), a([l, a(i, " "), s], " ");
+    }
+  },
+  Argument: {
+    leave: ({ name: e, value: n }) => e + ": " + n
+  },
+  // Fragments
+  FragmentSpread: {
+    leave: ({ name: e, directives: n }) => "..." + e + f(" ", a(n, " "))
+  },
+  InlineFragment: {
+    leave: ({ typeCondition: e, directives: n, selectionSet: t }) => a(
+      [
+        "...",
+        f("on ", e),
+        a(n, " "),
+        t
+      ],
+      " "
+    )
+  },
+  FragmentDefinition: {
+    leave: ({ name: e, typeCondition: n, variableDefinitions: t, directives: i, selectionSet: s }) => (
+      // or removed in the future.
+      `fragment ${e}${f("(", a(t, ", "), ")")} on ${n} ${f("", a(i, " "), " ")}` + s
+    )
+  },
+  // Value
+  IntValue: {
+    leave: ({ value: e }) => e
+  },
+  FloatValue: {
+    leave: ({ value: e }) => e
+  },
+  StringValue: {
+    leave: ({ value: e, block: n }) => n ? un(e) : cn(e)
+  },
+  BooleanValue: {
+    leave: ({ value: e }) => e ? "true" : "false"
+  },
+  NullValue: {
+    leave: () => "null"
+  },
+  EnumValue: {
+    leave: ({ value: e }) => e
+  },
+  ListValue: {
+    leave: ({ values: e }) => "[" + a(e, ", ") + "]"
+  },
+  ObjectValue: {
+    leave: ({ fields: e }) => "{" + a(e, ", ") + "}"
+  },
+  ObjectField: {
+    leave: ({ name: e, value: n }) => e + ": " + n
+  },
+  // Directive
+  Directive: {
+    leave: ({ name: e, arguments: n }) => "@" + e + f("(", a(n, ", "), ")")
+  },
+  // Type
+  NamedType: {
+    leave: ({ name: e }) => e
+  },
+  ListType: {
+    leave: ({ type: e }) => "[" + e + "]"
+  },
+  NonNullType: {
+    leave: ({ type: e }) => e + "!"
+  },
+  // Type System Definitions
+  SchemaDefinition: {
+    leave: ({ description: e, directives: n, operationTypes: t }) => f("", e, `
+`) + a(["schema", a(n, " "), D(t)], " ")
+  },
+  OperationTypeDefinition: {
+    leave: ({ operation: e, type: n }) => e + ": " + n
+  },
+  ScalarTypeDefinition: {
+    leave: ({ description: e, name: n, directives: t }) => f("", e, `
+`) + a(["scalar", n, a(t, " ")], " ")
+  },
+  ObjectTypeDefinition: {
+    leave: ({ description: e, name: n, interfaces: t, directives: i, fields: s }) => f("", e, `
+`) + a(
+      [
+        "type",
+        n,
+        f("implements ", a(t, " & ")),
+        a(i, " "),
+        D(s)
+      ],
+      " "
+    )
+  },
+  FieldDefinition: {
+    leave: ({ description: e, name: n, arguments: t, type: i, directives: s }) => f("", e, `
+`) + n + (Ie(t) ? f(`(
+`, X(a(t, `
+`)), `
+)`) : f("(", a(t, ", "), ")")) + ": " + i + f(" ", a(s, " "))
+  },
+  InputValueDefinition: {
+    leave: ({ description: e, name: n, type: t, defaultValue: i, directives: s }) => f("", e, `
+`) + a(
+      [n + ": " + t, f("= ", i), a(s, " ")],
+      " "
+    )
+  },
+  InterfaceTypeDefinition: {
+    leave: ({ description: e, name: n, interfaces: t, directives: i, fields: s }) => f("", e, `
+`) + a(
+      [
+        "interface",
+        n,
+        f("implements ", a(t, " & ")),
+        a(i, " "),
+        D(s)
+      ],
+      " "
+    )
+  },
+  UnionTypeDefinition: {
+    leave: ({ description: e, name: n, directives: t, types: i }) => f("", e, `
+`) + a(
+      ["union", n, a(t, " "), f("= ", a(i, " | "))],
+      " "
+    )
+  },
+  EnumTypeDefinition: {
+    leave: ({ description: e, name: n, directives: t, values: i }) => f("", e, `
+`) + a(["enum", n, a(t, " "), D(i)], " ")
+  },
+  EnumValueDefinition: {
+    leave: ({ description: e, name: n, directives: t }) => f("", e, `
+`) + a([n, a(t, " ")], " ")
+  },
+  InputObjectTypeDefinition: {
+    leave: ({ description: e, name: n, directives: t, fields: i }) => f("", e, `
+`) + a(["input", n, a(t, " "), D(i)], " ")
+  },
+  DirectiveDefinition: {
+    leave: ({ description: e, name: n, arguments: t, repeatable: i, locations: s }) => f("", e, `
+`) + "directive @" + n + (Ie(t) ? f(`(
+`, X(a(t, `
+`)), `
+)`) : f("(", a(t, ", "), ")")) + (i ? " repeatable" : "") + " on " + a(s, " | ")
+  },
+  SchemaExtension: {
+    leave: ({ directives: e, operationTypes: n }) => a(
+      ["extend schema", a(e, " "), D(n)],
+      " "
+    )
+  },
+  ScalarTypeExtension: {
+    leave: ({ name: e, directives: n }) => a(["extend scalar", e, a(n, " ")], " ")
+  },
+  ObjectTypeExtension: {
+    leave: ({ name: e, interfaces: n, directives: t, fields: i }) => a(
+      [
+        "extend type",
+        e,
+        f("implements ", a(n, " & ")),
+        a(t, " "),
+        D(i)
+      ],
+      " "
+    )
+  },
+  InterfaceTypeExtension: {
+    leave: ({ name: e, interfaces: n, directives: t, fields: i }) => a(
+      [
+        "extend interface",
+        e,
+        f("implements ", a(n, " & ")),
+        a(t, " "),
+        D(i)
+      ],
+      " "
+    )
+  },
+  UnionTypeExtension: {
+    leave: ({ name: e, directives: n, types: t }) => a(
+      [
+        "extend union",
+        e,
+        a(n, " "),
+        f("= ", a(t, " | "))
+      ],
+      " "
+    )
+  },
+  EnumTypeExtension: {
+    leave: ({ name: e, directives: n, values: t }) => a(["extend enum", e, a(n, " "), D(t)], " ")
+  },
+  InputObjectTypeExtension: {
+    leave: ({ name: e, directives: n, fields: t }) => a(["extend input", e, a(n, " "), D(t)], " ")
+  }
+};
+function a(e, n = "") {
+  var t;
+  return (t = e == null ? void 0 : e.filter((i) => i).join(n)) !== null && t !== void 0 ? t : "";
+}
+r(a, "join");
+function D(e) {
+  return f(`{
+`, X(a(e, `
+`)), `
+}`);
+}
+r(D, "block");
+function f(e, n, t = "") {
+  return n != null && n !== "" ? e + n + t : "";
+}
+r(f, "wrap");
+function X(e) {
+  return f("  ", e.replace(/\n/g, `
+  `));
+}
+r(X, "indent");
+function Ie(e) {
+  var n;
+  return (n = e == null ? void 0 : e.some((t) => t.includes(`
+`))) !== null && n !== void 0 ? n : !1;
+}
+r(Ie, "hasMultilineItems");
+function En(e) {
+  return typeof e == "object" && typeof (e == null ? void 0 : e[Symbol.iterator]) == "function";
+}
+r(En, "isIterableObject");
+function Q(e) {
+  return typeof e == "object" && e !== null;
+}
+r(Q, "isObjectLike");
+const In = 5;
+function gn(e, n) {
+  const [t, i] = n ? [e, n] : [void 0, e];
+  let s = " Did you mean ";
+  t && (s += t + " ");
+  const o = i.map((d) => `"${d}"`);
+  switch (o.length) {
+    case 0:
+      return "";
+    case 1:
+      return s + o[0] + "?";
+    case 2:
+      return s + o[0] + " or " + o[1] + "?";
+  }
+  const l = o.slice(0, In), p = l.pop();
+  return s + l.join(", ") + ", or " + p + "?";
+}
+r(gn, "didYouMean");
+function ge(e) {
+  return e;
+}
+r(ge, "identityFunc");
+const $ = (
+  /* c8 ignore next 6 */
+  // FIXME: https://github.com/graphql/graphql-js/issues/2317
+  // eslint-disable-next-line no-undef
+  process.env.NODE_ENV === "production" ? /* @__PURE__ */ r(function(n, t) {
+    return n instanceof t;
+  }, "instanceOf") : /* @__PURE__ */ r(function(n, t) {
+    if (n instanceof t)
+      return !0;
+    if (typeof n == "object" && n !== null) {
+      var i;
+      const s = t.prototype[Symbol.toStringTag], o = (
+        // We still need to support constructor's name to detect conflicts with older versions of this library.
+        Symbol.toStringTag in n ? n[Symbol.toStringTag] : (i = n.constructor) === null || i === void 0 ? void 0 : i.name
+      );
+      if (s === o) {
+        const l = E(n);
+        throw new Error(`Cannot use ${s} "${l}" from another module or realm.
+
+Ensure that there is only one instance of "graphql" in the node_modules
+directory. If different versions of "graphql" are the dependencies of other
+relied on modules, use "resolutions" to ensure only one version is installed.
+
+https://yarnpkg.com/en/docs/selective-version-resolutions
+
+Duplicate "graphql" modules cannot be used at the same time since different
+versions may have different capabilities and behavior. The data from one
+version used in the function from another could produce confusing and
+spurious results.`);
+      }
+    }
+    return !1;
+  }, "instanceOf")
+);
+function bn(e, n) {
+  const t = /* @__PURE__ */ Object.create(null);
+  for (const i of e)
+    t[n(i)] = i;
+  return t;
+}
+r(bn, "keyMap");
+function ce(e, n, t) {
+  const i = /* @__PURE__ */ Object.create(null);
+  for (const s of e)
+    i[n(s)] = t(s);
+  return i;
+}
+r(ce, "keyValMap");
+function ee(e, n) {
+  const t = /* @__PURE__ */ Object.create(null);
+  for (const i of Object.keys(e))
+    t[i] = n(e[i], i);
+  return t;
+}
+r(ee, "mapValue");
+function On(e, n) {
+  let t = 0, i = 0;
+  for (; t < e.length && i < n.length; ) {
+    let s = e.charCodeAt(t), o = n.charCodeAt(i);
+    if (z(s) && z(o)) {
+      let l = 0;
+      do
+        ++t, l = l * 10 + s - oe, s = e.charCodeAt(t);
+      while (z(s) && l > 0);
+      let p = 0;
+      do
+        ++i, p = p * 10 + o - oe, o = n.charCodeAt(i);
+      while (z(o) && p > 0);
+      if (l < p)
+        return -1;
+      if (l > p)
+        return 1;
+    } else {
+      if (s < o)
+        return -1;
+      if (s > o)
+        return 1;
+      ++t, ++i;
+    }
+  }
+  return e.length - n.length;
+}
+r(On, "naturalCompare");
+const oe = 48, Sn = 57;
+function z(e) {
+  return !isNaN(e) && oe <= e && e <= Sn;
+}
+r(z, "isDigit");
+function _n(e, n) {
+  const t = /* @__PURE__ */ Object.create(null), i = new je(e), s = Math.floor(e.length * 0.4) + 1;
+  for (const o of n) {
+    const l = i.measure(o, s);
+    l !== void 0 && (t[o] = l);
+  }
+  return Object.keys(t).sort((o, l) => {
+    const p = t[o] - t[l];
+    return p !== 0 ? p : On(o, l);
+  });
+}
+r(_n, "suggestionList");
+class je {
+  constructor(n) {
+    this._input = n, this._inputLowerCase = n.toLowerCase(), this._inputArray = be(this._inputLowerCase), this._rows = [
+      new Array(n.length + 1).fill(0),
+      new Array(n.length + 1).fill(0),
+      new Array(n.length + 1).fill(0)
+    ];
+  }
+  measure(n, t) {
+    if (this._input === n)
+      return 0;
+    const i = n.toLowerCase();
+    if (this._inputLowerCase === i)
+      return 1;
+    let s = be(i), o = this._inputArray;
+    if (s.length < o.length) {
+      const u = s;
+      s = o, o = u;
+    }
+    const l = s.length, p = o.length;
+    if (l - p > t)
+      return;
+    const d = this._rows;
+    for (let u = 0; u <= p; u++)
+      d[0][u] = u;
+    for (let u = 1; u <= l; u++) {
+      const h = d[(u - 1) % 3], v = d[u % 3];
+      let S = v[0] = u;
+      for (let T = 1; T <= p; T++) {
+        const _ = s[u - 1] === o[T - 1] ? 0 : 1;
+        let R = Math.min(
+          h[T] + 1,
+          // delete
+          v[T - 1] + 1,
+          // insert
+          h[T - 1] + _
+          // substitute
+        );
+        if (u > 1 && T > 1 && s[u - 1] === o[T - 2] && s[u - 2] === o[T - 1]) {
+          const L = d[(u - 2) % 3][T - 2];
+          R = Math.min(R, L + 1);
+        }
+        R < S && (S = R), v[T] = R;
+      }
+      if (S > t)
+        return;
+    }
+    const c = d[l % 3][p];
+    return c <= t ? c : void 0;
+  }
+}
+r(je, "LexicalDistance");
+function be(e) {
+  const n = e.length, t = new Array(n);
+  for (let i = 0; i < n; ++i)
+    t[i] = e.charCodeAt(i);
+  return t;
+}
+r(be, "stringToArray");
+function x(e) {
+  if (e == null)
+    return /* @__PURE__ */ Object.create(null);
+  if (Object.getPrototypeOf(e) === null)
+    return e;
+  const n = /* @__PURE__ */ Object.create(null);
+  for (const [t, i] of Object.entries(e))
+    n[t] = i;
+  return n;
+}
+r(x, "toObjMap");
+const An = /\r\n|[\n\r]/g;
+function ae(e, n) {
+  let t = 0, i = 1;
+  for (const s of e.body.matchAll(An)) {
+    if (typeof s.index == "number" || ue(!1), s.index >= n)
+      break;
+    t = s.index + s[0].length, i += 1;
+  }
+  return {
+    line: i,
+    column: n + 1 - t
+  };
+}
+r(ae, "getLocation");
+function Ln(e) {
+  return Ue(
+    e.source,
+    ae(e.source, e.start)
+  );
+}
+r(Ln, "printLocation");
+function Ue(e, n) {
+  const t = e.locationOffset.column - 1, i = "".padStart(t) + e.body, s = n.line - 1, o = e.locationOffset.line - 1, l = n.line + o, p = n.line === 1 ? t : 0, d = n.column + p, c = `${e.name}:${l}:${d}
+`, u = i.split(/\r\n|[\n\r]/g), h = u[s];
+  if (h.length > 120) {
+    const v = Math.floor(d / 80), S = d % 80, T = [];
+    for (let _ = 0; _ < h.length; _ += 80)
+      T.push(h.slice(_, _ + 80));
+    return c + Oe([
+      [`${l} |`, T[0]],
+      ...T.slice(1, v + 1).map((_) => ["|", _]),
+      ["|", "^".padStart(S)],
+      ["|", T[v + 1]]
+    ]);
+  }
+  return c + Oe([
+    // Lines specified like this: ["prefix", "string"],
+    [`${l - 1} |`, u[s - 1]],
+    [`${l} |`, h],
+    ["|", "^".padStart(d)],
+    [`${l + 1} |`, u[s + 1]]
+  ]);
+}
+r(Ue, "printSourceLocation");
+function Oe(e) {
+  const n = e.filter(([i, s]) => s !== void 0), t = Math.max(...n.map(([i]) => i.length));
+  return n.map(([i, s]) => i.padStart(t) + (s ? " " + s : "")).join(`
+`);
+}
+r(Oe, "printPrefixedLines");
+function Dn(e) {
+  const n = e[0];
+  return n == null || "kind" in n || "length" in n ? {
+    nodes: n,
+    source: e[1],
+    positions: e[2],
+    path: e[3],
+    originalError: e[4],
+    extensions: e[5]
+  } : n;
+}
+r(Dn, "toNormalizedOptions");
+class N extends Error {
+  /**
+   * An array of `{ line, column }` locations within the source GraphQL document
+   * which correspond to this error.
+   *
+   * Errors during validation often contain multiple locations, for example to
+   * point out two things with the same name. Errors during execution include a
+   * single location, the field which produced the error.
+   *
+   * Enumerable, and appears in the result of JSON.stringify().
+   */
+  /**
+   * An array describing the JSON-path into the execution response which
+   * corresponds to this error. Only included for errors during execution.
+   *
+   * Enumerable, and appears in the result of JSON.stringify().
+   */
+  /**
+   * An array of GraphQL AST Nodes corresponding to this error.
+   */
+  /**
+   * The source GraphQL document for the first location of this error.
+   *
+   * Note that if this Error represents more than one node, the source may not
+   * represent nodes after the first node.
+   */
+  /**
+   * An array of character offsets within the source GraphQL document
+   * which correspond to this error.
+   */
+  /**
+   * The original error thrown from a field resolver during execution.
+   */
+  /**
+   * Extension fields to add to the formatted error.
+   */
+  /**
+   * @deprecated Please use the `GraphQLErrorOptions` constructor overload instead.
+   */
+  constructor(n, ...t) {
+    var i, s, o;
+    const { nodes: l, source: p, positions: d, path: c, originalError: u, extensions: h } = Dn(t);
+    super(n), this.name = "GraphQLError", this.path = c ?? void 0, this.originalError = u ?? void 0, this.nodes = Se(
+      Array.isArray(l) ? l : l ? [l] : void 0
+    );
+    const v = Se(
+      (i = this.nodes) === null || i === void 0 ? void 0 : i.map((T) => T.loc).filter((T) => T != null)
+    );
+    this.source = p ?? (v == null || (s = v[0]) === null || s === void 0 ? void 0 : s.source), this.positions = d ?? (v == null ? void 0 : v.map((T) => T.start)), this.locations = d && p ? d.map((T) => ae(p, T)) : v == null ? void 0 : v.map((T) => ae(T.source, T.start));
+    const S = Q(
+      u == null ? void 0 : u.extensions
+    ) ? u == null ? void 0 : u.extensions : void 0;
+    this.extensions = (o = h ?? S) !== null && o !== void 0 ? o : /* @__PURE__ */ Object.create(null), Object.defineProperties(this, {
+      message: {
+        writable: !0,
+        enumerable: !0
+      },
+      name: {
+        enumerable: !1
+      },
+      nodes: {
+        enumerable: !1
+      },
+      source: {
+        enumerable: !1
+      },
+      positions: {
+        enumerable: !1
+      },
+      originalError: {
+        enumerable: !1
+      }
+    }), u != null && u.stack ? Object.defineProperty(this, "stack", {
+      value: u.stack,
+      writable: !0,
+      configurable: !0
+    }) : Error.captureStackTrace ? Error.captureStackTrace(this, N) : Object.defineProperty(this, "stack", {
+      value: Error().stack,
+      writable: !0,
+      configurable: !0
+    });
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLError";
+  }
+  toString() {
+    let n = this.message;
+    if (this.nodes)
+      for (const t of this.nodes)
+        t.loc && (n += `
+
+` + Ln(t.loc));
+    else if (this.source && this.locations)
+      for (const t of this.locations)
+        n += `
+
+` + Ue(this.source, t);
+    return n;
+  }
+  toJSON() {
+    const n = {
+      message: this.message
+    };
+    return this.locations != null && (n.locations = this.locations), this.path != null && (n.path = this.path), this.extensions != null && Object.keys(this.extensions).length > 0 && (n.extensions = this.extensions), n;
+  }
+}
+r(N, "GraphQLError");
+function Se(e) {
+  return e === void 0 || e.length === 0 ? void 0 : e;
+}
+r(Se, "undefinedIfEmpty");
+function le(e, n) {
+  switch (e.kind) {
+    case m.NULL:
+      return null;
+    case m.INT:
+      return parseInt(e.value, 10);
+    case m.FLOAT:
+      return parseFloat(e.value);
+    case m.STRING:
+    case m.ENUM:
+    case m.BOOLEAN:
+      return e.value;
+    case m.LIST:
+      return e.values.map(
+        (t) => le(t, n)
+      );
+    case m.OBJECT:
+      return ce(
+        e.fields,
+        (t) => t.name.value,
+        (t) => le(t.value, n)
+      );
+    case m.VARIABLE:
+      return n == null ? void 0 : n[e.name.value];
+  }
+}
+r(le, "valueFromASTUntyped");
+function F(e) {
+  if (e != null || g(!1, "Must provide name."), typeof e == "string" || g(!1, "Expected name to be a string."), e.length === 0)
+    throw new N("Expected name to be a non-empty string.");
+  for (let n = 1; n < e.length; ++n)
+    if (!ln(e.charCodeAt(n)))
+      throw new N(
+        `Names must only contain [_a-zA-Z0-9] but "${e}" does not.`
+      );
+  if (!an(e.charCodeAt(0)))
+    throw new N(
+      `Names must start with [_a-zA-Z] but "${e}" does not.`
+    );
+  return e;
+}
+r(F, "assertName");
+function wn(e) {
+  if (e === "true" || e === "false" || e === "null")
+    throw new N(`Enum values cannot be named: ${e}`);
+  return F(e);
+}
+r(wn, "assertEnumValueName");
+function Ve(e) {
+  return pe(e) || W(e) || P(e) || de(e) || J(e) || Z(e) || fe(e) || ne(e);
+}
+r(Ve, "isType");
+function pe(e) {
+  return $(e, C);
+}
+r(pe, "isScalarType");
+function W(e) {
+  return $(e, M);
+}
+r(W, "isObjectType");
+function P(e) {
+  return $(e, Ge);
+}
+r(P, "isInterfaceType");
+function de(e) {
+  return $(e, Pe);
+}
+r(de, "isUnionType");
+function J(e) {
+  return $(e, te);
+}
+r(J, "isEnumType");
+function Z(e) {
+  return $(e, Qe);
+}
+r(Z, "isInputObjectType");
+function fe(e) {
+  return $(e, A);
+}
+r(fe, "isListType");
+function ne(e) {
+  return $(e, y);
+}
+r(ne, "isNonNullType");
+function xn(e) {
+  return pe(e) || J(e);
+}
+r(xn, "isLeafType");
+function Fn(e) {
+  return P(e) || de(e);
+}
+r(Fn, "isAbstractType");
+class A {
+  constructor(n) {
+    Ve(n) || g(!1, `Expected ${E(n)} to be a GraphQL type.`), this.ofType = n;
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLList";
+  }
+  toString() {
+    return "[" + String(this.ofType) + "]";
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(A, "GraphQLList");
+class y {
+  constructor(n) {
+    Rn(n) || g(
+      !1,
+      `Expected ${E(n)} to be a GraphQL nullable type.`
+    ), this.ofType = n;
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLNonNull";
+  }
+  toString() {
+    return String(this.ofType) + "!";
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(y, "GraphQLNonNull");
+function Rn(e) {
+  return Ve(e) && !ne(e);
+}
+r(Rn, "isNullableType");
+function ke(e) {
+  return typeof e == "function" ? e() : e;
+}
+r(ke, "resolveReadonlyArrayThunk");
+function $e(e) {
+  return typeof e == "function" ? e() : e;
+}
+r($e, "resolveObjMapThunk");
+class C {
+  constructor(n) {
+    var t, i, s, o;
+    const l = (t = n.parseValue) !== null && t !== void 0 ? t : ge;
+    this.name = F(n.name), this.description = n.description, this.specifiedByURL = n.specifiedByURL, this.serialize = (i = n.serialize) !== null && i !== void 0 ? i : ge, this.parseValue = l, this.parseLiteral = (s = n.parseLiteral) !== null && s !== void 0 ? s : (p, d) => l(le(p, d)), this.extensions = x(n.extensions), this.astNode = n.astNode, this.extensionASTNodes = (o = n.extensionASTNodes) !== null && o !== void 0 ? o : [], n.specifiedByURL == null || typeof n.specifiedByURL == "string" || g(
+      !1,
+      `${this.name} must provide "specifiedByURL" as a string, but got: ${E(n.specifiedByURL)}.`
+    ), n.serialize == null || typeof n.serialize == "function" || g(
+      !1,
+      `${this.name} must provide "serialize" function. If this custom Scalar is also used as an input type, ensure "parseValue" and "parseLiteral" functions are also provided.`
+    ), n.parseLiteral && (typeof n.parseValue == "function" && typeof n.parseLiteral == "function" || g(
+      !1,
+      `${this.name} must provide both "parseValue" and "parseLiteral" functions.`
+    ));
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLScalarType";
+  }
+  toConfig() {
+    return {
+      name: this.name,
+      description: this.description,
+      specifiedByURL: this.specifiedByURL,
+      serialize: this.serialize,
+      parseValue: this.parseValue,
+      parseLiteral: this.parseLiteral,
+      extensions: this.extensions,
+      astNode: this.astNode,
+      extensionASTNodes: this.extensionASTNodes
+    };
+  }
+  toString() {
+    return this.name;
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(C, "GraphQLScalarType");
+class M {
+  constructor(n) {
+    var t;
+    this.name = F(n.name), this.description = n.description, this.isTypeOf = n.isTypeOf, this.extensions = x(n.extensions), this.astNode = n.astNode, this.extensionASTNodes = (t = n.extensionASTNodes) !== null && t !== void 0 ? t : [], this._fields = () => Ce(n), this._interfaces = () => Me(n), n.isTypeOf == null || typeof n.isTypeOf == "function" || g(
+      !1,
+      `${this.name} must provide "isTypeOf" as a function, but got: ${E(n.isTypeOf)}.`
+    );
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLObjectType";
+  }
+  getFields() {
+    return typeof this._fields == "function" && (this._fields = this._fields()), this._fields;
+  }
+  getInterfaces() {
+    return typeof this._interfaces == "function" && (this._interfaces = this._interfaces()), this._interfaces;
+  }
+  toConfig() {
+    return {
+      name: this.name,
+      description: this.description,
+      interfaces: this.getInterfaces(),
+      fields: Be(this.getFields()),
+      isTypeOf: this.isTypeOf,
+      extensions: this.extensions,
+      astNode: this.astNode,
+      extensionASTNodes: this.extensionASTNodes
+    };
+  }
+  toString() {
+    return this.name;
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(M, "GraphQLObjectType");
+function Me(e) {
+  var n;
+  const t = ke(
+    (n = e.interfaces) !== null && n !== void 0 ? n : []
+  );
+  return Array.isArray(t) || g(
+    !1,
+    `${e.name} interfaces must be an Array or a function which returns an Array.`
+  ), t;
+}
+r(Me, "defineInterfaces");
+function Ce(e) {
+  const n = $e(e.fields);
+  return B(n) || g(
+    !1,
+    `${e.name} fields must be an object with field names as keys or a function which returns such an object.`
+  ), ee(n, (t, i) => {
+    var s;
+    B(t) || g(
+      !1,
+      `${e.name}.${i} field config must be an object.`
+    ), t.resolve == null || typeof t.resolve == "function" || g(
+      !1,
+      `${e.name}.${i} field resolver must be a function if provided, but got: ${E(t.resolve)}.`
+    );
+    const o = (s = t.args) !== null && s !== void 0 ? s : {};
+    return B(o) || g(
+      !1,
+      `${e.name}.${i} args must be an object with argument names as keys.`
+    ), {
+      name: F(i),
+      description: t.description,
+      type: t.type,
+      args: jn(o),
+      resolve: t.resolve,
+      subscribe: t.subscribe,
+      deprecationReason: t.deprecationReason,
+      extensions: x(t.extensions),
+      astNode: t.astNode
+    };
+  });
+}
+r(Ce, "defineFieldMap");
+function jn(e) {
+  return Object.entries(e).map(([n, t]) => ({
+    name: F(n),
+    description: t.description,
+    type: t.type,
+    defaultValue: t.defaultValue,
+    deprecationReason: t.deprecationReason,
+    extensions: x(t.extensions),
+    astNode: t.astNode
+  }));
+}
+r(jn, "defineArguments");
+function B(e) {
+  return Q(e) && !Array.isArray(e);
+}
+r(B, "isPlainObj");
+function Be(e) {
+  return ee(e, (n) => ({
+    description: n.description,
+    type: n.type,
+    args: Un(n.args),
+    resolve: n.resolve,
+    subscribe: n.subscribe,
+    deprecationReason: n.deprecationReason,
+    extensions: n.extensions,
+    astNode: n.astNode
+  }));
+}
+r(Be, "fieldsToFieldsConfig");
+function Un(e) {
+  return ce(
+    e,
+    (n) => n.name,
+    (n) => ({
+      description: n.description,
+      type: n.type,
+      defaultValue: n.defaultValue,
+      deprecationReason: n.deprecationReason,
+      extensions: n.extensions,
+      astNode: n.astNode
+    })
+  );
+}
+r(Un, "argsToArgsConfig");
+class Ge {
+  constructor(n) {
+    var t;
+    this.name = F(n.name), this.description = n.description, this.resolveType = n.resolveType, this.extensions = x(n.extensions), this.astNode = n.astNode, this.extensionASTNodes = (t = n.extensionASTNodes) !== null && t !== void 0 ? t : [], this._fields = Ce.bind(void 0, n), this._interfaces = Me.bind(void 0, n), n.resolveType == null || typeof n.resolveType == "function" || g(
+      !1,
+      `${this.name} must provide "resolveType" as a function, but got: ${E(n.resolveType)}.`
+    );
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLInterfaceType";
+  }
+  getFields() {
+    return typeof this._fields == "function" && (this._fields = this._fields()), this._fields;
+  }
+  getInterfaces() {
+    return typeof this._interfaces == "function" && (this._interfaces = this._interfaces()), this._interfaces;
+  }
+  toConfig() {
+    return {
+      name: this.name,
+      description: this.description,
+      interfaces: this.getInterfaces(),
+      fields: Be(this.getFields()),
+      resolveType: this.resolveType,
+      extensions: this.extensions,
+      astNode: this.astNode,
+      extensionASTNodes: this.extensionASTNodes
+    };
+  }
+  toString() {
+    return this.name;
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(Ge, "GraphQLInterfaceType");
+class Pe {
+  constructor(n) {
+    var t;
+    this.name = F(n.name), this.description = n.description, this.resolveType = n.resolveType, this.extensions = x(n.extensions), this.astNode = n.astNode, this.extensionASTNodes = (t = n.extensionASTNodes) !== null && t !== void 0 ? t : [], this._types = Vn.bind(void 0, n), n.resolveType == null || typeof n.resolveType == "function" || g(
+      !1,
+      `${this.name} must provide "resolveType" as a function, but got: ${E(n.resolveType)}.`
+    );
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLUnionType";
+  }
+  getTypes() {
+    return typeof this._types == "function" && (this._types = this._types()), this._types;
+  }
+  toConfig() {
+    return {
+      name: this.name,
+      description: this.description,
+      types: this.getTypes(),
+      resolveType: this.resolveType,
+      extensions: this.extensions,
+      astNode: this.astNode,
+      extensionASTNodes: this.extensionASTNodes
+    };
+  }
+  toString() {
+    return this.name;
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(Pe, "GraphQLUnionType");
+function Vn(e) {
+  const n = ke(e.types);
+  return Array.isArray(n) || g(
+    !1,
+    `Must provide Array of types or a function which returns such an array for Union ${e.name}.`
+  ), n;
+}
+r(Vn, "defineTypes");
+class te {
+  /* <T> */
+  constructor(n) {
+    var t;
+    this.name = F(n.name), this.description = n.description, this.extensions = x(n.extensions), this.astNode = n.astNode, this.extensionASTNodes = (t = n.extensionASTNodes) !== null && t !== void 0 ? t : [], this._values = kn(this.name, n.values), this._valueLookup = new Map(
+      this._values.map((i) => [i.value, i])
+    ), this._nameLookup = bn(this._values, (i) => i.name);
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLEnumType";
+  }
+  getValues() {
+    return this._values;
+  }
+  getValue(n) {
+    return this._nameLookup[n];
+  }
+  serialize(n) {
+    const t = this._valueLookup.get(n);
+    if (t === void 0)
+      throw new N(
+        `Enum "${this.name}" cannot represent value: ${E(n)}`
+      );
+    return t.name;
+  }
+  parseValue(n) {
+    if (typeof n != "string") {
+      const i = E(n);
+      throw new N(
+        `Enum "${this.name}" cannot represent non-string value: ${i}.` + q(this, i)
+      );
+    }
+    const t = this.getValue(n);
+    if (t == null)
+      throw new N(
+        `Value "${n}" does not exist in "${this.name}" enum.` + q(this, n)
+      );
+    return t.value;
+  }
+  parseLiteral(n, t) {
+    if (n.kind !== m.ENUM) {
+      const s = k(n);
+      throw new N(
+        `Enum "${this.name}" cannot represent non-enum value: ${s}.` + q(this, s),
+        {
+          nodes: n
+        }
+      );
+    }
+    const i = this.getValue(n.value);
+    if (i == null) {
+      const s = k(n);
+      throw new N(
+        `Value "${s}" does not exist in "${this.name}" enum.` + q(this, s),
+        {
+          nodes: n
+        }
+      );
+    }
+    return i.value;
+  }
+  toConfig() {
+    const n = ce(
+      this.getValues(),
+      (t) => t.name,
+      (t) => ({
+        description: t.description,
+        value: t.value,
+        deprecationReason: t.deprecationReason,
+        extensions: t.extensions,
+        astNode: t.astNode
+      })
+    );
+    return {
+      name: this.name,
+      description: this.description,
+      values: n,
+      extensions: this.extensions,
+      astNode: this.astNode,
+      extensionASTNodes: this.extensionASTNodes
+    };
+  }
+  toString() {
+    return this.name;
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(te, "GraphQLEnumType");
+function q(e, n) {
+  const t = e.getValues().map((s) => s.name), i = _n(n, t);
+  return gn("the enum value", i);
+}
+r(q, "didYouMeanEnumValue");
+function kn(e, n) {
+  return B(n) || g(
+    !1,
+    `${e} values must be an object with value names as keys.`
+  ), Object.entries(n).map(([t, i]) => (B(i) || g(
+    !1,
+    `${e}.${t} must refer to an object with a "value" key representing an internal value but got: ${E(i)}.`
+  ), {
+    name: wn(t),
+    description: i.description,
+    value: i.value !== void 0 ? i.value : t,
+    deprecationReason: i.deprecationReason,
+    extensions: x(i.extensions),
+    astNode: i.astNode
+  }));
+}
+r(kn, "defineEnumValues");
+class Qe {
+  constructor(n) {
+    var t;
+    this.name = F(n.name), this.description = n.description, this.extensions = x(n.extensions), this.astNode = n.astNode, this.extensionASTNodes = (t = n.extensionASTNodes) !== null && t !== void 0 ? t : [], this._fields = $n.bind(void 0, n);
+  }
+  get [Symbol.toStringTag]() {
+    return "GraphQLInputObjectType";
+  }
+  getFields() {
+    return typeof this._fields == "function" && (this._fields = this._fields()), this._fields;
+  }
+  toConfig() {
+    const n = ee(this.getFields(), (t) => ({
+      description: t.description,
+      type: t.type,
+      defaultValue: t.defaultValue,
+      deprecationReason: t.deprecationReason,
+      extensions: t.extensions,
+      astNode: t.astNode
+    }));
+    return {
+      name: this.name,
+      description: this.description,
+      fields: n,
+      extensions: this.extensions,
+      astNode: this.astNode,
+      extensionASTNodes: this.extensionASTNodes
+    };
+  }
+  toString() {
+    return this.name;
+  }
+  toJSON() {
+    return this.toString();
+  }
+}
+r(Qe, "GraphQLInputObjectType");
+function $n(e) {
+  const n = $e(e.fields);
+  return B(n) || g(
+    !1,
+    `${e.name} fields must be an object with field names as keys or a function which returns such an object.`
+  ), ee(n, (t, i) => (!("resolve" in t) || g(
+    !1,
+    `${e.name}.${i} field has a resolve property, but Input Types cannot define resolvers.`
+  ), {
+    name: F(i),
+    description: t.description,
+    type: t.type,
+    defaultValue: t.defaultValue,
+    deprecationReason: t.deprecationReason,
+    extensions: x(t.extensions),
+    astNode: t.astNode
+  }));
+}
+r($n, "defineInputFieldMap");
+const se = 2147483647, re = -2147483648;
+new C({
+  name: "Int",
+  description: "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+  serialize(e) {
+    const n = Y(e);
+    if (typeof n == "boolean")
+      return n ? 1 : 0;
+    let t = n;
+    if (typeof n == "string" && n !== "" && (t = Number(n)), typeof t != "number" || !Number.isInteger(t))
+      throw new N(
+        `Int cannot represent non-integer value: ${E(n)}`
+      );
+    if (t > se || t < re)
+      throw new N(
+        "Int cannot represent non 32-bit signed integer value: " + E(n)
+      );
+    return t;
+  },
+  parseValue(e) {
+    if (typeof e != "number" || !Number.isInteger(e))
+      throw new N(
+        `Int cannot represent non-integer value: ${E(e)}`
+      );
+    if (e > se || e < re)
+      throw new N(
+        `Int cannot represent non 32-bit signed integer value: ${e}`
+      );
+    return e;
+  },
+  parseLiteral(e) {
+    if (e.kind !== m.INT)
+      throw new N(
+        `Int cannot represent non-integer value: ${k(e)}`,
+        {
+          nodes: e
+        }
+      );
+    const n = parseInt(e.value, 10);
+    if (n > se || n < re)
+      throw new N(
+        `Int cannot represent non 32-bit signed integer value: ${e.value}`,
+        {
+          nodes: e
+        }
+      );
+    return n;
+  }
+});
+new C({
+  name: "Float",
+  description: "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+  serialize(e) {
+    const n = Y(e);
+    if (typeof n == "boolean")
+      return n ? 1 : 0;
+    let t = n;
+    if (typeof n == "string" && n !== "" && (t = Number(n)), typeof t != "number" || !Number.isFinite(t))
+      throw new N(
+        `Float cannot represent non numeric value: ${E(n)}`
+      );
+    return t;
+  },
+  parseValue(e) {
+    if (typeof e != "number" || !Number.isFinite(e))
+      throw new N(
+        `Float cannot represent non numeric value: ${E(e)}`
+      );
+    return e;
+  },
+  parseLiteral(e) {
+    if (e.kind !== m.FLOAT && e.kind !== m.INT)
+      throw new N(
+        `Float cannot represent non numeric value: ${k(e)}`,
+        e
+      );
+    return parseFloat(e.value);
+  }
+});
+const O = new C({
+  name: "String",
+  description: "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+  serialize(e) {
+    const n = Y(e);
+    if (typeof n == "string")
+      return n;
+    if (typeof n == "boolean")
+      return n ? "true" : "false";
+    if (typeof n == "number" && Number.isFinite(n))
+      return n.toString();
+    throw new N(
+      `String cannot represent value: ${E(e)}`
+    );
+  },
+  parseValue(e) {
+    if (typeof e != "string")
+      throw new N(
+        `String cannot represent a non string value: ${E(e)}`
+      );
+    return e;
+  },
+  parseLiteral(e) {
+    if (e.kind !== m.STRING)
+      throw new N(
+        `String cannot represent a non string value: ${k(e)}`,
+        {
+          nodes: e
+        }
+      );
+    return e.value;
+  }
+}), j = new C({
+  name: "Boolean",
+  description: "The `Boolean` scalar type represents `true` or `false`.",
+  serialize(e) {
+    const n = Y(e);
+    if (typeof n == "boolean")
+      return n;
+    if (Number.isFinite(n))
+      return n !== 0;
+    throw new N(
+      `Boolean cannot represent a non boolean value: ${E(n)}`
+    );
+  },
+  parseValue(e) {
+    if (typeof e != "boolean")
+      throw new N(
+        `Boolean cannot represent a non boolean value: ${E(e)}`
+      );
+    return e;
+  },
+  parseLiteral(e) {
+    if (e.kind !== m.BOOLEAN)
+      throw new N(
+        `Boolean cannot represent a non boolean value: ${k(e)}`,
+        {
+          nodes: e
+        }
+      );
+    return e.value;
+  }
+}), Mn = new C({
+  name: "ID",
+  description: 'The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.',
+  serialize(e) {
+    const n = Y(e);
+    if (typeof n == "string")
+      return n;
+    if (Number.isInteger(n))
+      return String(n);
+    throw new N(
+      `ID cannot represent value: ${E(e)}`
+    );
+  },
+  parseValue(e) {
+    if (typeof e == "string")
+      return e;
+    if (typeof e == "number" && Number.isInteger(e))
+      return e.toString();
+    throw new N(`ID cannot represent value: ${E(e)}`);
+  },
+  parseLiteral(e) {
+    if (e.kind !== m.STRING && e.kind !== m.INT)
+      throw new N(
+        "ID cannot represent a non-string and non-integer value: " + k(e),
+        {
+          nodes: e
+        }
+      );
+    return e.value;
+  }
+});
+function Y(e) {
+  if (Q(e)) {
+    if (typeof e.valueOf == "function") {
+      const n = e.valueOf();
+      if (!Q(n))
+        return n;
+    }
+    if (typeof e.toJSON == "function")
+      return e.toJSON();
+  }
+  return e;
+}
+r(Y, "serializeObject");
+function G(e, n) {
+  if (ne(n)) {
+    const t = G(e, n.ofType);
+    return (t == null ? void 0 : t.kind) === m.NULL ? null : t;
+  }
+  if (e === null)
+    return {
+      kind: m.NULL
+    };
+  if (e === void 0)
+    return null;
+  if (fe(n)) {
+    const t = n.ofType;
+    if (En(e)) {
+      const i = [];
+      for (const s of e) {
+        const o = G(s, t);
+        o != null && i.push(o);
+      }
+      return {
+        kind: m.LIST,
+        values: i
+      };
+    }
+    return G(e, t);
+  }
+  if (Z(n)) {
+    if (!Q(e))
+      return null;
+    const t = [];
+    for (const i of Object.values(n.getFields())) {
+      const s = G(e[i.name], i.type);
+      s && t.push({
+        kind: m.OBJECT_FIELD,
+        name: {
+          kind: m.NAME,
+          value: i.name
+        },
+        value: s
+      });
+    }
+    return {
+      kind: m.OBJECT,
+      fields: t
+    };
+  }
+  if (xn(n)) {
+    const t = n.serialize(e);
+    if (t == null)
+      return null;
+    if (typeof t == "boolean")
+      return {
+        kind: m.BOOLEAN,
+        value: t
+      };
+    if (typeof t == "number" && Number.isFinite(t)) {
+      const i = String(t);
+      return _e.test(i) ? {
+        kind: m.INT,
+        value: i
+      } : {
+        kind: m.FLOAT,
+        value: i
+      };
+    }
+    if (typeof t == "string")
+      return J(n) ? {
+        kind: m.ENUM,
+        value: t
+      } : n === Mn && _e.test(t) ? {
+        kind: m.INT,
+        value: t
+      } : {
+        kind: m.STRING,
+        value: t
+      };
+    throw new TypeError(`Cannot convert value to AST: ${E(t)}.`);
+  }
+  ue(!1, "Unexpected input type: " + E(n));
+}
+r(G, "astFromValue");
+const _e = /^-?(?:0|[1-9][0-9]*)$/, Cn = new M({
+  name: "__Schema",
+  description: "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
+  fields: () => ({
+    description: {
+      type: O,
+      resolve: (e) => e.description
+    },
+    types: {
+      description: "A list of all types supported by this server.",
+      type: new y(new A(new y(w))),
+      resolve(e) {
+        return Object.values(e.getTypeMap());
+      }
+    },
+    queryType: {
+      description: "The type that query operations will be rooted at.",
+      type: new y(w),
+      resolve: (e) => e.getQueryType()
+    },
+    mutationType: {
+      description: "If this server supports mutation, the type that mutation operations will be rooted at.",
+      type: w,
+      resolve: (e) => e.getMutationType()
+    },
+    subscriptionType: {
+      description: "If this server support subscription, the type that subscription operations will be rooted at.",
+      type: w,
+      resolve: (e) => e.getSubscriptionType()
+    },
+    directives: {
+      description: "A list of all directives supported by this server.",
+      type: new y(
+        new A(new y(Bn))
+      ),
+      resolve: (e) => e.getDirectives()
+    }
+  })
+}), Bn = new M({
+  name: "__Directive",
+  description: `A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
+
+In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.`,
+  fields: () => ({
+    name: {
+      type: new y(O),
+      resolve: (e) => e.name
+    },
+    description: {
+      type: O,
+      resolve: (e) => e.description
+    },
+    isRepeatable: {
+      type: new y(j),
+      resolve: (e) => e.isRepeatable
+    },
+    locations: {
+      type: new y(
+        new A(new y(Gn))
+      ),
+      resolve: (e) => e.locations
+    },
+    args: {
+      type: new y(
+        new A(new y(he))
+      ),
+      args: {
+        includeDeprecated: {
+          type: j,
+          defaultValue: !1
+        }
+      },
+      resolve(e, { includeDeprecated: n }) {
+        return n ? e.args : e.args.filter((t) => t.deprecationReason == null);
+      }
+    }
+  })
+}), Gn = new te({
+  name: "__DirectiveLocation",
+  description: "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+  values: {
+    QUERY: {
+      value: I.QUERY,
+      description: "Location adjacent to a query operation."
+    },
+    MUTATION: {
+      value: I.MUTATION,
+      description: "Location adjacent to a mutation operation."
+    },
+    SUBSCRIPTION: {
+      value: I.SUBSCRIPTION,
+      description: "Location adjacent to a subscription operation."
+    },
+    FIELD: {
+      value: I.FIELD,
+      description: "Location adjacent to a field."
+    },
+    FRAGMENT_DEFINITION: {
+      value: I.FRAGMENT_DEFINITION,
+      description: "Location adjacent to a fragment definition."
+    },
+    FRAGMENT_SPREAD: {
+      value: I.FRAGMENT_SPREAD,
+      description: "Location adjacent to a fragment spread."
+    },
+    INLINE_FRAGMENT: {
+      value: I.INLINE_FRAGMENT,
+      description: "Location adjacent to an inline fragment."
+    },
+    VARIABLE_DEFINITION: {
+      value: I.VARIABLE_DEFINITION,
+      description: "Location adjacent to a variable definition."
+    },
+    SCHEMA: {
+      value: I.SCHEMA,
+      description: "Location adjacent to a schema definition."
+    },
+    SCALAR: {
+      value: I.SCALAR,
+      description: "Location adjacent to a scalar definition."
+    },
+    OBJECT: {
+      value: I.OBJECT,
+      description: "Location adjacent to an object type definition."
+    },
+    FIELD_DEFINITION: {
+      value: I.FIELD_DEFINITION,
+      description: "Location adjacent to a field definition."
+    },
+    ARGUMENT_DEFINITION: {
+      value: I.ARGUMENT_DEFINITION,
+      description: "Location adjacent to an argument definition."
+    },
+    INTERFACE: {
+      value: I.INTERFACE,
+      description: "Location adjacent to an interface definition."
+    },
+    UNION: {
+      value: I.UNION,
+      description: "Location adjacent to a union definition."
+    },
+    ENUM: {
+      value: I.ENUM,
+      description: "Location adjacent to an enum definition."
+    },
+    ENUM_VALUE: {
+      value: I.ENUM_VALUE,
+      description: "Location adjacent to an enum value definition."
+    },
+    INPUT_OBJECT: {
+      value: I.INPUT_OBJECT,
+      description: "Location adjacent to an input object type definition."
+    },
+    INPUT_FIELD_DEFINITION: {
+      value: I.INPUT_FIELD_DEFINITION,
+      description: "Location adjacent to an input object field definition."
+    }
+  }
+}), w = new M({
+  name: "__Type",
+  description: "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+  fields: () => ({
+    kind: {
+      type: new y(Jn),
+      resolve(e) {
+        if (pe(e))
+          return b.SCALAR;
+        if (W(e))
+          return b.OBJECT;
+        if (P(e))
+          return b.INTERFACE;
+        if (de(e))
+          return b.UNION;
+        if (J(e))
+          return b.ENUM;
+        if (Z(e))
+          return b.INPUT_OBJECT;
+        if (fe(e))
+          return b.LIST;
+        if (ne(e))
+          return b.NON_NULL;
+        ue(!1, `Unexpected type: "${E(e)}".`);
+      }
+    },
+    name: {
+      type: O,
+      resolve: (e) => "name" in e ? e.name : void 0
+    },
+    description: {
+      type: O,
+      resolve: (e) => (
+        /* c8 ignore next */
+        "description" in e ? e.description : void 0
+      )
+    },
+    specifiedByURL: {
+      type: O,
+      resolve: (e) => "specifiedByURL" in e ? e.specifiedByURL : void 0
+    },
+    fields: {
+      type: new A(new y(Pn)),
+      args: {
+        includeDeprecated: {
+          type: j,
+          defaultValue: !1
+        }
+      },
+      resolve(e, { includeDeprecated: n }) {
+        if (W(e) || P(e)) {
+          const t = Object.values(e.getFields());
+          return n ? t : t.filter((i) => i.deprecationReason == null);
+        }
+      }
+    },
+    interfaces: {
+      type: new A(new y(w)),
+      resolve(e) {
+        if (W(e) || P(e))
+          return e.getInterfaces();
+      }
+    },
+    possibleTypes: {
+      type: new A(new y(w)),
+      resolve(e, n, t, { schema: i }) {
+        if (Fn(e))
+          return i.getPossibleTypes(e);
+      }
+    },
+    enumValues: {
+      type: new A(new y(Qn)),
+      args: {
+        includeDeprecated: {
+          type: j,
+          defaultValue: !1
+        }
+      },
+      resolve(e, { includeDeprecated: n }) {
+        if (J(e)) {
+          const t = e.getValues();
+          return n ? t : t.filter((i) => i.deprecationReason == null);
+        }
+      }
+    },
+    inputFields: {
+      type: new A(new y(he)),
+      args: {
+        includeDeprecated: {
+          type: j,
+          defaultValue: !1
+        }
+      },
+      resolve(e, { includeDeprecated: n }) {
+        if (Z(e)) {
+          const t = Object.values(e.getFields());
+          return n ? t : t.filter((i) => i.deprecationReason == null);
+        }
+      }
+    },
+    ofType: {
+      type: w,
+      resolve: (e) => "ofType" in e ? e.ofType : void 0
+    }
+  })
+}), Pn = new M({
+  name: "__Field",
+  description: "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+  fields: () => ({
+    name: {
+      type: new y(O),
+      resolve: (e) => e.name
+    },
+    description: {
+      type: O,
+      resolve: (e) => e.description
+    },
+    args: {
+      type: new y(
+        new A(new y(he))
+      ),
+      args: {
+        includeDeprecated: {
+          type: j,
+          defaultValue: !1
+        }
+      },
+      resolve(e, { includeDeprecated: n }) {
+        return n ? e.args : e.args.filter((t) => t.deprecationReason == null);
+      }
+    },
+    type: {
+      type: new y(w),
+      resolve: (e) => e.type
+    },
+    isDeprecated: {
+      type: new y(j),
+      resolve: (e) => e.deprecationReason != null
+    },
+    deprecationReason: {
+      type: O,
+      resolve: (e) => e.deprecationReason
+    }
+  })
+}), he = new M({
+  name: "__InputValue",
+  description: "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+  fields: () => ({
+    name: {
+      type: new y(O),
+      resolve: (e) => e.name
+    },
+    description: {
+      type: O,
+      resolve: (e) => e.description
+    },
+    type: {
+      type: new y(w),
+      resolve: (e) => e.type
+    },
+    defaultValue: {
+      type: O,
+      description: "A GraphQL-formatted string representing the default value for this input value.",
+      resolve(e) {
+        const { type: n, defaultValue: t } = e, i = G(t, n);
+        return i ? k(i) : null;
+      }
+    },
+    isDeprecated: {
+      type: new y(j),
+      resolve: (e) => e.deprecationReason != null
+    },
+    deprecationReason: {
+      type: O,
+      resolve: (e) => e.deprecationReason
+    }
+  })
+}), Qn = new M({
+  name: "__EnumValue",
+  description: "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+  fields: () => ({
+    name: {
+      type: new y(O),
+      resolve: (e) => e.name
+    },
+    description: {
+      type: O,
+      resolve: (e) => e.description
+    },
+    isDeprecated: {
+      type: new y(j),
+      resolve: (e) => e.deprecationReason != null
+    },
+    deprecationReason: {
+      type: O,
+      resolve: (e) => e.deprecationReason
+    }
+  })
+});
+let b;
+(function(e) {
+  e.SCALAR = "SCALAR", e.OBJECT = "OBJECT", e.INTERFACE = "INTERFACE", e.UNION = "UNION", e.ENUM = "ENUM", e.INPUT_OBJECT = "INPUT_OBJECT", e.LIST = "LIST", e.NON_NULL = "NON_NULL";
+})(b || (b = {}));
+const Jn = new te({
+  name: "__TypeKind",
+  description: "An enum describing what kind of type a given `__Type` is.",
+  values: {
+    SCALAR: {
+      value: b.SCALAR,
+      description: "Indicates this type is a scalar."
+    },
+    OBJECT: {
+      value: b.OBJECT,
+      description: "Indicates this type is an object. `fields` and `interfaces` are valid fields."
+    },
+    INTERFACE: {
+      value: b.INTERFACE,
+      description: "Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields."
+    },
+    UNION: {
+      value: b.UNION,
+      description: "Indicates this type is a union. `possibleTypes` is a valid field."
+    },
+    ENUM: {
+      value: b.ENUM,
+      description: "Indicates this type is an enum. `enumValues` is a valid field."
+    },
+    INPUT_OBJECT: {
+      value: b.INPUT_OBJECT,
+      description: "Indicates this type is an input object. `inputFields` is a valid field."
+    },
+    LIST: {
+      value: b.LIST,
+      description: "Indicates this type is a list. `ofType` is a valid field."
+    },
+    NON_NULL: {
+      value: b.NON_NULL,
+      description: "Indicates this type is a non-null. `ofType` is a valid field."
+    }
+  }
+}), Ae = {
+  name: "__schema",
+  type: new y(Cn),
+  description: "Access the current type schema of this server.",
+  args: [],
+  resolve: (e, n, t, { schema: i }) => i,
+  deprecationReason: void 0,
+  extensions: /* @__PURE__ */ Object.create(null),
+  astNode: void 0
+}, Le = {
+  name: "__type",
+  type: w,
+  description: "Request the type information of a single type.",
+  args: [
+    {
+      name: "name",
+      description: void 0,
+      type: new y(O),
+      defaultValue: void 0,
+      deprecationReason: void 0,
+      extensions: /* @__PURE__ */ Object.create(null),
+      astNode: void 0
+    }
+  ],
+  resolve: (e, { name: n }, t, { schema: i }) => i.getType(n),
+  deprecationReason: void 0,
+  extensions: /* @__PURE__ */ Object.create(null),
+  astNode: void 0
+}, De = {
+  name: "__typename",
+  type: new y(O),
+  description: "The name of the current Object type at runtime.",
+  args: [],
+  resolve: (e, n, t, { parentType: i }) => i.name,
+  deprecationReason: void 0,
+  extensions: /* @__PURE__ */ Object.create(null),
+  astNode: void 0
+};
+function Xn(e, n) {
+  const t = {
+    schema: e,
+    type: null,
+    parentType: null,
+    inputType: null,
+    directiveDef: null,
+    fieldDef: null,
+    argDef: null,
+    argDefs: null,
+    objectFieldDefs: null
+  };
+  return Ze(n, (i) => {
+    var s, o;
+    switch (i.kind) {
+      case "Query":
+      case "ShortQuery":
+        t.type = e.getQueryType();
+        break;
+      case "Mutation":
+        t.type = e.getMutationType();
+        break;
+      case "Subscription":
+        t.type = e.getSubscriptionType();
+        break;
+      case "InlineFragment":
+      case "FragmentDefinition":
+        i.type && (t.type = e.getType(i.type));
+        break;
+      case "Field":
+      case "AliasedField":
+        t.fieldDef = t.type && i.name ? we(e, t.parentType, i.name) : null, t.type = (s = t.fieldDef) === null || s === void 0 ? void 0 : s.type;
+        break;
+      case "SelectionSet":
+        t.parentType = t.type ? H(t.type) : null;
+        break;
+      case "Directive":
+        t.directiveDef = i.name ? e.getDirective(i.name) : null;
+        break;
+      case "Arguments":
+        const l = i.prevState ? i.prevState.kind === "Field" ? t.fieldDef : i.prevState.kind === "Directive" ? t.directiveDef : i.prevState.kind === "AliasedField" ? i.prevState.name && we(e, t.parentType, i.prevState.name) : null : null;
+        t.argDefs = l ? l.args : null;
+        break;
+      case "Argument":
+        if (t.argDef = null, t.argDefs) {
+          for (let h = 0; h < t.argDefs.length; h++)
+            if (t.argDefs[h].name === i.name) {
+              t.argDef = t.argDefs[h];
+              break;
+            }
+        }
+        t.inputType = (o = t.argDef) === null || o === void 0 ? void 0 : o.type;
+        break;
+      case "EnumValue":
+        const p = t.inputType ? H(t.inputType) : null;
+        t.enumValue = p instanceof Xe ? Yn(p.getValues(), (h) => h.value === i.name) : null;
+        break;
+      case "ListValue":
+        const d = t.inputType ? qe(t.inputType) : null;
+        t.inputType = d instanceof He ? d.ofType : null;
+        break;
+      case "ObjectValue":
+        const c = t.inputType ? H(t.inputType) : null;
+        t.objectFieldDefs = c instanceof ze ? c.getFields() : null;
+        break;
+      case "ObjectField":
+        const u = i.name && t.objectFieldDefs ? t.objectFieldDefs[i.name] : null;
+        t.inputType = u == null ? void 0 : u.type;
+        break;
+      case "NamedType":
+        t.type = i.name ? e.getType(i.name) : null;
+        break;
+    }
+  }), t;
+}
+r(Xn, "getTypeInfo");
+function we(e, n, t) {
+  if (t === Ae.name && e.getQueryType() === n)
+    return Ae;
+  if (t === Le.name && e.getQueryType() === n)
+    return Le;
+  if (t === De.name && We(n))
+    return De;
+  if (n && n.getFields)
+    return n.getFields()[t];
+}
+r(we, "getFieldDef");
+function Yn(e, n) {
+  for (let t = 0; t < e.length; t++)
+    if (n(e[t]))
+      return e[t];
+}
+r(Yn, "find");
+function Wn(e) {
+  return {
+    kind: "Field",
+    schema: e.schema,
+    field: e.fieldDef,
+    type: Je(e.fieldDef) ? null : e.parentType
+  };
+}
+r(Wn, "getFieldReference");
+function Zn(e) {
+  return {
+    kind: "Directive",
+    schema: e.schema,
+    directive: e.directiveDef
+  };
+}
+r(Zn, "getDirectiveReference");
+function Kn(e) {
+  return e.directiveDef ? {
+    kind: "Argument",
+    schema: e.schema,
+    argument: e.argDef,
+    directive: e.directiveDef
+  } : {
+    kind: "Argument",
+    schema: e.schema,
+    argument: e.argDef,
+    field: e.fieldDef,
+    type: Je(e.fieldDef) ? null : e.parentType
+  };
+}
+r(Kn, "getArgumentReference");
+function et(e) {
+  return {
+    kind: "EnumValue",
+    value: e.enumValue || void 0,
+    type: e.inputType ? H(e.inputType) : void 0
+  };
+}
+r(et, "getEnumValueReference");
+function nt(e, n) {
+  return {
+    kind: "Type",
+    schema: e.schema,
+    type: n || e.type
+  };
+}
+r(nt, "getTypeReference");
+function Je(e) {
+  return e.name.slice(0, 2) === "__";
+}
+r(Je, "isMetaField");
+export {
+  Wn as a,
+  Zn as b,
+  Kn as c,
+  et as d,
+  nt as e,
+  Xn as g
+};
+//# sourceMappingURL=SchemaReference.es.js.map

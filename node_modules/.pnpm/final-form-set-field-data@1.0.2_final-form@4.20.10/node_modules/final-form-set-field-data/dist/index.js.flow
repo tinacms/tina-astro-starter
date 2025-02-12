@@ -1,0 +1,4 @@
+// @flow
+import type { Mutator } from 'final-form'
+
+declare export default Mutator

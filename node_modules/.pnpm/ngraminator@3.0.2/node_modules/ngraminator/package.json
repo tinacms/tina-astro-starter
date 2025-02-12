@@ -1,0 +1,21 @@
+{
+  "name": "ngraminator",
+  "version": "3.0.2",
+  "description": "A utility for making ngrams from Arrays",
+  "main": "./dist/ngraminator.cjs.js",
+  "module": "./dist/ngraminator.esm.mjs",
+  "browser": "./dist/ngraminator.umd.js",
+  "scripts": {
+    "build": "rollup --config",
+    "test": "standard './*.js' './test/*.js' && npm run build && npx ava ./test/test.cjs.js && npx ava ./test/test.esm.mjs && npx ava ./test/ui-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fergiemcdowall/ngraminator"
+  },
+  "author": "Fergus McDowall <fergusmcdowal@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "batr": "^2.1.2"
+  }
+}

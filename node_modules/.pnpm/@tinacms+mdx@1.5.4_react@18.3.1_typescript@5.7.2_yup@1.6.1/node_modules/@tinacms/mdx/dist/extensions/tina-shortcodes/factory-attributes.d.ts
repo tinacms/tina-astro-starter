@@ -1,0 +1,2 @@
+import type { Effects, State } from 'micromark-util-types';
+export declare function factoryAttributes(effects: Effects, ok: State, nnok: State, attributesType: string, attributesMarkerType: string, attributeType: string, attributeIdType: string, attributeClassType: string, attributeNameType: string, attributeInitializerType: string, attributeValueLiteralType: string, attributeValueType: string, attributeValueMarker: string, attributeValueData: string, disallowEol?: boolean): State;

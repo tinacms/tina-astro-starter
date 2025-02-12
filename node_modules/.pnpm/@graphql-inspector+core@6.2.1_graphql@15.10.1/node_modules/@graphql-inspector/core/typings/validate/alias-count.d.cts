@@ -1,0 +1,10 @@
+import { DepGraph } from 'dependency-graph';
+import type { DocumentNode, FieldNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode, OperationDefinitionNode, Source } from 'graphql';
+import { GraphQLError } from 'graphql';
+export declare function validateAliasCount({ source, doc, maxAliasCount, fragmentGraph, }: {
+    source: Source;
+    doc: DocumentNode;
+    maxAliasCount: number;
+    fragmentGraph: DepGraph<FragmentDefinitionNode>;
+}): GraphQLError | void;
+export declare function countAliases(node: FieldNode | FragmentDefinitionNode | InlineFragmentNode | OperationDefinitionNode | FragmentSpreadNode, getFragmentByName: (fragmentName: string) => FragmentDefinitionNode | undefined): number;

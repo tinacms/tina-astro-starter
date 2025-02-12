@@ -1,0 +1,186 @@
+{
+  "name": "@react-hook/window-size",
+  "version": "3.1.1",
+  "homepage": "https://github.com/jaredLunde/react-hook/tree/master/packages/window-size#readme",
+  "repository": "github:jaredLunde/react-hook",
+  "bugs": "https://github.com/jaredLunde/react-hook/issues",
+  "author": "Jared Lunde <jared.lunde@gmail.com>",
+  "license": "MIT",
+  "description": "React hooks for updating components when the size of the `window` changes.",
+  "keywords": [
+    "react",
+    "react hook",
+    "hook",
+    "react hooks",
+    "hooks",
+    "window size",
+    "window size hook",
+    "window width",
+    "window width hook",
+    "window height",
+    "window height hook",
+    "window",
+    "viewport size",
+    "viewport width",
+    "viewport height",
+    "viewport",
+    "viewport hook",
+    "react window size hook",
+    "use window size",
+    "use window width",
+    "use window height",
+    "usewindowsize",
+    "usewindowwidth",
+    "usewindowheight"
+  ],
+  "main": "dist/main/index.js",
+  "module": "dist/module/index.js",
+  "unpkg": "dist/umd/use-window-size.js",
+  "source": "src/index.tsx",
+  "types": "types/index.d.ts",
+  "files": [
+    "/dist",
+    "/src",
+    "/types",
+    "/throttled/dist",
+    "/throttled/src",
+    "/throttled/types",
+    "/throttled/package.json"
+  ],
+  "exports": {
+    ".": {
+      "browser": "./dist/module/index.js",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/main/index.js",
+      "umd": "./dist/umd/use-window-size.js",
+      "source": "./src/index.tsx",
+      "types": "./types/index.d.ts",
+      "default": "./dist/main/index.js"
+    },
+    "./throttled": {
+      "browser": "./throttled/dist/module/index.js",
+      "import": "./throttled/dist/esm/index.mjs",
+      "require": "./throttled/dist/main/index.js",
+      "umd": "./throttled/dist/umd/use-window-size.js",
+      "source": "./throttled/src/index.tsx",
+      "types": "./throttled/types/index.d.ts",
+      "default": "./throttled/dist/main/index.js"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "lundle build",
+    "check-types": "lundle check-types",
+    "dev": "lundle build -f module,cjs -w",
+    "format": "prettier --write \"{,!(node_modules|dist|coverage|throttled)/**/}*.{ts,tsx,js,jsx,md,yml,json}\" && prettier --write \"throttled/{,!(node_modules|dist|coverage)/**/}*.{ts,tsx,js,jsx,md,yml,json}\"",
+    "lint": "eslint . --ext .ts,.tsx",
+    "prepublishOnly": "npm run lint && npm run test && npm run build && npm run format",
+    "test": "jest",
+    "validate": "lundle check-types && npm run lint && jest --coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": [
+      "lundle build -f types",
+      "eslint",
+      "prettier --write"
+    ],
+    "**/*.{md,yml,json}": [
+      "prettier --write"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "lunde"
+    ],
+    "rules": {
+      "testing-library/prefer-wait-for": "off",
+      "import/no-extraneous-dependencies": "warn"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": [
+            "test"
+          ]
+        },
+        "jest": {
+          "jestConfigFile": "package.json"
+        }
+      }
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist",
+    "test",
+    "*.d.ts",
+    "*.config.js"
+  ],
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src",
+      "test"
+    ],
+    "testMatch": [
+      "<rootDir>/{src,throttled/src}/**/?(*.)test.{ts,tsx}"
+    ],
+    "collectCoverageFrom": [
+      "**/src/**/*.{ts,tsx}"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/setup.js"
+    ],
+    "snapshotResolver": "./test/resolve-snapshot.js",
+    "globals": {
+      "__DEV__": true
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "bracketSpacing": false
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/react-hooks": "latest",
+    "@testing-library/user-event": "latest",
+    "@types/jest": "latest",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "babel-jest": "latest",
+    "eslint": "^7.32.0",
+    "eslint-config-lunde": "^0.7.1",
+    "husky": "latest",
+    "jest": "latest",
+    "lint-staged": "latest",
+    "lundle": "^0.4.14",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
+    "typescript": "^4.7.0"
+  },
+  "dependencies": {
+    "@react-hook/debounce": "^3.0.0",
+    "@react-hook/event": "^1.2.1",
+    "@react-hook/throttle": "^2.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "resolutions": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
