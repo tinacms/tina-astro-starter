@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/page",
+  "definitions": {
+    "page": {
+      "type": "object",
+      "properties": {
+        "tinaInfo": {
+          "type": "object",
+          "properties": {
+            "filename": {
+              "type": "string"
+            },
+            "basename": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "relativePath": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "filename",
+            "basename",
+            "path",
+            "relativePath"
+          ],
+          "additionalProperties": false
+        },
+        "seoTitle": {
+          "type": "string"
+        },
+        "body": {},
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tinaInfo",
+        "seoTitle"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

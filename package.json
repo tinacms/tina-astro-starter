@@ -14,7 +14,7 @@
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
     "@tanstack/react-virtual": "^3.13.0",
-    "astro": "^5.2.5",
+    "astro": "^5.2.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
