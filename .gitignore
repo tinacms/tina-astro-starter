@@ -135,6 +135,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Astro
+.astro
+
 # Don't allow lock files to be committed (This is for templates only)
 
 # Package Manager Lock Files
