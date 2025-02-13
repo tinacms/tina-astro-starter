@@ -1,0 +1,39 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.calculateOperationComplexity = exports.validateComplexity = void 0;
+const graphql_1 = require("graphql");
+function validateComplexity({ source, doc, maxComplexityScore, config, fragmentGraph, }) {
+    var _a;
+    const getFragmentByFragmentName = (fragmentName) => fragmentGraph.getNodeData(fragmentName);
+    for (const definition of doc.definitions) {
+        if (definition.kind !== graphql_1.Kind.OPERATION_DEFINITION) {
+            continue;
+        }
+        const complexityScore = calculateOperationComplexity(definition, config, getFragmentByFragmentName);
+        if (complexityScore > maxComplexityScore) {
+            return new graphql_1.GraphQLError(`Too high complexity score (${complexityScore}). Maximum allowed is ${maxComplexityScore}`, [definition], source, ((_a = definition.loc) === null || _a === void 0 ? void 0 : _a.start) ? [definition.loc.start] : undefined);
+        }
+    }
+}
+exports.validateComplexity = validateComplexity;
+function calculateOperationComplexity(node, config, getFragmentByName, depth = 0) {
+    let cost = config.scalarCost;
+    if ('selectionSet' in node && node.selectionSet) {
+        cost = config.objectCost;
+        for (const child of node.selectionSet.selections) {
+            cost +=
+                config.depthCostFactor *
+                    calculateOperationComplexity(child, config, getFragmentByName, depth + 1);
+        }
+    }
+    if (node.kind === graphql_1.Kind.FRAGMENT_SPREAD) {
+        const fragment = getFragmentByName(node.name.value);
+        if (fragment) {
+            cost +=
+                config.depthCostFactor *
+                    calculateOperationComplexity(fragment, config, getFragmentByName, depth + 1);
+        }
+    }
+    return cost;
+}
+exports.calculateOperationComplexity = calculateOperationComplexity;

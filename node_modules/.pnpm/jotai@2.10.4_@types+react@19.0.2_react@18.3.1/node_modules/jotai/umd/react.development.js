@@ -1,0 +1,163 @@
+'use client';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('jotai/vanilla')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react', 'jotai/vanilla'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.jotaiReact = {}, global.React, global.jotaiVanilla));
+})(this, (function (exports, ReactExports, vanilla) { 'use strict';
+
+  var StoreContext = ReactExports.createContext(undefined);
+  var useStore = function useStore(options) {
+    var store = ReactExports.useContext(StoreContext);
+    return (options == null ? void 0 : options.store) || store || vanilla.getDefaultStore();
+  };
+  var Provider = function Provider(_ref) {
+    var children = _ref.children,
+      store = _ref.store;
+    var storeRef = ReactExports.useRef(undefined);
+    if (!store && !storeRef.current) {
+      storeRef.current = vanilla.createStore();
+    }
+    return ReactExports.createElement(StoreContext.Provider, {
+      value: store || storeRef.current
+    }, children);
+  };
+
+  var isPromiseLike = function isPromiseLike(x) {
+    return typeof (x == null ? void 0 : x.then) === 'function';
+  };
+  var attachPromiseMeta = function attachPromiseMeta(promise) {
+    promise.status = 'pending';
+    promise.then(function (v) {
+      promise.status = 'fulfilled';
+      promise.value = v;
+    }, function (e) {
+      promise.status = 'rejected';
+      promise.reason = e;
+    });
+  };
+  var use = ReactExports.use || function (promise) {
+    if (promise.status === 'pending') {
+      throw promise;
+    } else if (promise.status === 'fulfilled') {
+      return promise.value;
+    } else if (promise.status === 'rejected') {
+      throw promise.reason;
+    } else {
+      attachPromiseMeta(promise);
+      throw promise;
+    }
+  };
+  var continuablePromiseMap = new WeakMap();
+  var createContinuablePromise = function createContinuablePromise(promise) {
+    var continuablePromise = continuablePromiseMap.get(promise);
+    if (!continuablePromise) {
+      continuablePromise = new Promise(function (resolve, reject) {
+        var curr = promise;
+        var onFulfilled = function onFulfilled(me) {
+          return function (v) {
+            if (curr === me) {
+              resolve(v);
+            }
+          };
+        };
+        var onRejected = function onRejected(me) {
+          return function (e) {
+            if (curr === me) {
+              reject(e);
+            }
+          };
+        };
+        var _registerCancelHandler = function registerCancelHandler(p) {
+          if ('onCancel' in p && typeof p.onCancel === 'function') {
+            p.onCancel(function (nextValue) {
+              if (nextValue === p) {
+                throw new Error('[Bug] p is not updated even after cancelation');
+              }
+              if (isPromiseLike(nextValue)) {
+                continuablePromiseMap.set(nextValue, continuablePromise);
+                curr = nextValue;
+                nextValue.then(onFulfilled(nextValue), onRejected(nextValue));
+                _registerCancelHandler(nextValue);
+              } else {
+                resolve(nextValue);
+              }
+            });
+          }
+        };
+        promise.then(onFulfilled(promise), onRejected(promise));
+        _registerCancelHandler(promise);
+      });
+      continuablePromiseMap.set(promise, continuablePromise);
+    }
+    return continuablePromise;
+  };
+  function useAtomValue(atom, options) {
+    var store = useStore(options);
+    var _useReducer = ReactExports.useReducer(function (prev) {
+        var nextValue = store.get(atom);
+        if (Object.is(prev[0], nextValue) && prev[1] === store && prev[2] === atom) {
+          return prev;
+        }
+        return [nextValue, store, atom];
+      }, undefined, function () {
+        return [store.get(atom), store, atom];
+      }),
+      _useReducer$ = _useReducer[0],
+      valueFromReducer = _useReducer$[0],
+      storeFromReducer = _useReducer$[1],
+      atomFromReducer = _useReducer$[2],
+      rerender = _useReducer[1];
+    var value = valueFromReducer;
+    if (storeFromReducer !== store || atomFromReducer !== atom) {
+      rerender();
+      value = store.get(atom);
+    }
+    var delay = options == null ? void 0 : options.delay;
+    ReactExports.useEffect(function () {
+      var unsub = store.sub(atom, function () {
+        if (typeof delay === 'number') {
+          var _value = store.get(atom);
+          if (isPromiseLike(_value)) {
+            attachPromiseMeta(createContinuablePromise(_value));
+          }
+          setTimeout(rerender, delay);
+          return;
+        }
+        rerender();
+      });
+      rerender();
+      return unsub;
+    }, [store, atom, delay]);
+    ReactExports.useDebugValue(value);
+    if (isPromiseLike(value)) {
+      var promise = createContinuablePromise(value);
+      return use(promise);
+    }
+    return value;
+  }
+
+  function useSetAtom(atom, options) {
+    var store = useStore(options);
+    var setAtom = ReactExports.useCallback(function () {
+      if (!('write' in atom)) {
+        throw new Error('not writable atom');
+      }
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      return store.set.apply(store, [atom].concat(args));
+    }, [store, atom]);
+    return setAtom;
+  }
+
+  function useAtom(atom, options) {
+    return [useAtomValue(atom, options), useSetAtom(atom, options)];
+  }
+
+  exports.Provider = Provider;
+  exports.useAtom = useAtom;
+  exports.useAtomValue = useAtomValue;
+  exports.useSetAtom = useSetAtom;
+  exports.useStore = useStore;
+
+}));

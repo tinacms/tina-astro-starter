@@ -1,0 +1,66 @@
+{
+  "name": "many-level",
+  "version": "2.0.0",
+  "description": "Share an abstract-level database over the network or other kind of stream",
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "test": "standard && ts-standard *.ts && hallmark && (nyc -s tape test/*.js | faucet) && nyc report",
+    "coverage": "nyc report -r lcovonly",
+    "hallmark": "hallmark --fix",
+    "protobuf": "protocol-buffers schema.proto -o messages.js",
+    "dependency-check": "dependency-check --no-dev .",
+    "prepublishOnly": "npm run dependency-check"
+  },
+  "files": [
+    "guest.js",
+    "host.js",
+    "index.js",
+    "index.d.ts",
+    "messages.js",
+    "tags.js",
+    "CHANGELOG.md",
+    "UPGRADING.md"
+  ],
+  "dependencies": {
+    "@vweevers/length-prefixed-stream": "^1.0.0",
+    "abstract-level": "^1.0.3",
+    "module-error": "^1.0.2",
+    "protocol-buffers-encodings": "^1.1.0",
+    "readable-stream": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/readable-stream": "^2.3.13",
+    "@voxpelli/tsconfig": "^4.0.0",
+    "concat-stream": "^2.0.0",
+    "dependency-check": "^4.1.0",
+    "faucet": "^0.0.1",
+    "hallmark": "^4.0.0",
+    "level-read-stream": "^1.1.0",
+    "memory-level": "^1.0.0",
+    "nyc": "^15.1.0",
+    "protocol-buffers": "^5.0.0",
+    "standard": "^16.0.3",
+    "tape": "^5.0.1",
+    "ts-standard": "^11.0.0",
+    "typescript": "^4.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Level/many-level.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Level/many-level/issues"
+  },
+  "homepage": "https://github.com/Level/many-level",
+  "engines": {
+    "node": ">=12"
+  },
+  "standard": {
+    "ignore": [
+      "messages.js"
+    ]
+  }
+}

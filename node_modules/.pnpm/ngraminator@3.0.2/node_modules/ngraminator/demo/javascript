@@ -1,0 +1,35 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+
+  // Go to file:///Users/eklem/github_modules/ngraminator/demo/index.html
+  await page.goto('file:///Users/eklem/github_modules/ngraminator/demo/index.html');
+
+  // Click text=Some text Comma-separated list of numbers
+  await page.click('text=Some text Comma-separated list of numbers');
+
+  // Click text=Some text Comma-separated list of numbers
+  await page.click('text=Some text Comma-separated list of numbers');
+
+  // Click [placeholder="Add\ some\ text"]
+  await page.click('[placeholder="Add\\ some\\ text"]');
+
+  // Fill [placeholder="Add\ some\ text"]
+  await page.fill('[placeholder="Add\\ some\\ text"]', 'mary had a little lamb');
+
+  // Click pre
+  await page.click('pre');
+
+  // Click pre
+  await page.click('pre');
+
+  // Click pre
+  await page.click('pre');
+
+  // Click pre
+  await page.click('pre');
+
+  // Close page
+  await page.close();
+
+});

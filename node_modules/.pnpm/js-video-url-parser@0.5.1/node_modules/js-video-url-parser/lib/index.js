@@ -1,0 +1,17 @@
+const parser = require('./base');
+require('./provider/allocine');
+require('./provider/canalplus');
+require('./provider/coub');
+require('./provider/dailymotion');
+require('./provider/loom');
+require('./provider/twitch');
+require('./provider/vimeo');
+require('./provider/wistia');
+require('./provider/youku');
+require('./provider/youtube');
+require('./provider/soundcloud');
+require('./provider/teachertube');
+require('./provider/tiktok');
+require('./provider/ted');
+require('./provider/facebook');
+module.exports = parser;

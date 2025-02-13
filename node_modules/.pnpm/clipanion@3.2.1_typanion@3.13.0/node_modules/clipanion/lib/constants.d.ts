@@ -1,0 +1,11 @@
+export declare const NODE_INITIAL = 0;
+export declare const NODE_SUCCESS = 1;
+export declare const NODE_ERRORED = 2;
+export declare const START_OF_INPUT = "\u0001";
+export declare const END_OF_INPUT = "\0";
+export declare const HELP_COMMAND_INDEX = -1;
+export declare const HELP_REGEX: RegExp;
+export declare const OPTION_REGEX: RegExp;
+export declare const BATCH_REGEX: RegExp;
+export declare const BINDING_REGEX: RegExp;
+export declare const DEBUG: boolean;

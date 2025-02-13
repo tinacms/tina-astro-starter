@@ -1,0 +1,25 @@
+{
+    "name": "@types/is-hotkey",
+    "version": "0.1.10",
+    "description": "TypeScript definitions for is-hotkey",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/is-hotkey",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Alex Kondratyuk",
+            "githubUsername": "lynxtaa",
+            "url": "https://github.com/lynxtaa"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/is-hotkey"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "fbcc0a72538fdc33c00b4df714358da87a33f186d74783bd68c8c4795dedc9c5",
+    "typeScriptVersion": "4.5"
+}

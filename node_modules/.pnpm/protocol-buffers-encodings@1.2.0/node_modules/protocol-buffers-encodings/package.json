@@ -1,0 +1,28 @@
+{
+  "name": "protocol-buffers-encodings",
+  "version": "1.2.0",
+  "description": "Base encodings for protocol-buffers",
+  "main": "index.js",
+  "dependencies": {
+    "b4a": "^1.6.0",
+    "signed-varint": "^2.0.1",
+    "varint": "5.0.0"
+  },
+  "devDependencies": {
+    "standard": "^14.3.4",
+    "tape": "^5.0.1"
+  },
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/protocol-buffers-encodings.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/protocol-buffers-encodings/issues"
+  },
+  "homepage": "https://github.com/mafintosh/protocol-buffers-encodings"
+}
