@@ -17,7 +17,7 @@ Features:
 
 - ✅ Markdown & MDX support + TinaCMS Markdown Component
 - ✅ TinaCMS Collections (Pages, Blogs, Config)
-- ✅ Visual Editing using Custom Loaders and Client Directives
+- ✅ Visual Editing using Custom Loaders and Client Directives (requires React)
 - ✅ 100/100 Lighthouse performance
 - ✅ View transitions are enabled 
 - ✅ Minimal styling (make it your own!)
