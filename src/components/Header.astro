@@ -4,8 +4,8 @@ import config from "../content/config/config.json";
 import IconLink from "./react/IconLink";
 ---
 
-<header>
-	<nav>
+<header role="banner">
+	<nav aria-label="Main navigation">
 		<h2><a href="/">{config.seo.title}</a></h2>
 		<div class="internal-links">
 			{
@@ -51,6 +51,10 @@ import IconLink from "./react/IconLink";
 		color: var(--black);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
+	}
+	nav a:focus {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
 	}
 	nav a.active {
 		text-decoration: none;

@@ -89,6 +89,10 @@ a {
 a:hover {
 	color: var(--accent);
 }
+a:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
 p {
 	margin-bottom: 1em;
 }
@@ -99,8 +103,22 @@ textarea {
 	width: 100%;
 	font-size: 16px;
 }
+textarea:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
 input {
 	font-size: 16px;
+}
+input:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+button:focus,
+[role="button"]:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+	box-shadow: 0 0 0 4px rgba(var(--accent), 0.25);
 }
 table {
 	width: 100%;

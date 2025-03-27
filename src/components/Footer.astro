@@ -7,10 +7,10 @@ const today = new Date();
 	<div class="tina-banner-content"><img src="/llama.svg" alt="Tina CMS Llama Logo" /><a href="https://tina.io" target="_blank" rel="noopener noreferrer">Powered by TinaCMS</a>
 	</div>
 </div>
-	<footer class="copyright-footer">
+	<footer class="copyright-footer" role="contentinfo">
 		&copy; {today.getFullYear()}
 		{config.seo.siteOwner}. All rights reserved.
-		<div class="social-links">
+		<div class="social-links" aria-label="Social media links">
 			{
 				config?.contactLinks?.map((link) => {
 					return (
@@ -44,6 +44,11 @@ const today = new Date();
 
 	.social-links a:hover {
 		color: rgb(var(--gray-dark));
+	}
+	
+	.social-links a:focus {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
 	}
 
 	.tina-footer {
@@ -91,5 +96,10 @@ const today = new Date();
 		text-decoration: none;
 		padding-top: 0.5em;
 		font-weight: bold;
+	}
+	
+	.tina-banner-content a:focus {
+		outline: 2px solid white;
+		outline-offset: 2px;
 	}
 </style>

@@ -32,7 +32,7 @@ const data = await getTinaProps();
 	<body>
 		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
-		<main id="main-content">
+		<main id="main-content" role="main">
 			<Page {...data} client:tina />
 		</main>
 		<Footer />
