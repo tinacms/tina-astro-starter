@@ -48,17 +48,19 @@ import IconLink from "./react/IconLink";
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--black);
+		color: rgb(var(--black));
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
+		font-weight: 500;
 	}
 	nav a:focus {
-		outline: 2px solid var(--accent);
+		outline: 2px solid var(--focus-outline);
 		outline-offset: 2px;
 	}
 	nav a.active {
+		color: var(--accent-accessible);
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		border-bottom-color: var(--accent-accessible);
 	}
 	.social-links,
 	.social-links a {
