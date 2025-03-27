@@ -87,8 +87,9 @@ const posts = (await getCollection('blog')).sort(
 		</style>
 	</head>
 	<body>
+		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
-		<main>
+		<main id="main-content">
 			<section>
 				<ul>
 					{

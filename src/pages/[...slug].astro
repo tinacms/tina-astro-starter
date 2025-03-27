@@ -30,9 +30,11 @@ const data = await getTinaProps();
 		<BaseHead title={data.data.page.seoTitle} description={config.seo.description} />
 	</head>
 	<body>
+		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
-				<Page {...data} client:tina />
+		<main id="main-content">
+			<Page {...data} client:tina />
+		</main>
 		<Footer />
 	</body>
 </html>
-
