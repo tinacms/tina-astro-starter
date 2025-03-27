@@ -93,9 +93,10 @@ b {
 }
 a {
 	color: var(--accent-accessible);
+	transition: color 0.2s ease;
 }
 a:hover {
-	color: var(--accent-accessible);
+	color: var(--accent-dark);
 	text-decoration: underline;
 }
 a:focus {

@@ -42,10 +42,11 @@ const today = new Date();
 		text-decoration: none;
 		color: rgb(var(--gray-accessible));
 		font-weight: 500;
+		transition: color 0.2s ease;
 	}
 
 	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+		color: var(--accent-dark);
 	}
 	
 	.social-links a:focus {
@@ -100,6 +101,12 @@ const today = new Date();
 		padding: 4px 8px;
 		border-radius: 4px;
 		font-weight: bold;
+		transition: background-color 0.2s ease;
+	}
+	
+	.tina-banner-content a:hover {
+		background-color: rgba(0, 0, 0, 0.5);
+		text-decoration: underline;
 	}
 	
 	.tina-banner-content a:focus {

@@ -52,6 +52,11 @@ import IconLink from "./react/IconLink";
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 		font-weight: 500;
+		transition: color 0.2s ease, border-bottom-color 0.2s ease;
+	}
+	nav a:hover {
+		color: var(--accent-dark);
+		border-bottom-color: var(--accent-dark);
 	}
 	nav a:focus {
 		outline: 2px solid var(--focus-outline);
