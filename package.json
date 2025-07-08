@@ -13,15 +13,15 @@
     "@astrojs/react": "^4.3.0",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.4.1",
-    "@tanstack/react-virtual": "^3.13.11",
-    "astro": "^5.10.1",
+    "@tanstack/react-virtual": "^3.13.12",
+    "astro": "^5.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
-    "tinacms": "^2.7.9"
+    "tinacms": "^2.8.0"
   },
   "devDependencies": {
-    "@tinacms/cli": "^1.9.9",
-    "@types/node": "^22.15.33"
+    "@tinacms/cli": "^1.10.0",
+    "@types/node": "^22.16.0"
   }
 }
