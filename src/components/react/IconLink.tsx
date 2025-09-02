@@ -8,7 +8,13 @@ type LinkProps = {
 }
 function IconLink({ title, link, icon }: LinkProps) {
     return (
-        <a href={link} target="_blank" aria-label={`Go to ${title}`}>
+        <a 
+            href={link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            aria-label={`Go to ${title}`}
+            tabIndex={0}
+        >
             <span className="sr-only">{title}</span>
             <ReactIcon iconName={icon} />
         </a>
