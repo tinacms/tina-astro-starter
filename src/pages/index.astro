@@ -15,8 +15,11 @@ const data = await client.queries.page({relativePath: "home.mdx"});
 		<BaseHead title={config.seo.title} description={config.seo.description} />
 	</head>
 	<body>
+		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
-		<HomePage {...data} client:tina />
+		<main id="main-content" role="main">
+			<HomePage {...data} client:tina />
+		</main>
 		<Footer />
 	</body>
 </html>

@@ -4,8 +4,8 @@ import config from "../content/config/config.json";
 import IconLink from "./react/IconLink";
 ---
 
-<header>
-	<nav>
+<header role="banner">
+	<nav aria-label="Main navigation">
 		<h2><a href="/">{config.seo.title}</a></h2>
 		<div class="internal-links">
 			{
@@ -48,13 +48,24 @@ import IconLink from "./react/IconLink";
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--black);
+		color: rgb(var(--black));
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s ease, border-bottom-color 0.2s ease;
+	}
+	nav a:hover {
+		color: var(--accent-dark);
+		border-bottom-color: var(--accent-dark);
+	}
+	nav a:focus {
+		outline: 2px solid var(--focus-outline);
+		outline-offset: 2px;
 	}
 	nav a.active {
+		color: var(--accent-accessible);
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		border-bottom-color: var(--accent-accessible);
 	}
 	.social-links,
 	.social-links a {

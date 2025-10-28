@@ -7,10 +7,10 @@ const today = new Date();
 	<div class="tina-banner-content"><img src="/llama.svg" alt="Tina CMS Llama Logo" /><a href="https://tina.io" target="_blank" rel="noopener noreferrer">Powered by TinaCMS</a>
 	</div>
 </div>
-	<footer class="copyright-footer">
+	<footer class="copyright-footer" role="contentinfo">
 		&copy; {today.getFullYear()}
 		{config.seo.siteOwner}. All rights reserved.
-		<div class="social-links">
+		<div class="social-links" aria-label="Social media links">
 			{
 				config?.contactLinks?.map((link) => {
 					return (
@@ -26,8 +26,9 @@ const today = new Date();
 	.copyright-footer {
 		padding: 2em 1em 2em 1em;
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+		color: rgb(var(--gray-accessible));
 		text-align: center;
+		font-weight: 500;
 	}
 
 	.social-links {
@@ -39,11 +40,18 @@ const today = new Date();
 
 	.social-links a {
 		text-decoration: none;
-		color: rgb(var(--gray));
+		color: rgb(var(--gray-accessible));
+		font-weight: 500;
+		transition: color 0.2s ease;
 	}
 
 	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+		color: var(--accent-dark);
+	}
+	
+	.social-links a:focus {
+		outline: 2px solid var(--focus-outline);
+		outline-offset: 2px;
 	}
 
 	.tina-footer {
@@ -89,7 +97,20 @@ const today = new Date();
 	.tina-banner-content a {
 		color: white;
 		text-decoration: none;
-		padding-top: 0.5em;
+		background-color: rgba(0, 0, 0, 0.3);
+		padding: 4px 8px;
+		border-radius: 4px;
 		font-weight: bold;
+		transition: background-color 0.2s ease;
+	}
+	
+	.tina-banner-content a:hover {
+		background-color: rgba(0, 0, 0, 0.5);
+		text-decoration: underline;
+	}
+	
+	.tina-banner-content a:focus {
+		outline: 2px solid white;
+		outline-offset: 2px;
 	}
 </style>
