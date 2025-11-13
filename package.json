@@ -9,19 +9,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.7",
-    "@astrojs/react": "^4.4.0",
-    "@astrojs/rss": "^4.0.12",
+    "@astrojs/mdx": "^4.3.10",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@tanstack/react-virtual": "^3.13.12",
-    "astro": "^5.14.7",
+    "astro": "^5.15.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
-    "tinacms": "^2.9.0"
+    "tinacms": "^2.9.3"
   },
   "devDependencies": {
-    "@tinacms/cli": "^1.11.0",
-    "@types/node": "^22.18.12"
+    "@tinacms/cli": "^1.12.2",
+    "@types/node": "^22.19.1"
   }
 }
