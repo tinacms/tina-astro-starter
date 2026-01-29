@@ -9,4 +9,18 @@ import tinaDirective from "./astro-tina-directive/register"
 export default defineConfig({
 	site: process.env.SITE_URL || `https://${process.env.VERCEL_URL}`,
 	integrations: [mdx(), sitemap(), react(), tinaDirective()],
+	vite: {
+		build: {
+			rollupOptions: {
+				onwarn(warning, warn) {
+					// Suppress TinaCMS generated file warning
+					if (warning.code === 'UNUSED_EXTERNAL_IMPORT' && 
+						warning.exporter === 'tinacms/dist/client') {
+						return;
+					}
+					warn(warning);
+				}
+			}
+		}
+	}
 });
