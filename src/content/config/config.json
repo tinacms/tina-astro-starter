@@ -20,9 +20,9 @@
   ],
   "contactLinks": [
     {
-      "title": "Twitter",
+      "title": "X",
       "link": "https://x.com/tinacms",
-      "icon": "TbBrandTwitter"
+      "icon": "TbBrandX"
     },
     {
       "title": "Docs",
