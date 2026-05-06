@@ -1,5 +1,4 @@
 import type { Collection } from "tinacms";
-import IconComponent from "../components/IconComponent";
 
 export const GlobalConfigCollection: Collection = {
   name: "config",
@@ -92,12 +91,8 @@ export const GlobalConfigCollection: Collection = {
         },
         {
           name: "icon",
-          label: "Icon",
-          type: "string",
-          ui: {
-            //@ts-ignore
-            component: IconComponent
-          }
+          label: "Icon (e.g. TbBrandX, TbBook2, TbBrandGithub)",
+          type: "string"
         }
       ],
     }

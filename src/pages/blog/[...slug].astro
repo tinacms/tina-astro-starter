@@ -1,28 +1,42 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro"
-import client from "../../../tina/__generated__/client";
-import AdminBlogPost from "../../../tina/pages/AdminBlogPost";
+import { getCollection, render } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
-
 	return posts.map((post) => ({
 		params: { slug: post.id },
-		props: {
-			post,
-			getTinaProps: async () =>
-				client.queries.blog({
-					relativePath: post.data.tinaInfo.relativePath,
-				}),
-		},
+		props: { post },
 	}));
 }
 
-const { post, getTinaProps } = Astro.props;
-const tinaProps = await getTinaProps();
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, pubDate, updatedDate, heroImage } = post.data;
 ---
 
-<BlogPost {...tinaProps}>
-		<AdminBlogPost {...tinaProps} client:tina/>
+<BlogPost {...post.data}>
+	<article>
+		{heroImage && (
+			<div class="hero-image">
+				<img width={1020} height={510} src={heroImage} alt="" />
+			</div>
+		)}
+		<div class="prose">
+			<div class="title">
+				<div class="date">
+					<FormattedDate date={pubDate} />
+					{updatedDate && (
+						<div class="last-updated-on">
+							Last updated on <FormattedDate date={updatedDate} />
+						</div>
+					)}
+				</div>
+				<h1>{title}</h1>
+				<hr />
+			</div>
+			<Content />
+		</div>
+	</article>
 </BlogPost>

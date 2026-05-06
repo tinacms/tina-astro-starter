@@ -1,12 +1,13 @@
 ---
+import { getEntry, render } from "astro:content";
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import config from '../content/config/config.json';
-import client from '../../tina/__generated__/client';
-import HomePage from "../../tina/pages/HomePage.tsx";
-const data = await client.queries.page({relativePath: "home.mdx"});
 
+const home = await getEntry("page", "home");
+if (!home) throw new Error("Missing src/content/page/home.mdx");
+const { Content } = await render(home);
 ---
 
 <!doctype html>
@@ -16,7 +17,9 @@ const data = await client.queries.page({relativePath: "home.mdx"});
 	</head>
 	<body>
 		<Header />
-		<HomePage {...data} client:tina />
+		<main>
+			<Content />
+		</main>
 		<Footer />
 	</body>
 </html>
