@@ -10,13 +10,15 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/node": "^9.5.5",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
+    "@tinacms/astro": "0.0.0-1c6e779-20260506092317",
     "astro": "^5.16.16",
-    "tinacms": "^3.3.2"
+    "tinacms": "0.0.0-1c6e779-20260506092317"
   },
   "devDependencies": {
-    "@tinacms/cli": "^2.1.2",
+    "@tinacms/cli": "0.0.0-1c6e779-20260506092317",
     "@types/node": "^25.1.0"
   }
 }

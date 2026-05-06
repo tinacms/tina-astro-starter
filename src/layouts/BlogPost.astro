@@ -1,17 +1,30 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+interface Form {
+	id: string;
+	query: string;
+	variables: object;
+	data: object;
+}
 
-const { title, description } = Astro.props;
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	heroImage?: string | null;
+	forms?: Form[];
+}
+
+const { title, description, forms = [] } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} forms={forms} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -52,7 +65,6 @@ const { title, description } = Astro.props;
 			}
 		</style>
 	</head>
-
 	<body>
 		<Header />
 		<main>

@@ -1,0 +1,15 @@
+---
+import TinaMarkdown from '@tinacms/astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+  data?: Record<string, unknown> | null;
+}
+
+const { data } = Astro.props;
+---
+{data?.body && (
+  <div data-tina-field={tinaField(data, 'body')}>
+    <TinaMarkdown content={data.body as never} />
+  </div>
+)}

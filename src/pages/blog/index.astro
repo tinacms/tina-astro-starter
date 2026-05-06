@@ -1,15 +1,13 @@
 ---
+export const prerender = false;
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import config from '../../content/config/config.json';
-import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import { listBlogs } from '../../lib/data';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
+const posts = await listBlogs();
 ---
 
 <!doctype html>
@@ -91,19 +89,24 @@ const posts = (await getCollection('blog')).sort(
 		<main>
 			<section>
 				<ul>
-					{
-						posts.map((post) => (
+					{posts.map((post) => {
+						const slug = post._sys?.relativePath?.replace(/\.mdx?$/, "") ?? "";
+						return (
 							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+								<a href={`/blog/${slug}/`}>
+									{post.heroImage && (
+										<img width={720} height={360} src={post.heroImage} alt="" />
+									)}
+									<h4 class="title">{post.title}</h4>
+									{post.pubDate && (
+										<p class="date">
+											<FormattedDate date={new Date(post.pubDate)} />
+										</p>
+									)}
 								</a>
 							</li>
-						))
-					}
+						);
+					})}
 				</ul>
 			</section>
 		</main>

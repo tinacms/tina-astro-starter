@@ -1,42 +1,25 @@
 ---
-import { getCollection, render } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
-import FormattedDate from "../../components/FormattedDate.astro";
+export const prerender = false;
+import BlogPost from '../../layouts/BlogPost.astro';
+import BlogBody from '../../components/islands/BlogBody.astro';
+import { getBlog } from '../../lib/data';
 
-export async function getStaticPaths() {
-	const posts = await getCollection("blog");
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: { post },
-	}));
-}
+const slug = (Astro.params.slug ?? '').toString();
+const blog = await getBlog(slug, Astro.request);
+const data = blog.data?.blog as Record<string, unknown> | undefined;
 
-const { post } = Astro.props;
-const { Content } = await render(post);
-const { title, pubDate, updatedDate, heroImage } = post.data;
+const layoutProps = {
+	title: (data?.title as string) ?? '',
+	description: (data?.description as string) ?? '',
+	pubDate: data?.pubDate ? new Date(data.pubDate as string) : new Date(),
+	updatedDate: data?.updatedDate ? new Date(data.updatedDate as string) : undefined,
+	heroImage: (data?.heroImage as string | null | undefined) ?? null,
+	forms: [{ id: blog.id, query: blog.query, variables: blog.variables, data: blog.data as unknown as object }],
+};
 ---
 
-<BlogPost {...post.data}>
-	<article>
-		{heroImage && (
-			<div class="hero-image">
-				<img width={1020} height={510} src={heroImage} alt="" />
-			</div>
-		)}
-		<div class="prose">
-			<div class="title">
-				<div class="date">
-					<FormattedDate date={pubDate} />
-					{updatedDate && (
-						<div class="last-updated-on">
-							Last updated on <FormattedDate date={updatedDate} />
-						</div>
-					)}
-				</div>
-				<h1>{title}</h1>
-				<hr />
-			</div>
-			<Content />
-		</div>
+<BlogPost {...layoutProps}>
+	<article data-tina-island={`/tina-island/blog?slug=${encodeURIComponent(slug)}`}>
+		<BlogBody data={data} />
 	</article>
 </BlogPost>

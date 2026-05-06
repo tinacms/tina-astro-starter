@@ -1,24 +1,30 @@
 ---
-import { getEntry, render } from "astro:content";
+export const prerender = false;
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import PageBody from '../components/islands/PageBody.astro';
 import config from '../content/config/config.json';
+import { getPage } from '../lib/data';
 
-const home = await getEntry("page", "home");
-if (!home) throw new Error("Missing src/content/page/home.mdx");
-const { Content } = await render(home);
+const slug = 'home';
+const page = await getPage(slug, Astro.request);
+const data = page.data?.page as Record<string, unknown> | undefined;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={config.seo.title} description={config.seo.description} />
+		<BaseHead
+			title={(data?.seoTitle as string) ?? config.seo.title}
+			description={config.seo.description}
+			forms={[{ id: page.id, query: page.query, variables: page.variables, data: page.data as unknown as object }]}
+		/>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<Content />
+		<main data-tina-island={`/tina-island/page?slug=${slug}`}>
+			<PageBody data={data} />
 		</main>
 		<Footer />
 	</body>

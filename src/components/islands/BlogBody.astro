@@ -1,0 +1,41 @@
+---
+import TinaMarkdown from '@tinacms/astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import FormattedDate from '../FormattedDate.astro';
+
+interface Props {
+  data?: Record<string, unknown> | null;
+}
+
+const { data } = Astro.props;
+const heroImage = data?.heroImage as string | null | undefined;
+const title = data?.title as string | undefined;
+const pubDate = data?.pubDate as string | null | undefined;
+const updatedDate = data?.updatedDate as string | null | undefined;
+---
+{heroImage && (
+  <div data-tina-field={tinaField(data, 'heroImage')} class="hero-image">
+    <img width={1020} height={510} src={heroImage} alt="" />
+  </div>
+)}
+<div class="prose">
+  <div class="title">
+    {pubDate && (
+      <div data-tina-field={tinaField(data, 'pubDate')} class="date">
+        <FormattedDate date={new Date(pubDate)} />
+        {updatedDate && (
+          <div data-tina-field={tinaField(data, 'updatedDate')} class="last-updated-on">
+            Last updated on <FormattedDate date={new Date(updatedDate)} />
+          </div>
+        )}
+      </div>
+    )}
+    {title && <h1 data-tina-field={tinaField(data, 'title')}>{title}</h1>}
+    <hr />
+  </div>
+  {data?.body && (
+    <div data-tina-field={tinaField(data, 'body')}>
+      <TinaMarkdown content={data.body as never} />
+    </div>
+  )}
+</div>
