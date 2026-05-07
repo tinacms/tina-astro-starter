@@ -60,8 +60,9 @@ const { title, description, image = '/blog-placeholder-1.jpg', forms = [] } = As
 	<script type="application/tina+json" set:html={JSON.stringify(form)} />
 ))}
 <script>
-	import { init } from '@tinacms/astro/bridge';
+	import { init, refreshForms } from '@tinacms/astro/bridge';
 	init();
+	document.addEventListener('astro:page-load', refreshForms);
 </script>
 
 <ClientRouter />

@@ -9,6 +9,8 @@ import { getPage } from '../lib/data';
 
 const slug = (Astro.params.slug ?? '').toString();
 if (!slug || slug === 'home') return Astro.redirect('/');
+// Asset requests (favicon.ico, robots.txt, etc.) — page slugs never contain dots.
+if (slug.includes('.')) return new Response('Not found', { status: 404 });
 
 const page = await getPage(slug, Astro.request);
 const data = page.data?.page as Record<string, unknown> | undefined;
