@@ -1,8 +1,9 @@
 {
   "seo": {
-    "title": "Astro Blog + Tina",
+    "title": "TinaCMS + Astro",
     "description": "Welcome to my website!",
-    "siteOwner": "Your name here"
+    "siteOwner": "TinaCMS",
+    "logo": "/orange-llama.svg"
   },
   "nav": [
     {

@@ -35,7 +35,12 @@ export const GlobalConfigCollection: Collection = {
             defaultValue: "Your name here"
           },
         },
-        // Add more settings here...
+        {
+          name: 'logo',
+          label: 'Logo',
+          type: 'image',
+        }
+        //Add more site settings here...
       ],
     },
     {

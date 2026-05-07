@@ -6,7 +6,7 @@ import IconLink from "./IconLink.astro";
 
 <header>
 	<nav>
-		<h2><a href="/">{config.seo.title}</a></h2>
+		<h2><a href="/" class="nav-header"><img src={config.seo.logo} alt="Logo" width="50" height="50" /> {config.seo.title}</a></h2>
 		<div class="internal-links">
 			{
 				config.nav.map((nav) => (

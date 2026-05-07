@@ -172,3 +172,9 @@ hr {
 .social-links a:hover {
 	color: rgb(var(--gray-dark));
 }
+
+.nav-header {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
