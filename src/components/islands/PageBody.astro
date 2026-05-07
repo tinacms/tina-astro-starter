@@ -1,15 +1,20 @@
 ---
 import TinaMarkdown from '@tinacms/astro';
 import { tinaField } from '@tinacms/astro/tina-field';
+import YouTubeEmbed from '../mdx/YouTubeEmbed.astro';
 
 interface Props {
   data?: Record<string, unknown> | null;
 }
 
 const { data } = Astro.props;
+
+const components = {
+  YouTubeEmbed,
+};
 ---
 {data?.body && (
-  <div data-tina-field={tinaField(data, 'body')}>
-    <TinaMarkdown content={data.body as never} />
+  <div data-tina-field={tinaField(data, 'body')} class="page-body">
+    <TinaMarkdown content={data.body as never} components={components as never} />
   </div>
 )}
