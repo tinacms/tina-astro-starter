@@ -15,10 +15,10 @@
     "@astrojs/sitemap": "^3.7.0",
     "@tinacms/astro": "0.0.0-1c6e779-20260506092317",
     "astro": "^5.16.16",
-    "tinacms": "0.0.0-1c6e779-20260506092317"
+    "tinacms": "0.0.0-5f6bcf5-20260506122752"
   },
   "devDependencies": {
-    "@tinacms/cli": "0.0.0-1c6e779-20260506092317",
+    "@tinacms/cli": "0.0.0-5f6bcf5-20260506122752",
     "@types/node": "^25.1.0"
   }
 }
