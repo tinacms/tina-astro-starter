@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "tina/__generated__", "tina/collections", "tina/config.ts"],
   "compilerOptions": {
     "strictNullChecks": true
   }

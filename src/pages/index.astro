@@ -1,31 +1,23 @@
 ---
 export const prerender = false;
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Base from '../layouts/Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import PageBody from '../components/islands/PageBody.astro';
-import config from '../content/config/config.json';
-import { getPage } from '../lib/data';
+import { getConfig, getPage } from '../lib/data';
+import { islands } from '../lib/islands';
 
 const slug = 'home';
-const page = await getPage(slug, Astro.request);
-const data = page.data?.page as Record<string, unknown> | undefined;
+const page = await getPage(slug);
+const data = page.data?.page;
+if (!data) return new Response('Not Found', { status: 404 });
+const config = (await getConfig()).data?.config ?? null;
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead
-			title={(data?.seoTitle as string) ?? config.seo.title}
-			description={config.seo.description}
-			forms={[{ id: page.id, query: page.query, variables: page.variables, data: page.data as unknown as object }]}
-		/>
-	</head>
-	<body>
-		<Header />
-		<main data-tina-island={`/tina-island/page?slug=${slug}`}>
-			<PageBody data={data} />
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base
+	title={data.seoTitle || config?.seo?.title || 'TinaCMS + Astro'}
+	description={config?.seo?.description ?? 'Welcome to my website!'}
+>
+	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }}>
+		<PageBody data={data} />
+	</TinaIsland>
+</Base>

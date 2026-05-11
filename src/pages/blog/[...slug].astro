@@ -1,25 +1,27 @@
 ---
 export const prerender = false;
 import BlogPost from '../../layouts/BlogPost.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import BlogBody from '../../components/islands/BlogBody.astro';
 import { getBlog } from '../../lib/data';
+import { islands } from '../../lib/islands';
 
 const slug = (Astro.params.slug ?? '').toString();
-const blog = await getBlog(slug, Astro.request);
-const data = blog.data?.blog as Record<string, unknown> | undefined;
+const blog = await getBlog(slug);
+const data = blog.data?.blog;
+if (!data) return new Response('Not Found', { status: 404 });
 
 const layoutProps = {
-	title: (data?.title as string) ?? '',
-	description: (data?.description as string) ?? '',
-	pubDate: data?.pubDate ? new Date(data.pubDate as string) : new Date(),
-	updatedDate: data?.updatedDate ? new Date(data.updatedDate as string) : undefined,
-	heroImage: (data?.heroImage as string | null | undefined) ?? null,
-	forms: [{ id: blog.id, query: blog.query, variables: blog.variables, data: blog.data as unknown as object }],
+	title: data.title ?? '',
+	description: data.description ?? '',
+	pubDate: data.pubDate ? new Date(data.pubDate) : new Date(),
+	updatedDate: data.updatedDate ? new Date(data.updatedDate) : undefined,
+	heroImage: data.heroImage ?? null,
 };
 ---
 
 <BlogPost {...layoutProps}>
-	<article data-tina-island={`/tina-island/blog?slug=${encodeURIComponent(slug)}`}>
+	<TinaIsland name="blog" wrapper={islands.blog.wrapper} params={{ slug }}>
 		<BlogBody data={data} />
-	</article>
+	</TinaIsland>
 </BlogPost>

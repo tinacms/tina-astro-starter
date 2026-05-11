@@ -5,20 +5,21 @@
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
     "build": "tinacms build && astro build",
+    "build:local": "tinacms build --local --skip-cloud-checks -c \"astro build\"",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.4",
-    "@astrojs/node": "^10.1.0",
+    "@astrojs/mdx": "^4.3.0",
+    "@astrojs/node": "^9.0.0",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
-    "@tinacms/astro": "latest",
-    "astro": "^6.3.1"
+    "@tinacms/astro": "0.0.0-95758a0-20260511052304",
+    "astro": "^5.16.0"
   },
   "devDependencies": {
-    "@tinacms/cli": "latest",
+    "@tinacms/cli": "0.0.0-95758a0-20260511052304",
     "@types/node": "^25.1.0",
-    "tinacms": "latest"
+    "tinacms": "0.0.0-95758a0-20260511052304"
   }
 }

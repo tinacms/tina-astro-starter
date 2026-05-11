@@ -1,20 +1,22 @@
 ---
-import TinaMarkdown from '@tinacms/astro';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import type { CustomComponentsMap } from '@tinacms/astro/types';
 import { tinaField } from '@tinacms/astro/tina-field';
+import type { PageQuery } from '../../../tina/__generated__/types';
 import YouTubeEmbed from '../mdx/YouTubeEmbed.astro';
 
 interface Props {
-  data?: Record<string, unknown> | null;
+	data?: PageQuery['page'] | null;
 }
 
 const { data } = Astro.props;
 
-const components = {
-  YouTubeEmbed,
+const components: CustomComponentsMap = {
+	YouTubeEmbed,
 };
 ---
 {data?.body && (
-  <div data-tina-field={tinaField(data, 'body')} class="page-body">
-    <TinaMarkdown content={data.body as never} components={components as never} />
-  </div>
+	<div data-tina-field={tinaField(data, 'body')} class="page-body">
+		<TinaMarkdown content={data.body} components={components} />
+	</div>
 )}

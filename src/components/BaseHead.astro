@@ -4,23 +4,15 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 
-interface Form {
-	id: string;
-	query: string;
-	variables: object;
-	data: object;
-}
-
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
-	forms?: Form[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/blog-placeholder-1.jpg', forms = [] } = Astro.props;
+const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -55,14 +47,6 @@ const { title, description, image = '/blog-placeholder-1.jpg', forms = [] } = As
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-
-{forms.map((form) => (
-	<script type="application/tina+json" set:html={JSON.stringify(form)} />
-))}
-<script>
-	import { init, refreshForms } from '@tinacms/astro/bridge';
-	init();
-	document.addEventListener('astro:page-load', refreshForms);
-</script>
+<!-- TinaCMS visual editing is wired by the tina() integration in astro.config.mjs; its middleware only touches edit-mode responses, so there's nothing to add here. -->
 
 <ClientRouter />

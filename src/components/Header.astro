@@ -1,27 +1,32 @@
 ---
+import { tinaField } from "@tinacms/astro/tina-field";
+import type { ConfigQuery } from "../../tina/__generated__/types";
 import HeaderLink from "./HeaderLink.astro";
-import config from "../content/config/config.json";
 import IconLink from "./IconLink.astro";
+
+interface Props {
+	config?: ConfigQuery["config"] | null;
+}
+
+const { config } = Astro.props;
+const seo = config?.seo ?? null;
+const nav = (config?.nav ?? []).filter((item) => item !== null);
+const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null);
 ---
 
 <header>
 	<nav>
-		<h2><a href="/" class="nav-header"><img src={config.seo.logo} alt="Logo" width="50" height="50" /> {config.seo.title}</a></h2>
-		<div class="internal-links">
-			{
-				config.nav.map((nav) => (
-					<HeaderLink href={nav.link}>{nav.title}</HeaderLink>
-				))
-			}
+		<h2>
+			<a href="/" class="nav-header">
+				{seo?.logo && <img src={seo.logo} alt="Logo" width="50" height="50" data-tina-field={tinaField(seo, "logo")} />}
+				<span data-tina-field={seo ? tinaField(seo, "title") : undefined}>{seo?.title}</span>
+			</a>
+		</h2>
+		<div class="internal-links" data-tina-field={config ? tinaField(config, "nav") : undefined}>
+			{nav.map((item) => <HeaderLink href={item.link}>{item.title}</HeaderLink>)}
 		</div>
-		<div class="social-links">
-			{
-				config?.contactLinks?.map((link) => {
-					return (
-						<IconLink {...link} />
-					);
-				})
-			}
+		<div class="social-links" data-tina-field={config ? tinaField(config, "contactLinks") : undefined}>
+			{contactLinks.map((link) => <IconLink title={link.title ?? ""} link={link.link ?? "#"} icon={link.icon ?? ""} />)}
 		</div>
 	</nav>
 </header>

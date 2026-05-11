@@ -1,41 +1,42 @@
 ---
-import TinaMarkdown from '@tinacms/astro';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
+import type { BlogQuery } from '../../../tina/__generated__/types';
 import FormattedDate from '../FormattedDate.astro';
 
 interface Props {
-  data?: Record<string, unknown> | null;
+	data?: BlogQuery['blog'] | null;
 }
 
 const { data } = Astro.props;
-const heroImage = data?.heroImage as string | null | undefined;
-const title = data?.title as string | undefined;
-const pubDate = data?.pubDate as string | null | undefined;
-const updatedDate = data?.updatedDate as string | null | undefined;
+const heroImage = data?.heroImage;
+const title = data?.title;
+const pubDate = data?.pubDate;
+const updatedDate = data?.updatedDate;
 ---
 {heroImage && (
-  <div data-tina-field={tinaField(data, 'heroImage')} class="hero-image">
-    <img width={1020} height={510} src={heroImage} alt="" />
-  </div>
+	<div data-tina-field={data ? tinaField(data, 'heroImage') : undefined} class="hero-image">
+		<img width={1020} height={510} src={heroImage} alt="" />
+	</div>
 )}
 <div class="prose">
-  <div class="title">
-    {pubDate && (
-      <div data-tina-field={tinaField(data, 'pubDate')} class="date">
-        <FormattedDate date={new Date(pubDate)} />
-        {updatedDate && (
-          <div data-tina-field={tinaField(data, 'updatedDate')} class="last-updated-on">
-            Last updated on <FormattedDate date={new Date(updatedDate)} />
-          </div>
-        )}
-      </div>
-    )}
-    {title && <h1 data-tina-field={tinaField(data, 'title')}>{title}</h1>}
-    <hr />
-  </div>
-  {data?.body && (
-    <div data-tina-field={tinaField(data, 'body')}>
-      <TinaMarkdown content={data.body as never} />
-    </div>
-  )}
+	<div class="title">
+		{pubDate && (
+			<div data-tina-field={data ? tinaField(data, 'pubDate') : undefined} class="date">
+				<FormattedDate date={new Date(pubDate)} />
+				{updatedDate && (
+					<div data-tina-field={data ? tinaField(data, 'updatedDate') : undefined} class="last-updated-on">
+						Last updated on <FormattedDate date={new Date(updatedDate)} />
+					</div>
+				)}
+			</div>
+		)}
+		{title && <h1 data-tina-field={data ? tinaField(data, 'title') : undefined}>{title}</h1>}
+		<hr />
+	</div>
+	{data?.body && (
+		<div data-tina-field={tinaField(data, 'body')}>
+			<TinaMarkdown content={data.body} />
+		</div>
+	)}
 </div>

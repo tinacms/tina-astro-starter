@@ -1,115 +1,108 @@
 ---
 export const prerender = false;
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import config from '../../content/config/config.json';
+import Base from '../../layouts/Base.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import { listBlogs } from '../../lib/data';
+import { getConfig, listBlogs } from '../../lib/data';
 
 const posts = await listBlogs();
+const config = (await getConfig()).data?.config ?? null;
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={config.seo.title} description={config.seo.description} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{posts.map((post) => {
-						const slug = post._sys?.relativePath?.replace(/\.mdx?$/, "") ?? "";
-						return (
-							<li>
-								<a href={`/blog/${slug}/`}>
-									{post.heroImage && (
-										<img width={720} height={360} src={post.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.title}</h4>
-									{post.pubDate && (
-										<p class="date">
-											<FormattedDate date={new Date(post.pubDate)} />
-										</p>
-									)}
-								</a>
-							</li>
-						);
-					})}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base
+	title={config?.seo?.title ?? 'Blog'}
+	description={config?.seo?.description ?? 'Welcome to my website!'}
+>
+	<main>
+		<section>
+			<ul>
+				{posts.map((post) => {
+					const slug = post._sys?.relativePath?.replace(/\.mdx?$/, "") ?? "";
+					return (
+						<li>
+							<a href={`/blog/${slug}/`}>
+								{post.heroImage && (
+									<img width={720} height={360} src={post.heroImage} alt="" />
+								)}
+								<h4 class="title">{post.title}</h4>
+								{post.pubDate && (
+									<p class="date">
+										<FormattedDate date={new Date(post.pubDate)} />
+									</p>
+								)}
+							</a>
+						</li>
+					);
+				})}
+			</ul>
+		</section>
+	</main>
+</Base>
+<style>
+	main {
+		width: 960px;
+	}
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2rem;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	ul li {
+		width: calc(50% - 1rem);
+	}
+	ul li * {
+		text-decoration: none;
+		transition: 0.2s ease;
+	}
+	ul li:first-child {
+		width: 100%;
+		margin-bottom: 1rem;
+		text-align: center;
+	}
+	ul li:first-child img {
+		width: 100%;
+	}
+	ul li:first-child .title {
+		font-size: 2.369rem;
+	}
+	ul li img {
+		margin-bottom: 0.5rem;
+		border-radius: 12px;
+	}
+	ul li a {
+		display: block;
+	}
+	.title {
+		margin: 0;
+		color: rgb(var(--black));
+		line-height: 1;
+	}
+	.date {
+		margin: 0;
+		color: rgb(var(--gray));
+	}
+	ul li a:hover h4,
+	ul li a:hover .date {
+		color: rgb(var(--accent));
+	}
+	ul a:hover img {
+		box-shadow: var(--box-shadow);
+	}
+	@media (max-width: 720px) {
+		ul {
+			gap: 0.5em;
+		}
+		ul li {
+			width: 100%;
+			text-align: center;
+		}
+		ul li:first-child {
+			margin-bottom: 0;
+		}
+		ul li:first-child .title {
+			font-size: 1.563em;
+		}
+	}
+</style>

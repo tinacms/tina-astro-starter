@@ -1,6 +1,15 @@
 ---
-import config from "../content/config/config.json";
+import { tinaField } from "@tinacms/astro/tina-field";
+import type { ConfigQuery } from "../../tina/__generated__/types";
 import IconLink from "./IconLink.astro";
+
+interface Props {
+	config?: ConfigQuery["config"] | null;
+}
+
+const { config } = Astro.props;
+const seo = config?.seo ?? null;
+const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null);
 const today = new Date();
 ---
 <div class="tina-footer">
@@ -9,15 +18,9 @@ const today = new Date();
 </div>
 	<footer class="copyright-footer">
 		&copy; {today.getFullYear()}
-		{config.seo.siteOwner}. All rights reserved.
-		<div class="social-links">
-			{
-				config?.contactLinks?.map((link) => {
-					return (
-						<IconLink {...link} />
-					);
-				})
-			}
+		<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
+		<div class="social-links" data-tina-field={config ? tinaField(config, "contactLinks") : undefined}>
+			{contactLinks.map((link) => <IconLink title={link.title ?? ""} link={link.link ?? "#"} icon={link.icon ?? ""} />)}
 		</div>
 	</footer>
 
