@@ -24,7 +24,7 @@ const config = (await getConfig()).data?.config ?? null;
 	title={data.seoTitle || config?.seo?.title || 'TinaCMS + Astro'}
 	description={config?.seo?.description ?? 'Welcome to my website!'}
 >
-	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }}>
+	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary>
 		<PageBody data={data} />
 	</TinaIsland>
 </Base>
