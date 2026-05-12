@@ -15,12 +15,12 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/vercel": "^9.0.5",
-    "@tinacms/astro": "0.0.0-b1d5018-20260512040542",
+    "@tinacms/astro": "0.0.0-4c38d0a-20260512090207",
     "astro": "^5.16.0"
   },
   "devDependencies": {
-    "@tinacms/cli": "0.0.0-b1d5018-20260512040542",
+    "@tinacms/cli": "0.0.0-4c38d0a-20260512090207",
     "@types/node": "^25.1.0",
-    "tinacms": "0.0.0-b1d5018-20260512040542"
+    "tinacms": "0.0.0-4c38d0a-20260512090207"
   }
 }
