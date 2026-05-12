@@ -2,14 +2,15 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 import tina from '@tinacms/astro/integration';
 
 // https://astro.build/config
 export default defineConfig({
 	site: process.env.SITE_URL || `https://${process.env.VERCEL_URL}`,
-	output: 'server',
-	adapter: node({ mode: 'standalone' }),
+	output: 'static',
+	adapter: vercel(),
+	redirects: { '/home': '/' },
 	integrations: [mdx(), sitemap(), tina()],
 	vite: {
 		// Bundle @tinacms/astro into the SSR build instead of resolving it

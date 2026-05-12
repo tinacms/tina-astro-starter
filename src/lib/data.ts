@@ -16,6 +16,13 @@ export const getPage = (slug: string) =>
 export const getBlog = (slug: string) =>
 	requestWithMetadata(client.queries.blog({ relativePath: `${slug}.mdx` }));
 
+export async function listPages() {
+	const result = await client.queries.pageConnection();
+	return (result?.data?.pageConnection?.edges ?? [])
+		.filter((edge): edge is NonNullable<typeof edge> => !!edge?.node)
+		.map((edge) => edge!.node!);
+}
+
 export async function listBlogs() {
 	const result = await client.queries.blogConnection();
 	return (result?.data?.blogConnection?.edges ?? [])

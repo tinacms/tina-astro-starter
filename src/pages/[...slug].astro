@@ -1,16 +1,19 @@
 ---
-export const prerender = false;
 import Base from '../layouts/Base.astro';
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import PageBody from '../components/islands/PageBody.astro';
-import { getConfig, getPage } from '../lib/data';
+import { getConfig, getPage, listPages } from '../lib/data';
 import { islands } from '../lib/islands';
 
-const slug = (Astro.params.slug ?? '').toString();
-if (!slug || slug === 'home') return Astro.redirect('/');
-// Asset requests (favicon.ico, robots.txt, etc.) — page slugs never contain dots.
-if (slug.includes('.')) return new Response('Not found', { status: 404 });
+export async function getStaticPaths() {
+	const pages = await listPages();
+	return pages
+		.map((node) => node._sys?.relativePath?.replace(/\.mdx?$/, '') ?? '')
+		.filter((slug) => slug && slug !== 'home')
+		.map((slug) => ({ params: { slug } }));
+}
 
+const slug = (Astro.params.slug ?? '').toString();
 const page = await getPage(slug);
 const data = page.data?.page;
 if (!data) return new Response('Not Found', { status: 404 });

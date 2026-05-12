@@ -1,10 +1,17 @@
 ---
-export const prerender = false;
 import BlogPost from '../../layouts/BlogPost.astro';
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import BlogBody from '../../components/islands/BlogBody.astro';
-import { getBlog } from '../../lib/data';
+import { getBlog, listBlogs } from '../../lib/data';
 import { islands } from '../../lib/islands';
+
+export async function getStaticPaths() {
+	const posts = await listBlogs();
+	return posts
+		.map((node) => node._sys?.relativePath?.replace(/\.mdx?$/, '') ?? '')
+		.filter(Boolean)
+		.map((slug) => ({ params: { slug } }));
+}
 
 const slug = (Astro.params.slug ?? '').toString();
 const blog = await getBlog(slug);
