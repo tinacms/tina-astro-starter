@@ -19,8 +19,15 @@ const today = new Date();
 	<footer class="copyright-footer">
 		&copy; {today.getFullYear()}
 		<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
-		<div class="social-links" data-tina-field={config ? tinaField(config, "contactLinks") : undefined}>
-			{contactLinks.map((link) => <IconLink title={link.title ?? ""} link={link.link ?? "#"} icon={link.icon ?? ""} />)}
+		<div class="social-links">
+			{contactLinks.map((link) => (
+				<IconLink
+					title={link.title}
+					link={link.link}
+					icon={link.icon}
+					data-tina-field={tinaField(link, "title")}
+				/>
+			))}
 		</div>
 	</footer>
 

@@ -11,10 +11,16 @@ export const getConfig = () =>
 	requestWithMetadata(client.queries.config({ relativePath: 'config.json' }));
 
 export const getPage = (slug: string) =>
-	requestWithMetadata(client.queries.page({ relativePath: `${slug}.mdx` }));
+	requestWithMetadata(
+		client.queries.page({ relativePath: `${slug}.mdx` }),
+		{ priority: 'primary' },
+	);
 
 export const getBlog = (slug: string) =>
-	requestWithMetadata(client.queries.blog({ relativePath: `${slug}.mdx` }));
+	requestWithMetadata(
+		client.queries.blog({ relativePath: `${slug}.mdx` }),
+		{ priority: 'primary' },
+	);
 
 export async function listPages() {
 	const result = await client.queries.pageConnection();

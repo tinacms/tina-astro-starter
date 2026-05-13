@@ -22,11 +22,20 @@ const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null
 				<span data-tina-field={seo ? tinaField(seo, "title") : undefined}>{seo?.title}</span>
 			</a>
 		</h2>
-		<div class="internal-links" data-tina-field={config ? tinaField(config, "nav") : undefined}>
-			{nav.map((item) => <HeaderLink href={item.link}>{item.title}</HeaderLink>)}
+		<div class="internal-links">
+			{nav.map((item) => (
+				<HeaderLink href={item.link} data-tina-field={tinaField(item, "title")}>{item.title}</HeaderLink>
+			))}
 		</div>
-		<div class="social-links" data-tina-field={config ? tinaField(config, "contactLinks") : undefined}>
-			{contactLinks.map((link) => <IconLink title={link.title ?? ""} link={link.link ?? "#"} icon={link.icon ?? ""} />)}
+		<div class="social-links">
+			{contactLinks.map((link) => (
+				<IconLink
+					title={link.title}
+					link={link.link}
+					icon={link.icon}
+					data-tina-field={tinaField(link, "title")}
+				/>
+			))}
 		</div>
 	</nav>
 </header>
