@@ -5,7 +5,9 @@
  * one entry here; the dynamic `[name].ts` route picks it up automatically.
  */
 import type { IslandRegistry } from '@tinacms/astro/experimental';
+import type { QueryResult } from '@tinacms/astro/data';
 
+import type { BlogQuery, ConfigQuery, PageQuery } from '../../tina/__generated__/types';
 import PageBody from '../components/islands/PageBody.astro';
 import BlogBody from '../components/islands/BlogBody.astro';
 import Header from '../components/Header.astro';
@@ -18,7 +20,7 @@ export const islands: IslandRegistry = {
 		component: PageBody,
 		wrapper: { tag: 'main' },
 		propsFromData: (data) => ({
-			data: (data as { data?: { page?: unknown } }).data?.page,
+			data: (data as QueryResult<PageQuery>).data?.page,
 		}),
 	},
 	blog: {
@@ -26,7 +28,7 @@ export const islands: IslandRegistry = {
 		component: BlogBody,
 		wrapper: { tag: 'article' },
 		propsFromData: (data) => ({
-			data: (data as { data?: { blog?: unknown } }).data?.blog,
+			data: (data as QueryResult<BlogQuery>).data?.blog,
 		}),
 	},
 	global: {
@@ -34,7 +36,7 @@ export const islands: IslandRegistry = {
 		component: Header,
 		wrapper: { tag: 'div' },
 		propsFromData: (data) => ({
-			config: (data as { data?: { config?: unknown } }).data?.config,
+			config: (data as QueryResult<ConfigQuery>).data?.config,
 		}),
 	},
 	'global-footer': {
@@ -42,7 +44,7 @@ export const islands: IslandRegistry = {
 		component: Footer,
 		wrapper: { tag: 'div' },
 		propsFromData: (data) => ({
-			config: (data as { data?: { config?: unknown } }).data?.config,
+			config: (data as QueryResult<ConfigQuery>).data?.config,
 		}),
 	},
 };
