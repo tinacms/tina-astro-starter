@@ -4,7 +4,23 @@ interface Props {
 }
 
 const { videoId } = Astro.props;
+
+/**
+ * Accept a bare ID, an ID with a share suffix (`?si=...`), or a full
+ * YouTube URL — and always emit a clean `/embed/<id>` source so a pasted
+ * value never produces a malformed embed URL.
+ */
+function extractId(input: string): string {
+  if (!input) return "";
+  const urlMatch = input.match(/(?:youtu\.be\/|[?&]v=|\/embed\/)([\w-]{11})/);
+  if (urlMatch) return urlMatch[1];
+  return input.split(/[?&/]/)[0];
+}
+
+const id = extractId(videoId);
 ---
-<div>
-    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
+{id && (
+  <div>
+    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${id}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+)}
