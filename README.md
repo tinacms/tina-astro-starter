@@ -6,7 +6,7 @@ This is a [Tina CMS](https://tina.io/) starter project.
 npx create-tina-app@latest --template tina-astro-starter
 ```
 
-And start editing with TinaCMS at `/admin`! 
+And start editing with TinaCMS at `/admin/index.html` (in dev, `astro dev` won't serve `/admin` directly)! 
 
 
 > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
