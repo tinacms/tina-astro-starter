@@ -29,6 +29,11 @@ export async function listPages() {
 		.map((edge) => edge!.node!);
 }
 
+/** Derive a blog post's URL slug from its source file path. */
+export function blogSlug(node: { _sys?: { relativePath?: string | null } | null }): string {
+	return node._sys?.relativePath?.replace(/\.mdx?$/, '') ?? '';
+}
+
 export async function listBlogs() {
 	const result = await client.queries.blogConnection();
 	return (result?.data?.blogConnection?.edges ?? [])
