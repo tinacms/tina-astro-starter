@@ -96,7 +96,8 @@ export const GlobalConfigCollection: Collection = {
         },
         {
           name: "icon",
-          label: "Icon (e.g. TbBrandX, TbBook2, TbBrandGithub)",
+          label: "Icon",
+          description: "Any Tabler icon name, e.g. tabler:brand-x, tabler:book-2, tabler:brand-github. Browse at https://icones.js.org/collection/tabler",
           type: "string"
         }
       ],

@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
+import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
 
 // https://astro.build/config
@@ -11,7 +12,7 @@ export default defineConfig({
 	output: 'static',
 	adapter: vercel(),
 	redirects: { '/home': '/' },
-	integrations: [mdx(), sitemap(), tina()],
+	integrations: [mdx(), sitemap(), icon(), tina()],
 	vite: {
 		// Bundle @tinacms/astro into the SSR build instead of resolving it
 		// per-module on every cold request — otherwise each

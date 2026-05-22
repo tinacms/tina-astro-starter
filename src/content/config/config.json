@@ -23,17 +23,17 @@
     {
       "title": "X",
       "link": "https://x.com/tinacms",
-      "icon": "TbBrandX"
+      "icon": "tabler:brand-x"
     },
     {
       "title": "Docs",
       "link": "https://tina.io/docs",
-      "icon": "TbBook2"
+      "icon": "tabler:book-2"
     },
     {
       "title": "GitHub",
       "link": "https://github.com/tinacms/tinacms",
-      "icon": "TbBrandGithub"
+      "icon": "tabler:brand-github"
     }
   ]
 }
