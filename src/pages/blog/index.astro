@@ -1,9 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import { getConfig, listBlogs } from '../../lib/data';
+import { blogSlug, getConfig, listBlogs } from '../../lib/data';
 
-const posts = await listBlogs();
+const posts = (await listBlogs())
+	.map((post) => ({ post, slug: blogSlug(post) }))
+	.filter(({ slug }) => slug);
 const config = (await getConfig()).data?.config ?? null;
 ---
 
@@ -14,8 +16,7 @@ const config = (await getConfig()).data?.config ?? null;
 	<main>
 		<section>
 			<ul>
-				{posts.map((post) => {
-					const slug = post._sys?.relativePath?.replace(/\.mdx?$/, "") ?? "";
+				{posts.map(({ post, slug }) => {
 					return (
 						<li>
 							<a href={`/blog/${slug}/`}>
