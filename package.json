@@ -4,25 +4,25 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
-    "build": "tinacms build && astro build",
-    "build-local": "tinacms build --content=local --skip-cloud-checks -c \"astro build\"",
+    "build": "tinacms build --content=local && astro build",
+    "build:local": "tinacms build --local --skip-cloud-checks -c \"astro build\"",
+    "build:search": "tinacms search-index",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/rss": "^4.0.15",
-    "@astrojs/sitemap": "^3.7.0",
-    "@tanstack/react-virtual": "^3.13.18",
-    "astro": "^5.16.16",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-icons": "^5.5.0",
-    "tinacms": "^3.8.1"
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/vercel": "^10.0.7",
+    "@iconify-json/tabler": "^1.2.35",
+    "@tinacms/astro": "^0.3.0",
+    "astro": "^6.3.7",
+    "astro-icon": "^1.1.5"
   },
   "devDependencies": {
-    "@tinacms/cli": "^2.3.1",
-    "@types/node": "^25.1.0"
+    "@tinacms/cli": "^2.4.0",
+    "@types/node": "^25.9.1",
+    "tinacms": "^3.8.2"
   }
 }

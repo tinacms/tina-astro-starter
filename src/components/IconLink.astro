@@ -1,0 +1,20 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'> & {
+	title?: string | null;
+	link?: string | null;
+	/** Any Iconify icon name, e.g. "tabler:brand-x". */
+	icon?: string | null;
+};
+
+const { title, link, icon, ...rest } = Astro.props;
+const safeTitle = title ?? '';
+const safeLink = link ?? '#';
+---
+
+<a href={safeLink} target="_blank" aria-label={`Go to ${safeTitle}`} {...rest}>
+	<span class="sr-only">{safeTitle}</span>
+	{icon && <Icon name={icon} size={32} />}
+</a>

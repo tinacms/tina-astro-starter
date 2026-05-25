@@ -1,4 +1,5 @@
 import type { Collection } from "tinacms";
+import { youTubeEmbedTemplate } from "../../src/components/mdx/YouTubeEmbed.template";
 
 export const PageCollection: Collection = {
   name: "page",
@@ -14,13 +15,14 @@ export const PageCollection: Collection = {
     {
       name: "seoTitle",
       type: "string",
-      required: true
+      required: true,
     },
     {
       name: "body",
       type: "rich-text",
       isBody: true,
-      required: true
-    }
-  ]
-}
+      required: true,
+      templates: [youTubeEmbedTemplate],
+    },
+  ],
+};

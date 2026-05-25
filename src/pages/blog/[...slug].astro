@@ -1,28 +1,34 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro"
-import client from "../../../tina/__generated__/client";
-import AdminBlogPost from "../../../tina/pages/AdminBlogPost";
+import BlogPost from '../../layouts/BlogPost.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import BlogBody from '../../components/islands/BlogBody.astro';
+import { getBlog, listBlogs } from '../../lib/data';
+import { islands } from '../../lib/islands';
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog");
-
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: {
-			post,
-			getTinaProps: async () =>
-				client.queries.blog({
-					relativePath: post.data.tinaInfo.relativePath,
-				}),
-		},
-	}));
+	const posts = await listBlogs();
+	return posts
+		.map((node) => node._sys?.relativePath?.replace(/\.mdx?$/, '') ?? '')
+		.filter(Boolean)
+		.map((slug) => ({ params: { slug } }));
 }
 
-const { post, getTinaProps } = Astro.props;
-const tinaProps = await getTinaProps();
+const slug = (Astro.params.slug ?? '').toString();
+const blog = await getBlog(slug);
+const data = blog.data?.blog;
+if (!data) return new Response('Not Found', { status: 404 });
+
+const layoutProps = {
+	title: data.title ?? '',
+	description: data.description ?? '',
+	pubDate: data.pubDate ? new Date(data.pubDate) : new Date(),
+	updatedDate: data.updatedDate ? new Date(data.updatedDate) : undefined,
+	heroImage: data.heroImage ?? null,
+};
 ---
 
-<BlogPost {...tinaProps}>
-		<AdminBlogPost {...tinaProps} client:tina/>
+<BlogPost {...layoutProps}>
+	<TinaIsland name="blog" wrapper={islands.blog.wrapper} params={{ slug }} primary>
+		<BlogBody data={data} />
+	</TinaIsland>
 </BlogPost>

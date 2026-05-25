@@ -5,7 +5,7 @@
  */
 
 :root {
-	--accent: #2337ff;
+	--accent: #ec4815;
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
@@ -171,4 +171,14 @@ hr {
 }
 .social-links a:hover {
 	color: rgb(var(--gray-dark));
+}
+
+.nav-header {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+
+.page-body {
+	min-height: 100vh;
 }

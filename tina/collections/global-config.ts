@@ -1,5 +1,4 @@
 import type { Collection } from "tinacms";
-import IconComponent from "../components/IconComponent";
 
 export const GlobalConfigCollection: Collection = {
   name: "config",
@@ -36,7 +35,12 @@ export const GlobalConfigCollection: Collection = {
             defaultValue: "Your name here"
           },
         },
-        // Add more settings here...
+        {
+          name: 'logo',
+          label: 'Logo',
+          type: 'image',
+        }
+        //Add more site settings here...
       ],
     },
     {
@@ -93,11 +97,8 @@ export const GlobalConfigCollection: Collection = {
         {
           name: "icon",
           label: "Icon",
-          type: "string",
-          ui: {
-            //@ts-ignore
-            component: IconComponent
-          }
+          description: "Any Tabler icon name, e.g. tabler:brand-x, tabler:book-2, tabler:brand-github. Browse at https://icones.js.org/collection/tabler",
+          type: "string"
         }
       ],
     }
