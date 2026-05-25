@@ -1,38 +1,30 @@
 ---
-import { getCollection } from "astro:content";
-import client from "../../tina/__generated__/client";
-import Page from "../../tina/pages/Page";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import BaseHead from "../components/BaseHead.astro";
-import config from '../content/config/config.json';
+import Base from '../layouts/Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import PageBody from '../components/islands/PageBody.astro';
+import { getConfig, getPage, listPages } from '../lib/data';
+import { islands } from '../lib/islands';
 
 export async function getStaticPaths() {
-	const page = await getCollection("page");
-	return page.map((p) => ({
-		params: { slug: p.id },
-		props: {
-			getTinaProps: async () =>
-				client.queries.page({
-					relativePath: p.data.tinaInfo.relativePath,
-				}),
-		},
-	}));
+	const pages = await listPages();
+	return pages
+		.map((node) => node._sys?.relativePath?.replace(/\.mdx?$/, '') ?? '')
+		.filter((slug) => slug && slug !== 'home')
+		.map((slug) => ({ params: { slug } }));
 }
 
-const { getTinaProps } = Astro.props;
-const data = await getTinaProps();
+const slug = (Astro.params.slug ?? '').toString();
+const page = await getPage(slug);
+const data = page.data?.page;
+if (!data) return new Response('Not Found', { status: 404 });
+const config = (await getConfig()).data?.config ?? null;
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={data.data.page.seoTitle} description={config.seo.description} />
-	</head>
-	<body>
-		<Header />
-				<Page {...data} client:tina />
-		<Footer />
-	</body>
-</html>
-
+<Base
+	title={data.seoTitle || config?.seo?.title || 'TinaCMS + Astro'}
+	description={config?.seo?.description ?? 'Welcome to my website!'}
+>
+	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary>
+		<PageBody data={data} />
+	</TinaIsland>
+</Base>

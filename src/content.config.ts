@@ -1,64 +1,16 @@
-import { defineCollection, z } from "astro:content";
-import client from "../tina/__generated__/client";
+/**
+ * Content is sourced from TinaCMS (see `src/lib/data.ts`), not Astro's
+ * content layer, so these collections are unused at runtime. We only
+ * declare `config` to stop Astro auto-generating it as a Markdown
+ * collection: `src/content/config` holds JSON (Tina's global config), so
+ * the default Markdown glob finds nothing and warns. Pointing it at JSON
+ * silences that. `blog` and `page` keep their Markdown auto-generation.
+ */
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
 
-const blog = defineCollection({
-  loader: async () => {
-    const postsResponse = await client.queries.blogConnection();
-
-    // Map Tina posts to the correct format for Astro
-    return postsResponse.data.blogConnection.edges
-      ?.filter((post) => !!post)
-      .map((post) => {
-        const node = post?.node;
-
-        return {
-          ...node,
-          id: node?._sys.relativePath.replace(/\.mdx?$/, ""), // Generate clean URLs
-          tinaInfo: node?._sys, // Include Tina system info if needed
-        };
-      });
-  },
-  schema: z.object({
-    tinaInfo: z.object({
-      filename: z.string(),
-      basename: z.string(),
-      path: z.string(),
-      relativePath: z.string(),
-    }),
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    heroImage: z.string().nullish(),
-  }),
+const config = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: 'src/content/config' }),
 });
 
-const page = defineCollection({
-  loader: async () => {
-    const postsResponse = await client.queries.pageConnection();
-
-    // Map Tina posts to the correct format for Astro
-    return postsResponse.data.pageConnection.edges
-      ?.filter((p) => !!p)
-      .map((p) => {
-        const node = p?.node;
-
-        return {
-          ...node,
-          id: node?._sys.relativePath.replace(/\.mdx?$/, ""), // Generate clean URLs
-          tinaInfo: node?._sys, // Include Tina system info if needed
-        };
-      });
-  },
-  schema: z.object({
-    tinaInfo: z.object({
-      filename: z.string(),
-      basename: z.string(),
-      path: z.string(),
-      relativePath: z.string(),
-    }),
-    seoTitle: z.string(),
-    body: z.any(),
-  }),
-})
-export const collections = { blog, page };
+export const collections = { config };
