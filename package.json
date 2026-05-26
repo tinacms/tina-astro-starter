@@ -24,5 +24,19 @@
     "@tinacms/cli": "^2.4.0",
     "@types/node": "^25.9.1",
     "tinacms": "^3.8.2"
+  },
+  "overrides": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "resolutions": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^18.3.1",
+      "react-dom": "^18.3.1"
+    }
   }
 }
