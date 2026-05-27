@@ -3,11 +3,17 @@ import { tinaField } from '@tinacms/astro/tina-field';
 import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import Aurora from '../space/Aurora.astro';
+import Starfield from '../space/Starfield.astro';
+import LlamaNaut from '../space/LlamaNaut.astro';
 const { data } = Astro.props;
 const actions = (data.actions ?? []).filter(Boolean);
 ---
-<Section background={data.background}>
-	<div class="text-center sm:mx-auto lg:mr-auto">
+<Section background={data.background} class="relative overflow-hidden">
+	<Aurora />
+	<Starfield count={70} class="text-foreground/20" />
+	<div class="relative text-center sm:mx-auto lg:mr-auto">
+		<LlamaNaut class="mx-auto mb-6 size-28 md:size-32" />
 		{data.headline && <h1 data-tina-field={tinaField(data, 'headline')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{data.headline}</h1>}
 		{data.tagline && <p data-tina-field={tinaField(data, 'tagline')} class="mx-auto mt-8 max-w-2xl text-balance text-lg text-muted-foreground">{data.tagline}</p>}
 		{actions.length > 0 && (
