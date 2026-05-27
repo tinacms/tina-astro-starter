@@ -1,5 +1,5 @@
 import type { Template } from 'tinacms';
-import type { StatItem } from '../../lib/types/cms';
+import type { StatItem } from '../../lib/data';
 
 export const statsBlockSchema: Template = {
 	name: 'stats',

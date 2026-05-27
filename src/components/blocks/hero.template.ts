@@ -1,5 +1,5 @@
 import type { Template } from 'tinacms';
-import type { Action } from '../../lib/types/cms';
+import type { Action } from '../../lib/data';
 
 export const heroBlockSchema: Template = {
 	name: 'hero',

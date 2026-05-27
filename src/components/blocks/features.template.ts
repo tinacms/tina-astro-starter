@@ -1,5 +1,5 @@
 import type { Template } from 'tinacms';
-import type { FeatureItem } from '../../lib/types/cms';
+import type { FeatureItem } from '../../lib/data';
 
 export const featuresBlockSchema: Template = {
 	name: 'features',

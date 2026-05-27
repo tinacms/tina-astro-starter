@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import rss from '@astrojs/rss';
 import config from '../content/config/config.json';
-import { blogSlug, listBlogs } from '../lib/data';
+import { listBlogs } from '../lib/data';
 
 export const prerender = true;
 
@@ -11,14 +11,11 @@ export async function GET(context: APIContext) {
 		title: config.seo.title,
 		description: config.seo.description,
 		site: context.site ?? '',
-		items: posts
-			.map((post) => ({ post, slug: blogSlug(post) }))
-			.filter(({ slug }) => slug)
-			.map(({ post, slug }) => ({
-				title: post.title,
-				description: post.description ?? undefined,
-				pubDate: post.pubDate ? new Date(post.pubDate) : undefined,
-				link: `/blog/${slug}/`,
-			})),
+		items: posts.map((post) => ({
+			title: post.title,
+			description: post.description ?? undefined,
+			pubDate: post.pubDate ? new Date(post.pubDate) : undefined,
+			link: `/blog/${post._sys.filename}/`,
+		})),
 	});
 }

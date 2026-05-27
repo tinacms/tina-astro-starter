@@ -1,5 +1,5 @@
 import type { Template } from 'tinacms';
-import type { TestimonialItem } from '../../lib/types/cms';
+import type { TestimonialItem } from '../../lib/data';
 
 export const testimonialBlockSchema: Template = {
 	name: 'testimonial',

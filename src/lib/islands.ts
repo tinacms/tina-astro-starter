@@ -8,7 +8,7 @@ import type { IslandRegistry } from '@tinacms/astro/experimental';
 import type { QueryResult } from '@tinacms/astro/data';
 
 import type { BlogQuery, ConfigQuery, PageQuery } from '../../tina/__generated__/types';
-import type { CmsBlog, CmsConfig, CmsPage } from './types/cms';
+import type { CmsBlog, CmsConfig, CmsPage } from './data';
 import PageBody from '../components/islands/PageBody.astro';
 import BlogBody from '../components/islands/BlogBody.astro';
 import Header from '../components/Header.astro';
