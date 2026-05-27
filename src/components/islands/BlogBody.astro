@@ -15,27 +15,24 @@ const pubDate = data?.pubDate;
 const updatedDate = data?.updatedDate;
 ---
 {heroImage && (
-	<div data-tina-field={data ? tinaField(data, 'heroImage') : undefined} class="hero-image">
-		<img width={1020} height={510} src={heroImage} alt="" />
+	<div data-tina-field={data ? tinaField(data, 'heroImage') : undefined} class="mx-auto max-w-4xl px-6">
+		<img width={1020} height={510} src={heroImage} alt="" class="w-full rounded-2xl border shadow-lg" />
 	</div>
 )}
-<div class="prose">
-	<div class="title">
+<div class="mx-auto max-w-3xl px-6 py-12">
+	<div class="mb-8 text-center">
 		{pubDate && (
-			<div data-tina-field={data ? tinaField(data, 'pubDate') : undefined} class="date">
+			<div data-tina-field={data ? tinaField(data, 'pubDate') : undefined} class="text-sm text-muted-foreground">
 				<FormattedDate date={new Date(pubDate)} />
 				{updatedDate && (
-					<div data-tina-field={data ? tinaField(data, 'updatedDate') : undefined} class="last-updated-on">
-						Last updated on <FormattedDate date={new Date(updatedDate)} />
-					</div>
+					<span data-tina-field={data ? tinaField(data, 'updatedDate') : undefined} class="italic"> · Last updated {new Date(updatedDate).toLocaleDateString()}</span>
 				)}
 			</div>
 		)}
-		{title && <h1 data-tina-field={data ? tinaField(data, 'title') : undefined}>{title}</h1>}
-		<hr />
+		{title && <h1 data-tina-field={data ? tinaField(data, 'title') : undefined} class="mt-2 text-4xl font-semibold tracking-tight lg:text-5xl">{title}</h1>}
 	</div>
 	{data?.body && (
-		<div data-tina-field={tinaField(data, 'body')}>
+		<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
 			<TinaMarkdown content={data.body} />
 		</div>
 	)}

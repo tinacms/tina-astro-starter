@@ -13,96 +13,26 @@ const config = (await getConfig()).data?.config ?? null;
 	title={config?.seo?.title ?? 'Blog'}
 	description={config?.seo?.description ?? 'Welcome to my website!'}
 >
-	<main>
-		<section>
-			<ul>
-				{posts.map(({ post, slug }) => {
-					return (
-						<li>
-							<a href={`/blog/${slug}/`}>
-								{post.heroImage && (
-									<img width={720} height={360} src={post.heroImage} alt="" />
-								)}
-								<h4 class="title">{post.title}</h4>
-								{post.pubDate && (
-									<p class="date">
-										<FormattedDate date={new Date(post.pubDate)} />
-									</p>
-								)}
-							</a>
-						</li>
-					);
-				})}
-			</ul>
-		</section>
+	<main class="mx-auto max-w-5xl px-6 py-12">
+		<h1 class="mb-8 text-4xl font-semibold tracking-tight">Blog</h1>
+		<ul class="grid list-none gap-6 p-0 sm:grid-cols-2">
+			{posts.map(({ post, slug }) => (
+				<li>
+					<a href={`/blog/${slug}/`} class="group block overflow-hidden rounded-xl border bg-card shadow-sm transition-shadow hover:shadow-md">
+						{post.heroImage && (
+							<img width={720} height={360} src={post.heroImage} alt="" class="aspect-video w-full object-cover" />
+						)}
+						<div class="p-6">
+							<h2 class="font-semibold group-hover:underline">{post.title}</h2>
+							{post.pubDate && (
+								<p class="mt-1 text-sm text-muted-foreground">
+									<FormattedDate date={new Date(post.pubDate)} />
+								</p>
+							)}
+						</div>
+					</a>
+				</li>
+			))}
+		</ul>
 	</main>
 </Base>
-<style>
-	main {
-		width: 960px;
-	}
-	ul {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 2rem;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-	ul li {
-		width: calc(50% - 1rem);
-	}
-	ul li * {
-		text-decoration: none;
-		transition: 0.2s ease;
-	}
-	ul li:first-child {
-		width: 100%;
-		margin-bottom: 1rem;
-		text-align: center;
-	}
-	ul li:first-child img {
-		width: 100%;
-	}
-	ul li:first-child .title {
-		font-size: 2.369rem;
-	}
-	ul li img {
-		margin-bottom: 0.5rem;
-		border-radius: 12px;
-	}
-	ul li a {
-		display: block;
-	}
-	.title {
-		margin: 0;
-		color: rgb(var(--black));
-		line-height: 1;
-	}
-	.date {
-		margin: 0;
-		color: rgb(var(--gray));
-	}
-	ul li a:hover h4,
-	ul li a:hover .date {
-		color: rgb(var(--accent));
-	}
-	ul a:hover img {
-		box-shadow: var(--box-shadow);
-	}
-	@media (max-width: 720px) {
-		ul {
-			gap: 0.5em;
-		}
-		ul li {
-			width: 100%;
-			text-align: center;
-		}
-		ul li:first-child {
-			margin-bottom: 0;
-		}
-		ul li:first-child .title {
-			font-size: 1.563em;
-		}
-	}
-</style>
