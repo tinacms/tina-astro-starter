@@ -16,7 +16,7 @@ const actions = (data.actions ?? []).filter(Boolean);
 		<div data-tina-field={tinaField(data, 'image')} class="mx-auto mb-6 size-28 md:size-32">
 			{data.image?.src
 				? <img src={data.image.src} alt={data.image.alt ?? ''} class="size-full rounded-full object-cover" />
-				: <LlamaNaut class="size-full" />}
+				: ''}
 		</div>
 		{data.headline && <h1 data-tina-field={tinaField(data, 'headline')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{data.headline}</h1>}
 		{data.tagline && <p data-tina-field={tinaField(data, 'tagline')} class="mx-auto mt-8 max-w-2xl text-balance text-lg text-muted-foreground">{data.tagline}</p>}
