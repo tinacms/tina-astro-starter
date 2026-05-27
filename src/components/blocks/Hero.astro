@@ -12,9 +12,9 @@ const actions = (data.actions ?? []).filter(Boolean);
 	<Aurora />
 	<Starfield count={70} class="text-foreground/20" />
 	<div class="relative text-center sm:mx-auto lg:mr-auto">
-		<div data-tina-field={tinaField(data, 'image')} class="mx-auto mb-6 size-40 md:size-52">
+		<div data-tina-field={tinaField(data, 'image')} class="mx-auto mb-6 size-56 md:size-72">
 			{data.image?.src
-				? <img src={data.image.src} alt={data.image.alt ?? ''} width="208" height="208" class="size-full rounded-full object-cover" />
+				? <img src={data.image.src} alt={data.image.alt ?? ''} width="288" height="288" class="size-full rounded-full object-cover" />
 				: ''}
 		</div>
 		{data.headline && <h1 data-tina-field={tinaField(data, 'headline')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{data.headline}</h1>}
