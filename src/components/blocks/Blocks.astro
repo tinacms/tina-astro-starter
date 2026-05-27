@@ -8,6 +8,7 @@ import Hero from './Hero.astro';
 import Stats from './Stats.astro';
 import Testimonial from './Testimonial.astro';
 import Video from './Video.astro';
+import ConstellationDivider from '../space/ConstellationDivider.astro';
 import type { PageQuery } from '../../../tina/__generated__/types';
 
 interface Props {
@@ -28,12 +29,15 @@ const componentMap: Record<string, any> = {
 const { data } = Astro.props;
 const blocks = (data?.blocks ?? []).filter(Boolean);
 ---
-{blocks.map((block: any) => {
+{blocks.map((block: any, i: number) => {
 	const Component = componentMap[block.__typename];
 	if (!Component) return null;
 	return (
-		<div data-tina-field={tinaField(block)}>
-			<Component data={block} />
-		</div>
+		<>
+			<div data-tina-field={tinaField(block)}>
+				<Component data={block} />
+			</div>
+			{i < blocks.length - 1 && <ConstellationDivider class="my-2 opacity-70" />}
+		</>
 	);
 })}

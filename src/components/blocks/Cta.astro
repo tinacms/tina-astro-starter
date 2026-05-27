@@ -3,11 +3,13 @@ import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
+import OrbitRings from '../space/OrbitRings.astro';
 const { data } = Astro.props;
 const actions = (data.actions ?? []).filter(Boolean);
 ---
-<Section>
-	<div class="text-center">
+<Section class="relative overflow-hidden">
+	<OrbitRings class="opacity-70" />
+	<div class="relative text-center">
 		<h2 class="text-balance text-4xl font-semibold lg:text-5xl" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
 		<p class="mt-4 text-muted-foreground" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
 		<div class="mt-12 flex flex-wrap justify-center gap-4">
