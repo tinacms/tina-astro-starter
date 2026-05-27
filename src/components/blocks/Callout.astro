@@ -2,6 +2,10 @@
 import { tinaField } from '@tinacms/astro/tina-field';
 import Section from '../ui/Section.astro';
 import Icon from '../ui/Icon.astro';
+import type { CalloutBlock } from '../../lib/types/cms';
+
+interface Props { data: CalloutBlock }
+
 const { data } = Astro.props;
 ---
 <Section class="py-6">

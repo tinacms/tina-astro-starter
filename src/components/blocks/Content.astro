@@ -2,6 +2,10 @@
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import Section from '../ui/Section.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
+import type { ContentBlock } from '../../lib/types/cms';
+
+interface Props { data: ContentBlock }
+
 const { data } = Astro.props;
 ---
 <Section class="prose prose-lg max-w-none">

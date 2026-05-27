@@ -1,9 +1,9 @@
 ---
 import Blocks from '../blocks/Blocks.astro';
-import type { PageQuery } from '../../../tina/__generated__/types';
+import type { CmsPage } from '../../lib/types/cms';
 
 interface Props {
-	data?: PageQuery['page'] | null;
+	data?: CmsPage | null;
 }
 
 const { data } = Astro.props;

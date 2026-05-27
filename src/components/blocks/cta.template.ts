@@ -1,4 +1,5 @@
 import type { Template } from 'tinacms';
+import type { Action } from '../../lib/types/cms';
 
 export const ctaBlockSchema: Template = {
 	name: 'cta',
@@ -10,7 +11,7 @@ export const ctaBlockSchema: Template = {
 			type: 'object', label: 'Actions', name: 'actions', list: true,
 			ui: {
 				defaultItem: { label: 'Get Started', type: 'button', link: '/' },
-				itemProps: (item: any) => ({ label: item.label }),
+				itemProps: (item: Action) => ({ label: item.label ?? '' }),
 			},
 			fields: [
 				{ type: 'string', label: 'Label', name: 'label' },

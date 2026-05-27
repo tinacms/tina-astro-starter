@@ -1,4 +1,5 @@
 import type { Template } from 'tinacms';
+import type { FeatureItem } from '../../lib/types/cms';
 
 export const featuresBlockSchema: Template = {
 	name: 'features',
@@ -8,7 +9,7 @@ export const featuresBlockSchema: Template = {
 		{ type: 'string', label: 'Description', name: 'description' },
 		{
 			type: 'object', label: 'Feature Items', name: 'items', list: true,
-			ui: { itemProps: (i: any) => ({ label: i?.title }), defaultItem: { title: "Here's a feature", text: 'Describe it here.' } },
+			ui: { itemProps: (i: FeatureItem) => ({ label: i?.title ?? '' }), defaultItem: { title: "Here's a feature", text: 'Describe it here.' } },
 			fields: [
 				{ type: 'string', label: 'Icon (Tabler name)', name: 'icon' },
 				{ type: 'string', label: 'Title', name: 'title' },

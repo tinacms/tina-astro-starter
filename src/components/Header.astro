@@ -1,17 +1,20 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { tinaField } from "@tinacms/astro/tina-field";
-import type { ConfigQuery } from "../../tina/__generated__/types";
+import type { CmsConfig, CmsConfigContactLink, CmsConfigNav } from '../lib/types/cms';
 import IconLink from "./IconLink.astro";
 import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
-	config?: ConfigQuery["config"] | null;
+	config?: CmsConfig | null;
 }
 
 const { config } = Astro.props;
 const seo = config?.seo ?? null;
-const nav = (config?.nav ?? []).filter((item) => item !== null);
-const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null);
+const nav = (config?.nav ?? []).filter((item): item is CmsConfigNav => item !== null);
+const contactLinks = (config?.contactLinks ?? []).filter(
+	(item): item is CmsConfigContactLink => item !== null,
+);
 ---
 
 <header class="fixed top-0 z-20 w-full border-b bg-background/50 backdrop-blur-xl">
@@ -26,10 +29,79 @@ const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null
 			))}
 		</div>
 		<div class="flex items-center gap-3">
-			{contactLinks.map((link) => (
-				<IconLink title={link.title} link={link.link} icon={link.icon} data-tina-field={tinaField(link, "title")} />
-			))}
-			<ThemeToggle />
+			<div class="hidden items-center gap-3 lg:flex">
+				{contactLinks.map((link) => (
+					<IconLink title={link.title} link={link.link} icon={link.icon} data-tina-field={tinaField(link, "title")} />
+				))}
+				<ThemeToggle />
+			</div>
+			<button
+				id="mobile-menu-toggle"
+				type="button"
+				aria-label="Toggle navigation menu"
+				aria-controls="mobile-menu-panel"
+				aria-expanded="false"
+				class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none lg:hidden"
+			>
+				<Icon name="tabler:menu-2" class="icon-open size-5" />
+				<Icon name="tabler:x" class="icon-close size-5" />
+			</button>
 		</div>
 	</nav>
+	<div
+		id="mobile-menu-panel"
+		hidden
+		class="border-t bg-background/95 backdrop-blur-xl lg:hidden"
+	>
+		<div class="mx-auto flex max-w-6xl flex-col px-6 py-4">
+			{nav.map((item) => (
+				<a
+					href={item.link}
+					class="border-b border-border/50 py-3 text-sm text-muted-foreground transition-colors last:border-b-0 hover:text-foreground"
+					data-tina-field={tinaField(item, "title")}
+				>
+					{item.title}
+				</a>
+			))}
+			<div class="mt-4 flex items-center justify-between gap-3 pt-4">
+				<div class="flex items-center gap-2">
+					{contactLinks.map((link) => (
+						<IconLink title={link.title} link={link.link} icon={link.icon} data-tina-field={tinaField(link, "title")} />
+					))}
+				</div>
+				<ThemeToggle />
+			</div>
+		</div>
+	</div>
 </header>
+<style>
+	#mobile-menu-toggle .icon-close { display: none; }
+	#mobile-menu-toggle[aria-expanded="true"] .icon-open { display: none; }
+	#mobile-menu-toggle[aria-expanded="true"] .icon-close { display: block; }
+</style>
+<script is:inline>
+	if (!window.__mobileMenuBound) {
+		window.__mobileMenuBound = true;
+		const setOpen = (open) => {
+			const btn = document.getElementById('mobile-menu-toggle');
+			const panel = document.getElementById('mobile-menu-panel');
+			if (!btn || !panel) return;
+			btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+			panel.hidden = !open;
+		};
+		document.addEventListener('click', (e) => {
+			const toggle = e.target.closest('#mobile-menu-toggle');
+			if (toggle) {
+				const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+				setOpen(!isOpen);
+				return;
+			}
+			if (e.target.closest('#mobile-menu-panel a')) {
+				setOpen(false);
+			}
+		});
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') setOpen(false);
+		});
+	}
+</script>

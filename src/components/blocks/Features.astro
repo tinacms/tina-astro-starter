@@ -6,8 +6,12 @@ import Card from '../ui/Card.astro';
 import CardHeader from '../ui/CardHeader.astro';
 import CardContent from '../ui/CardContent.astro';
 import Icon from '../ui/Icon.astro';
+import type { FeatureItem, FeaturesBlock } from '../../lib/types/cms';
+
+interface Props { data: FeaturesBlock }
+
 const { data } = Astro.props;
-const items = (data.items ?? []).filter(Boolean);
+const items = (data.items ?? []).filter((it): it is FeatureItem => it !== null);
 ---
 <Section>
 	<div class="mx-auto max-w-5xl px-6">
@@ -16,7 +20,7 @@ const items = (data.items ?? []).filter(Boolean);
 			<p data-tina-field={tinaField(data, 'description')} class="mt-4 text-muted-foreground">{data.description}</p>
 		</div>
 		<Card class="mx-auto mt-8 grid max-w-sm divide-y overflow-hidden md:mt-16 md:max-w-full md:grid-cols-3 md:divide-x md:divide-y-0 *:text-center">
-			{items.map((item: any) => (
+			{items.map((item) => (
 				<div data-tina-field={tinaField(item)}>
 					<CardHeader class="pb-3">
 						<div class="relative mx-auto size-36">

@@ -1,4 +1,5 @@
 import type { Template } from 'tinacms';
+import type { Action } from '../../lib/types/cms';
 
 export const heroBlockSchema: Template = {
 	name: 'hero',
@@ -8,7 +9,7 @@ export const heroBlockSchema: Template = {
 		{ type: 'string', label: 'Tagline', name: 'tagline' },
 		{
 			type: 'object', label: 'Actions', name: 'actions', list: true,
-			ui: { defaultItem: { label: 'Get Started', type: 'button', link: '/' }, itemProps: (i: any) => ({ label: i.label }) },
+			ui: { defaultItem: { label: 'Get Started', type: 'button', link: '/' }, itemProps: (i: Action) => ({ label: i.label ?? '' }) },
 			fields: [
 				{ type: 'string', label: 'Label', name: 'label' },
 				{ type: 'string', label: 'Type', name: 'type', options: [{ label: 'Button', value: 'button' }, { label: 'Link', value: 'link' }] },

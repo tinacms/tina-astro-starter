@@ -1,4 +1,5 @@
 import type { Template } from 'tinacms';
+import type { StatItem } from '../../lib/types/cms';
 
 export const statsBlockSchema: Template = {
 	name: 'stats',
@@ -8,7 +9,7 @@ export const statsBlockSchema: Template = {
 		{ type: 'string', label: 'Description', name: 'description' },
 		{
 			type: 'object', label: 'Stats', name: 'stats', list: true,
-			ui: { defaultItem: { stat: '12K', type: 'Stars on GitHub' }, itemProps: (i: any) => ({ label: `${i.stat} ${i.type}` }) },
+			ui: { defaultItem: { stat: '12K', type: 'Stars on GitHub' }, itemProps: (i: StatItem) => ({ label: `${i.stat ?? ''} ${i.type ?? ''}` }) },
 			fields: [
 				{ type: 'string', label: 'Stat', name: 'stat' },
 				{ type: 'string', label: 'Type', name: 'type' },

@@ -1,4 +1,5 @@
 ---
+interface Props { class?: string }
 const { class: className = '' } = Astro.props;
 ---
 <svg aria-hidden="true" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" class={`pointer-events-none absolute inset-0 m-auto h-full w-full text-primary/20 ${className}`} fill="none" stroke="currentColor">

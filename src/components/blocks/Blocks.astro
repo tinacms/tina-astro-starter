@@ -10,13 +10,23 @@ import Stats from './Stats.astro';
 import Testimonial from './Testimonial.astro';
 import Video from './Video.astro';
 import ConstellationDivider from '../space/ConstellationDivider.astro';
-import type { PageQuery } from '../../../tina/__generated__/types';
+import type { CmsPage, PageBlock, PageBlockTypename } from '../../lib/types/cms';
 
 interface Props {
-	data?: PageQuery['page'] | null;
+	data?: CmsPage | null;
 }
 
-const componentMap: Record<string, any> = {
+/**
+ * Map from a block's GraphQL `__typename` to the Astro component that
+ * renders it. Each entry is widened to a generic renderer at the map type
+ * — TypeScript would otherwise intersect every component's `data` prop
+ * (since the map value is a union) and reduce it to `never`. The cast is
+ * sound because we dispatch on `__typename` immediately below; the
+ * underlying components keep their own narrow block prop types.
+ */
+type BlockRenderer = (props: { data: PageBlock }) => unknown;
+
+const componentMap = {
 	PageBlocksCallout: Callout,
 	PageBlocksContent: Content,
 	PageBlocksCta: Cta,
@@ -26,12 +36,12 @@ const componentMap: Record<string, any> = {
 	PageBlocksStats: Stats,
 	PageBlocksTestimonial: Testimonial,
 	PageBlocksVideo: Video,
-};
+} as unknown as Record<PageBlockTypename, BlockRenderer>;
 
 const { data } = Astro.props;
-const blocks = (data?.blocks ?? []).filter(Boolean);
+const blocks = (data?.blocks ?? []).filter((b): b is PageBlock => b !== null);
 ---
-{blocks.map((block: any, i: number) => {
+{blocks.map((block, i) => {
 	const Component = componentMap[block.__typename];
 	if (!Component) return null;
 	return (

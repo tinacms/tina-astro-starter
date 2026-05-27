@@ -1,4 +1,5 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '../../lib/cn';
 
@@ -23,18 +24,18 @@ const button = tv({
 	defaultVariants: { variant: 'default', size: 'default' },
 });
 
-type Props = VariantProps<typeof button> & {
-	href?: string;
-	class?: string;
-	[key: string]: any;
-};
+type Props = VariantProps<typeof button> &
+	Omit<HTMLAttributes<'a'>, 'href'> &
+	Omit<HTMLAttributes<'button'>, 'type'> & {
+		href?: string | null;
+	};
 
 const { variant, size, href, class: className, ...rest } = Astro.props;
 const classes = cn(button({ variant, size }), className);
 ---
 
 {href ? (
-	<a href={href} class={classes} {...rest}><slot /></a>
+	<a href={href} class={classes} {...rest as HTMLAttributes<'a'>}><slot /></a>
 ) : (
-	<button class={classes} {...rest}><slot /></button>
+	<button class={classes} {...rest as HTMLAttributes<'button'>}><slot /></button>
 )}

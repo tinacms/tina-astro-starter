@@ -4,9 +4,15 @@ import Section from '../ui/Section.astro';
 import Card from '../ui/Card.astro';
 import CardContent from '../ui/CardContent.astro';
 import Avatar from '../ui/Avatar.astro';
+import type { TestimonialBlock, TestimonialItem } from '../../lib/types/cms';
+
+interface Props { data: TestimonialBlock }
+
 const { data } = Astro.props;
-const testimonials = (data.testimonials ?? []).filter(Boolean);
-const initials = (name = '') => name.split(' ').map((w: string) => w[0]).join('');
+const testimonials = (data.testimonials ?? []).filter(
+	(t): t is TestimonialItem => t !== null,
+);
+const initials = (name?: string | null) => (name ?? '').split(' ').map((w) => w[0]).join('');
 ---
 <Section>
 	<div class="mx-auto max-w-xl text-center">
@@ -14,7 +20,7 @@ const initials = (name = '') => name.split(' ').map((w: string) => w[0]).join(''
 		<p data-tina-field={tinaField(data, 'description')} class="mt-6 text-muted-foreground">{data.description}</p>
 	</div>
 	<div class="mt-8 grid gap-6 md:mt-12 sm:grid-cols-2 lg:grid-cols-3">
-		{testimonials.map((t: any) => (
+		{testimonials.map((t) => (
 			<Card class="h-full" data-tina-field={tinaField(t)}>
 				<CardContent class="grid grid-cols-[auto_1fr] gap-3">
 					<Avatar src={t.avatar} alt={t.author} fallback={initials(t.author)} />

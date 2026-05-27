@@ -1,16 +1,18 @@
 ---
 import { tinaField } from "@tinacms/astro/tina-field";
-import type { ConfigQuery } from "../../tina/__generated__/types";
+import type { CmsConfig, CmsConfigContactLink } from '../lib/types/cms';
 import IconLink from "./IconLink.astro";
 import Starfield from './space/Starfield.astro';
 
 interface Props {
-	config?: ConfigQuery["config"] | null;
+	config?: CmsConfig | null;
 }
 
 const { config } = Astro.props;
 const seo = config?.seo ?? null;
-const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null);
+const contactLinks = (config?.contactLinks ?? []).filter(
+	(item): item is CmsConfigContactLink => item !== null,
+);
 const today = new Date();
 ---
 <footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground relative overflow-hidden">

@@ -1,39 +1,37 @@
 ---
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
-import type { BlogQuery } from '../../../tina/__generated__/types';
+import type { CmsBlog } from '../../lib/types/cms';
 import FormattedDate from '../FormattedDate.astro';
 
 interface Props {
-	data?: BlogQuery['blog'] | null;
+	data?: CmsBlog | null;
 }
 
 const { data } = Astro.props;
-const heroImage = data?.heroImage;
-const title = data?.title;
-const pubDate = data?.pubDate;
-const updatedDate = data?.updatedDate;
 ---
-{heroImage && (
-	<div data-tina-field={data ? tinaField(data, 'heroImage') : undefined} class="mx-auto max-w-4xl px-6">
-		<img width={1020} height={510} src={heroImage} alt="" class="w-full rounded-2xl border shadow-lg" />
+{data?.heroImage && (
+	<div data-tina-field={tinaField(data, 'heroImage')} class="mx-auto max-w-4xl px-6">
+		<img width={1020} height={510} src={data.heroImage} alt="" class="w-full rounded-2xl border shadow-lg" />
 	</div>
 )}
-<div class="mx-auto max-w-3xl px-6 py-12">
-	<div class="mb-8 text-center">
-		{pubDate && (
-			<div data-tina-field={data ? tinaField(data, 'pubDate') : undefined} class="text-sm text-muted-foreground">
-				<FormattedDate date={new Date(pubDate)} />
-				{updatedDate && (
-					<span data-tina-field={data ? tinaField(data, 'updatedDate') : undefined} class="italic"> · Last updated <FormattedDate date={new Date(updatedDate)} /></span>
-				)}
+{data && (
+	<div class="mx-auto max-w-3xl px-6 py-12">
+		<div class="mb-8 text-center">
+			{data.pubDate && (
+				<div data-tina-field={tinaField(data, 'pubDate')} class="text-sm text-muted-foreground">
+					<FormattedDate date={new Date(data.pubDate)} />
+					{data.updatedDate && (
+						<span data-tina-field={tinaField(data, 'updatedDate')} class="italic"> · Last updated <FormattedDate date={new Date(data.updatedDate)} /></span>
+					)}
+				</div>
+			)}
+			{data.title && <h1 data-tina-field={tinaField(data, 'title')} class="mt-2 text-4xl font-semibold tracking-tight lg:text-5xl">{data.title}</h1>}
+		</div>
+		{data.body && (
+			<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
+				<TinaMarkdown content={data.body} />
 			</div>
 		)}
-		{title && <h1 data-tina-field={data ? tinaField(data, 'title') : undefined} class="mt-2 text-4xl font-semibold tracking-tight lg:text-5xl">{title}</h1>}
 	</div>
-	{data?.body && (
-		<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
-			<TinaMarkdown content={data.body} />
-		</div>
-	)}
-</div>
+)}

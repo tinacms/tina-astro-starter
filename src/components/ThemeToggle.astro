@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 ---
 <button
-	id="theme-toggle"
+	data-theme-toggle
 	type="button"
 	aria-label="Toggle color theme"
 	class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
@@ -16,7 +16,7 @@ import { Icon } from 'astro-icon/components';
 	if (!window.__themeToggleBound) {
 		window.__themeToggleBound = true;
 		document.addEventListener('click', (e) => {
-			if (!e.target.closest('#theme-toggle')) return;
+			if (!e.target.closest('[data-theme-toggle]')) return;
 			const isDark = document.documentElement.classList.toggle('dark');
 			localStorage.setItem('theme', isDark ? 'dark' : 'light');
 		});

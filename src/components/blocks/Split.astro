@@ -5,8 +5,12 @@ import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { cn } from '../../lib/cn';
+import type { Action, SplitBlock } from '../../lib/types/cms';
+
+interface Props { data: SplitBlock }
+
 const { data } = Astro.props;
-const actions = (data.actions ?? []).filter(Boolean);
+const actions = (data.actions ?? []).filter((a): a is Action => a !== null);
 ---
 <Section>
 	<div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16">
@@ -19,7 +23,7 @@ const actions = (data.actions ?? []).filter(Boolean);
 			)}
 			{actions.length > 0 && (
 				<div class="flex flex-wrap gap-3 pt-2">
-					{actions.map((action: any) => (
+					{actions.map((action) => (
 						<div data-tina-field={tinaField(action)} class="bg-foreground/10 rounded-2xl border p-0.5">
 							<Button href={action.link} size="lg" variant={action.type === 'link' ? 'ghost' : 'default'} class="rounded-xl px-5 text-base">
 								{action.icon && <Icon name={action.icon} class="size-4" />}
