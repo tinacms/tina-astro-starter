@@ -2,6 +2,10 @@
 @import '@fontsource-variable/inter';
 @plugin '@tailwindcss/typography';
 
+/* Drive the dark: variant from the .dark class (toggled by ThemeToggle),
+   not the prefers-color-scheme media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
 	--font-sans: 'Inter Variable', system-ui, sans-serif;
 	--radius-sm: calc(var(--radius) - 4px);
