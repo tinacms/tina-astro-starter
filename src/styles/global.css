@@ -97,6 +97,29 @@
 	}
 }
 
+/* Prose (blog body) follows the theme tokens so it inverts in dark mode and
+   keeps the indigo tint, rather than the plugin's default zero-chroma grays.
+   Unlayered so it overrides the typography plugin's layered variables. */
+.prose {
+	--tw-prose-body: var(--foreground);
+	--tw-prose-headings: var(--foreground);
+	--tw-prose-lead: var(--muted-foreground);
+	--tw-prose-links: var(--primary);
+	--tw-prose-bold: var(--foreground);
+	--tw-prose-counters: var(--muted-foreground);
+	--tw-prose-bullets: var(--muted-foreground);
+	--tw-prose-hr: var(--border);
+	--tw-prose-quotes: var(--foreground);
+	--tw-prose-quote-borders: var(--border);
+	--tw-prose-captions: var(--muted-foreground);
+	--tw-prose-kbd: var(--foreground);
+	--tw-prose-code: var(--foreground);
+	--tw-prose-pre-code: var(--secondary-foreground);
+	--tw-prose-pre-bg: var(--muted);
+	--tw-prose-th-borders: var(--border);
+	--tw-prose-td-borders: var(--border);
+}
+
 @keyframes twinkle {
 	0%, 100% { opacity: 0.25; }
 	50% { opacity: 0.9; }
