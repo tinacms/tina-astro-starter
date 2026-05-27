@@ -1,11 +1,9 @@
 import type { Template } from 'tinacms';
-import { sectionBackgroundField } from '../../../tina/templates/section-background';
 
 export const testimonialBlockSchema: Template = {
 	name: 'testimonial',
 	label: 'Testimonial',
 	fields: [
-		sectionBackgroundField as any,
 		{ type: 'string', label: 'Title', name: 'title' },
 		{ type: 'string', label: 'Description', name: 'description', ui: { component: 'textarea' } },
 		{

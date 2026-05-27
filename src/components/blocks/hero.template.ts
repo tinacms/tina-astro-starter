@@ -1,11 +1,9 @@
 import type { Template } from 'tinacms';
-import { sectionBackgroundField } from '../../../tina/templates/section-background';
 
 export const heroBlockSchema: Template = {
 	name: 'hero',
 	label: 'Hero',
 	fields: [
-		sectionBackgroundField as any,
 		{ type: 'string', label: 'Headline', name: 'headline' },
 		{ type: 'string', label: 'Tagline', name: 'tagline' },
 		{
