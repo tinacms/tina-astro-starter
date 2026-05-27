@@ -1,5 +1,6 @@
 ---
 import { tinaField } from '@tinacms/astro/tina-field';
+import Callout from './Callout.astro';
 import Content from './Content.astro';
 import Cta from './Cta.astro';
 import Features from './Features.astro';
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const componentMap: Record<string, any> = {
+	PageBlocksCallout: Callout,
 	PageBlocksContent: Content,
 	PageBlocksCta: Cta,
 	PageBlocksFeatures: Features,
