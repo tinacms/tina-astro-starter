@@ -17,11 +17,21 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 
 <script is:inline>
 	(function () {
-		try {
-			const stored = localStorage.getItem('theme');
-			const dark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
-			document.documentElement.classList.toggle('dark', dark);
-		} catch (e) {}
+		function isDark() {
+			try {
+				const stored = localStorage.getItem('theme');
+				return stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+			} catch (e) {
+				return false;
+			}
+		}
+		function apply() {
+			document.documentElement.classList.toggle('dark', isDark());
+		}
+		apply();
+		// ClientRouter swaps in the SSR'd <html> (no .dark) on navigation,
+		// so re-apply the persisted theme after each swap, before paint.
+		document.addEventListener('astro:after-swap', apply);
 	})();
 </script>
 
