@@ -2,6 +2,7 @@
 import { tinaField } from "@tinacms/astro/tina-field";
 import type { ConfigQuery } from "../../tina/__generated__/types";
 import IconLink from "./IconLink.astro";
+import Starfield from './space/Starfield.astro';
 
 interface Props {
 	config?: ConfigQuery["config"] | null;
@@ -16,18 +17,21 @@ const today = new Date();
 	<div class="tina-banner-content"><img src="/llama.svg" alt="Tina CMS Llama Logo" /><a href="https://tina.io" target="_blank" rel="noopener noreferrer">Powered by TinaCMS</a>
 	</div>
 </div>
-	<footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground">
-		&copy; {today.getFullYear()}
-		<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
-		<div class="mt-4 flex justify-center gap-4">
-			{contactLinks.map((link) => (
-				<IconLink
-					title={link.title}
-					link={link.link}
-					icon={link.icon}
-					data-tina-field={tinaField(link, "title")}
-				/>
-			))}
+	<footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground relative overflow-hidden">
+		<Starfield count={50} class="text-foreground/15" />
+		<div class="relative">
+			&copy; {today.getFullYear()}
+			<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
+			<div class="mt-4 flex justify-center gap-4">
+				{contactLinks.map((link) => (
+					<IconLink
+						title={link.title}
+						link={link.link}
+						icon={link.icon}
+						data-tina-field={tinaField(link, "title")}
+					/>
+				))}
+			</div>
 		</div>
 	</footer>
 

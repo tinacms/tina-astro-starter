@@ -3,6 +3,7 @@ import { tinaField } from "@tinacms/astro/tina-field";
 import type { ConfigQuery } from "../../tina/__generated__/types";
 import IconLink from "./IconLink.astro";
 import ThemeToggle from './ThemeToggle.astro';
+import Starfield from './space/Starfield.astro';
 
 interface Props {
 	config?: ConfigQuery["config"] | null;
@@ -14,8 +15,9 @@ const nav = (config?.nav ?? []).filter((item) => item !== null);
 const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null);
 ---
 
-<header class="fixed top-0 z-20 w-full border-b bg-background/50 backdrop-blur-xl">
-	<nav class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+<header class="fixed top-0 z-20 w-full border-b bg-background/50 backdrop-blur-xl relative overflow-hidden">
+	<Starfield count={40} twinkle={false} class="text-foreground/15" />
+	<nav class="relative mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
 		<a href="/" class="flex items-center gap-2 font-semibold">
 			{seo?.logo && <img src={seo.logo} alt="Logo" width="32" height="32" data-tina-field={tinaField(seo, "logo")} />}
 			<span data-tina-field={seo ? tinaField(seo, "title") : undefined}>{seo?.title}</span>
