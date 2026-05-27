@@ -1,0 +1,20 @@
+---
+const { class: className = 'size-40' } = Astro.props;
+---
+<svg aria-hidden="true" viewBox="0 0 120 120" fill="none" class={className} xmlns="http://www.w3.org/2000/svg">
+	<!-- helmet -->
+	<circle cx="60" cy="60" r="46" class="fill-card stroke-border" stroke-width="2" />
+	<circle cx="60" cy="60" r="38" class="fill-background" />
+	<!-- visor -->
+	<path d="M32 58a28 22 0 0 1 56 0a28 16 0 0 1 -56 0Z" class="fill-primary/25 stroke-primary/50" stroke-width="1.5" />
+	<!-- llama head silhouette inside visor -->
+	<g class="fill-foreground">
+		<path d="M54 70c-1-8-3-12-3-18 0-7 4-12 9-12s9 5 9 12c0 6-2 10-3 18Z" />
+		<path d="M50 44c-2-4-2-9 0-12 2 2 3 6 2 10Z" />
+		<path d="M70 44c2-4 2-9 0-12-2 2-3 6-2 10Z" />
+		<circle cx="56" cy="52" r="1.6" class="fill-background" />
+		<circle cx="64" cy="52" r="1.6" class="fill-background" />
+	</g>
+	<!-- helmet highlight -->
+	<path d="M40 40a26 26 0 0 1 14-12" class="stroke-foreground/20" stroke-width="2" stroke-linecap="round" fill="none" />
+</svg>

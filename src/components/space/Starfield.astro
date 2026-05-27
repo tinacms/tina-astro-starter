@@ -1,0 +1,16 @@
+---
+interface Props { count?: number; twinkle?: boolean; class?: string; }
+const { count = 60, twinkle = true, class: className = '' } = Astro.props;
+const frac = (n: number) => { const x = Math.sin(n) * 43758.5453; return Math.abs(x - Math.floor(x)); };
+const stars = Array.from({ length: count }, (_, i) => ({
+	cx: (frac(i + 1) * 100).toFixed(2),
+	cy: (frac((i + 1) * 2.7) * 100).toFixed(2),
+	r: (frac((i + 1) * 5.3) * 0.9 + 0.2).toFixed(2),
+	d: (frac((i + 1) * 9.1) * 4).toFixed(2),
+}));
+---
+<svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class={`pointer-events-none absolute inset-0 h-full w-full ${className}`}>
+	{stars.map((s) => (
+		<circle cx={s.cx} cy={s.cy} r={s.r} fill="currentColor" class={twinkle ? 'star-twinkle' : ''} style={`--d:${s.d}s`} />
+	))}
+</svg>
