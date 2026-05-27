@@ -90,6 +90,7 @@
 		color: var(--foreground);
 		font-family: var(--font-sans);
 		margin: 0;
+		padding-top: 5rem;
 	}
 	.bg-default {
 		background-color: var(--background);
