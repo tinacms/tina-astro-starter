@@ -5,15 +5,20 @@ import { Icon } from 'astro-icon/components';
 	id="theme-toggle"
 	type="button"
 	aria-label="Toggle color theme"
-	class="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+	class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
 >
 	<Icon name="tabler:sun" class="hidden size-5 dark:block" />
 	<Icon name="tabler:moon" class="block size-5 dark:hidden" />
 </button>
-<script>
-	const btn = document.getElementById('theme-toggle');
-	btn?.addEventListener('click', () => {
-		const isDark = document.documentElement.classList.toggle('dark');
-		localStorage.setItem('theme', isDark ? 'dark' : 'light');
-	});
+<script is:inline>
+	// Delegate from document so the handler survives DOM swaps from
+	// Astro's ClientRouter and Tina's visual-editor re-renders.
+	if (!window.__themeToggleBound) {
+		window.__themeToggleBound = true;
+		document.addEventListener('click', (e) => {
+			if (!e.target.closest('#theme-toggle')) return;
+			const isDark = document.documentElement.classList.toggle('dark');
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		});
+	}
 </script>
