@@ -1,13 +1,58 @@
 ---
 blocks:
+  - _template: hero
+    headline: Build content-driven sites with Astro + TinaCMS
+    tagline: A polished, Git-backed starter with visual editing and composable blocks.
+    actions:
+      - label: Get Started
+        type: button
+        icon: rocket
+        link: /
+      - label: Read the docs
+        type: link
+        link: https://tina.io/docs
+  - _template: callout
+    text: Now with React-free visual editing
+    url: https://tina.io
+  - _template: features
+    title: Everything you need
+    description: Composable, Git-backed, and editable in context.
+    items:
+      - title: Visual editing
+        icon: edit
+        text: Click any field and edit it in place.
+      - title: Composable blocks
+        icon: layout-grid
+        text: Assemble pages from reusable sections.
+      - title: Git-backed
+        icon: brand-git
+        text: Content lives in your repository.
+  - _template: stats
+    title: TinaCMS by the numbers
+    description: An open-source headless CMS developers trust.
+    stats:
+      - stat: 12K
+        type: Stars on GitHub
+      - stat: 11K
+        type: Active Users
+      - stat: 22K
+        type: Powered Apps
   - _template: content
     body: |
-      # Welcome to TinaCMS + Astro
+      ## Write in Markdown
 
-      This starter is composed from editable blocks. Open the editor and try it.
+      The content block renders rich text with the Tailwind Typography plugin, so prose looks great out of the box.
+  - _template: testimonial
+    title: Loved by developers
+    testimonials:
+      - quote: The visual editing experience is unmatched.
+        author: Jane Doe
+        role: Frontend Engineer
+  - _template: video
+    url: https://www.youtube.com/watch?v=j8egYW7Jpgk
   - _template: cta
-    title: Start Building
-    description: Get started with TinaCMS today.
+    title: Start building today
+    description: Ship a polished, editable site in minutes.
     actions:
       - label: Get Started
         type: button
