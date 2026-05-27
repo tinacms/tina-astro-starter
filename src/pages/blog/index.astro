@@ -20,7 +20,7 @@ const config = (await getConfig()).data?.config ?? null;
 				<li>
 					<a href={`/blog/${slug}/`} class="group block overflow-hidden rounded-xl border bg-card shadow-sm transition-shadow hover:shadow-md">
 						{post.heroImage && (
-							<img width={720} height={360} src={post.heroImage} alt="" class="aspect-video w-full object-cover" />
+							<img width={720} height={360} src={post.heroImage} alt={post.title ?? ''} class="aspect-video w-full object-cover" />
 						)}
 						<div class="p-6">
 							<h2 class="font-semibold group-hover:underline">{post.title}</h2>

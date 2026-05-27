@@ -9,7 +9,7 @@ import Icon from '../ui/Icon.astro';
 const { data } = Astro.props;
 const items = (data.items ?? []).filter(Boolean);
 ---
-<Section background={data.background}>
+<Section>
 	<div class="mx-auto max-w-5xl px-6">
 		<div class="text-center">
 			<h2 data-tina-field={tinaField(data, 'title')} class="text-balance text-4xl font-semibold lg:text-5xl">{data.title}</h2>

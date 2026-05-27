@@ -4,7 +4,7 @@ import Section from '../ui/Section.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 const { data } = Astro.props;
 ---
-<Section background={data.background} class="prose prose-lg max-w-none">
+<Section class="prose prose-lg max-w-none">
 	<div class="mx-auto max-w-3xl" data-tina-field={tinaField(data, 'body')}>
 		<TinaMarkdown content={data.body} />
 	</div>

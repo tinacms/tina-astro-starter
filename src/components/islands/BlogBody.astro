@@ -25,7 +25,7 @@ const updatedDate = data?.updatedDate;
 			<div data-tina-field={data ? tinaField(data, 'pubDate') : undefined} class="text-sm text-muted-foreground">
 				<FormattedDate date={new Date(pubDate)} />
 				{updatedDate && (
-					<span data-tina-field={data ? tinaField(data, 'updatedDate') : undefined} class="italic"> · Last updated {new Date(updatedDate).toLocaleDateString()}</span>
+					<span data-tina-field={data ? tinaField(data, 'updatedDate') : undefined} class="italic"> · Last updated <FormattedDate date={new Date(updatedDate)} /></span>
 				)}
 			</div>
 		)}

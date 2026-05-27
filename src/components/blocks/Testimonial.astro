@@ -8,7 +8,7 @@ const { data } = Astro.props;
 const testimonials = (data.testimonials ?? []).filter(Boolean);
 const initials = (name = '') => name.split(' ').map((w: string) => w[0]).join('');
 ---
-<Section background={data.background}>
+<Section>
 	<div class="mx-auto max-w-xl text-center">
 		<h2 data-tina-field={tinaField(data, 'title')} class="text-3xl font-semibold">{data.title}</h2>
 		<p data-tina-field={tinaField(data, 'description')} class="mt-6 text-muted-foreground">{data.description}</p>
