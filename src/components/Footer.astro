@@ -14,7 +14,7 @@ const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null
 const today = new Date();
 ---
 <footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground relative overflow-hidden">
-	<Starfield count={50} class="text-foreground/15" />
+	{config?.footerStarfield !== false && <Starfield count={50} class="text-foreground/15" />}
 	<div class="relative flex flex-col items-center gap-6">
 		{contactLinks.length > 0 && (
 			<div class="flex justify-center gap-4">

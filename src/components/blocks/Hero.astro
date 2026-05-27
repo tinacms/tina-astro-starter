@@ -10,7 +10,7 @@ const actions = (data.actions ?? []).filter(Boolean);
 ---
 <Section class="relative overflow-hidden">
 	<Aurora />
-	<Starfield count={70} class="text-foreground/20" />
+	{data.starfield !== false && <Starfield count={70} class="text-foreground/20" />}
 	<div class="relative text-center sm:mx-auto lg:mr-auto">
 		<div data-tina-field={tinaField(data, 'image')} class="mx-auto mb-6 size-56 md:size-72">
 			{data.image?.src

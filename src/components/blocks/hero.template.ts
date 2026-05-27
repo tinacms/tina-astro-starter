@@ -23,11 +23,13 @@ export const heroBlockSchema: Template = {
 				{ name: 'alt', label: 'Alt Text', type: 'string' },
 			],
 		},
+		{ type: 'boolean', label: 'Show starfield', name: 'starfield' },
 	],
 	ui: {
 		defaultItem: {
 			tagline: "Here's some text above the other text",
 			headline: 'Astro + TinaCMS, ready to ship',
+			starfield: true,
 		},
 	},
 };
