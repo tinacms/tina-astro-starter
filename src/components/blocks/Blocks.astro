@@ -5,6 +5,7 @@ import Cta from './Cta.astro';
 import Features from './Features.astro';
 import Hero from './Hero.astro';
 import Stats from './Stats.astro';
+import Testimonial from './Testimonial.astro';
 import type { PageQuery } from '../../../tina/__generated__/types';
 
 interface Props {
@@ -17,6 +18,7 @@ const componentMap: Record<string, any> = {
 	PageBlocksFeatures: Features,
 	PageBlocksHero: Hero,
 	PageBlocksStats: Stats,
+	PageBlocksTestimonial: Testimonial,
 };
 
 const { data } = Astro.props;
