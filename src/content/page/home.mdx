@@ -1,74 +1,77 @@
 ---
 blocks:
-  - _template: hero
-    headline: The fastest way to build content-driven sites
-    tagline: Astro ships your pages with zero JavaScript by default. TinaCMS lets
-      you edit them visually, backed by Git. Build it fast, edit it in context,
-      own your content.
+  - headline: The fastest way to build content-driven sites
+    tagline: 'Astro ships your pages with zero JavaScript by default. TinaCMS lets you edit them visually, backed by Git. Build it fast, edit it in context, own your content.'
     actions:
       - label: Get Started
         type: button
         icon: rocket
-        link: https://tina.io/docs/setup-overview/
+        link: 'https://tina.io/docs/setup-overview/'
       - label: Star on GitHub
         type: link
         icon: brand-github
-        link: https://github.com/tinacms/tinacms
-  - _template: callout
-    text: Now with React-free visual editing, powered by @tinacms/astro
-    url: https://tina.io
-  - _template: features
-    title: Built for content, built for speed
+        link: 'https://github.com/tinacms/tinacms'
+    _template: hero
+  - text: 'Now with React-free visual editing, powered by @tinacms/astro'
+    url: 'https://tina.io'
+    _template: callout
+  - title: 'Built for content, built for speed'
     description: Astro's server-first performance meets TinaCMS's visual editing.
     items:
-      - title: Server-first performance
-        icon: bolt
-        text: Render on the server and send lightweight HTML to the browser, with
-          zero unnecessary JavaScript overhead.
-      - title: Visual editing for developers
-        icon: edit
-        text: An open-source, headless CMS with built-in Git version control. Edit
-          content visually while keeping full developer control.
-      - title: Git-native content
-        icon: brand-git
-        text: Your content lives in your repository as Markdown. Version it, review
-          it, own it.
-  - _template: stats
-    title: Performance you can measure
-    description: Astro leads the web on Core Web Vitals, and TinaCMS is trusted by
-      thousands of developers.
+      - icon: bolt
+        title: Server-first performance
+        text: |
+          Render on the server and send lightweight HTML to the browser, with zero unnecessary JavaScript overhead.
+      - icon: edit
+        title: Visual editing for developers
+        text: |
+          An open-source, headless CMS with built-in Git version control. Edit content visually while keeping full developer control.
+      - icon: brand-git
+        title: Git-native content
+        text: |
+          Your content lives in your repository as Markdown. Version it, review it, own it.
+    _template: features
+  - title: Performance you can measure
+    description: 'Astro leads the web on Core Web Vitals, and TinaCMS is trusted by thousands of developers.'
     stats:
       - stat: 66%
-        type: Core Web Vitals pass rate
+        type: '% of real-world sites with good Core Web Vitals use Astro'
       - stat: 0 KB
         type: JavaScript by default
       - stat: 13K+
         type: Stars on GitHub
-  - _template: content
-    body: |
+    _template: stats
+  - body: |
       ## Markdown is the answer
 
       LLMs think in it. Your CMS should too. TinaCMS stores everything as Markdown in Git, so your content stays open, portable, and ready for whatever comes next.
-  - _template: testimonial
-    title: Loved by developers
+    _template: content
+  - title: Loved by developers and editors
+    description: The teams who ship on Astro and Tina keep coming back for the same reason. A fast site their whole team can actually edit.
     testimonials:
-      - quote: I shipped a fully editable marketing site in an afternoon. Astro's
-          speed plus Tina's visual editing is the combo I didn't know I needed.
-        author: Sam Rivera
-        role: Full-stack developer
-  - _template: video
-    url: https://www.youtube.com/watch?v=j8egYW7Jpgk
-  - _template: cta
-    title: Start building today
-    description: Spin up this starter with one command, then make it your own in the
-      visual editor.
+      - quote: I made a whole website and I don't even have computer hacking skills. You just click the words right on the page and type new ones. Gosh, it's flippin' sweet.
+        author: Napoleon Dynamite
+        role: Student, Preston High
+      - quote: I love technology, and this is the sweetest setup I've found online. The content lives in Git, so nothing ever gets lost, not even my chat logs with LaFawnduh.
+        author: Kip Dynamite
+        role: Online entrepreneur
+      - quote: I built my whole campaign site in one night. If you want all your wildest dreams to come true, ship it on Astro and Tina.
+        author: Pedro Sánchez
+        role: Class president
+    _template: testimonial
+  - url: 'https://www.youtube.com/watch?v=j8egYW7Jpgk'
+    _template: video
+  - title: Start building today
+    description: 'Spin up this starter with one command, then make it your own in the visual editor.'
     actions:
       - label: Get Started
         type: button
         icon: rocket
-        link: https://tina.io/docs/setup-overview/
+        link: 'https://tina.io/docs/setup-overview/'
       - label: View on GitHub
         type: link
         icon: brand-github
-        link: https://github.com/tinacms/tina-astro-starter
+        link: 'https://github.com/tinacms/tina-astro-starter'
+    _template: cta
 ---
+
