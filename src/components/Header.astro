@@ -2,6 +2,7 @@
 import { tinaField } from "@tinacms/astro/tina-field";
 import type { ConfigQuery } from "../../tina/__generated__/types";
 import IconLink from "./IconLink.astro";
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
 	config?: ConfigQuery["config"] | null;
@@ -28,6 +29,7 @@ const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null
 			{contactLinks.map((link) => (
 				<IconLink title={link.title} link={link.link} icon={link.icon} data-tina-field={tinaField(link, "title")} />
 			))}
+			<ThemeToggle />
 		</div>
 	</nav>
 </header>
