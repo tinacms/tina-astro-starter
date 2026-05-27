@@ -1,0 +1,22 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Content from './Content.astro';
+import Cta from './Cta.astro';
+
+const componentMap: Record<string, any> = {
+	PageBlocksContent: Content,
+	PageBlocksCta: Cta,
+};
+
+const { data } = Astro.props;
+const blocks = (data?.blocks ?? []).filter(Boolean);
+---
+{blocks.map((block: any) => {
+	const Component = componentMap[block.__typename];
+	if (!Component) return null;
+	return (
+		<div data-tina-field={tinaField(block)}>
+			<Component data={block} />
+		</div>
+	);
+})}

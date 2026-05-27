@@ -1,0 +1,10 @@
+---
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import Section from '../ui/Section.astro';
+const { data } = Astro.props;
+---
+<Section background={data.background} class="prose prose-lg max-w-none">
+	<div class="mx-auto max-w-3xl">
+		<TinaMarkdown content={data.body} />
+	</div>
+</Section>
