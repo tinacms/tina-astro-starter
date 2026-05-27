@@ -16,7 +16,7 @@ const initials = (name = '') => name.split(' ').map((w: string) => w[0]).join(''
 	<div class="mt-8 grid gap-6 md:mt-12 sm:grid-cols-2 lg:grid-cols-3">
 		{testimonials.map((t: any) => (
 			<Card class="h-full" data-tina-field={tinaField(t)}>
-				<CardContent class="grid grid-cols-[auto_1fr] gap-3 pt-6">
+				<CardContent class="grid grid-cols-[auto_1fr] gap-3">
 					<Avatar src={t.avatar} alt={t.author} fallback={initials(t.author)} />
 					<div>
 						<h3 data-tina-field={tinaField(t, 'author')} class="font-medium">{t.author}</h3>
