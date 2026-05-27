@@ -1,23 +1,27 @@
 ---
 name: TinaCMS Astro Starter
-description: A neutral, theme-able shadcn-based system aligned with the TinaCMS Next.js starter. Light and dark, block-composed, color supplied by content.
+description: A cosmic-violet, dark-capable space theme ("The Observatory") on a content-first Astro + TinaCMS starter.
 colors:
-  background: "oklch(1 0 0)"
-  foreground: "oklch(0.145 0 0)"
-  card: "oklch(1 0 0)"
-  primary: "oklch(0.205 0 0)"
-  primary-foreground: "oklch(0.985 0 0)"
-  secondary: "oklch(0.97 0 0)"
-  secondary-foreground: "oklch(0.205 0 0)"
-  muted: "oklch(0.97 0 0)"
-  muted-foreground: "oklch(0.556 0 0)"
-  accent: "oklch(0.97 0 0)"
-  accent-foreground: "oklch(0.205 0 0)"
+  background: "oklch(0.99 0.004 285)"
+  foreground: "oklch(0.20 0.03 285)"
+  card: "oklch(1 0.002 285)"
+  primary: "oklch(0.52 0.20 285)"
+  primary-foreground: "oklch(0.99 0.005 285)"
+  secondary: "oklch(0.96 0.01 285)"
+  secondary-foreground: "oklch(0.30 0.04 285)"
+  muted: "oklch(0.96 0.01 285)"
+  muted-foreground: "oklch(0.48 0.03 285)"
+  accent: "oklch(0.95 0.02 285)"
+  accent-foreground: "oklch(0.30 0.05 285)"
   destructive: "oklch(0.577 0.245 27.325)"
-  border: "oklch(0.922 0 0)"
-  input: "oklch(0.922 0 0)"
-  ring: "oklch(0.708 0 0)"
+  border: "oklch(0.90 0.012 285)"
+  input: "oklch(0.90 0.012 285)"
+  ring: "oklch(0.52 0.20 285)"
   chart-orange: "oklch(0.646 0.222 41.116)"
+  chart-teal: "oklch(0.6 0.118 184.704)"
+  chart-blue: "oklch(0.398 0.07 227.392)"
+  chart-gold: "oklch(0.828 0.189 84.429)"
+  chart-amber: "oklch(0.769 0.188 70.08)"
 typography:
   display:
     fontFamily: "Inter, system-ui, sans-serif"
@@ -101,127 +105,146 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "The Editor's Canvas"**
+**Creative North Star: "The Observatory"**
 
-This system is deliberately quiet so the content can be loud. It is the shadcn/ui foundation the TinaCMS Next.js starter is built on, adopted here so every Tina starter speaks the same visual language. The palette is a pure neutral grayscale with no fixed brand color; identity arrives from the content itself, the editor's per-section background tint, real imagery, sharp typography, and the Tina-orange iconography, rather than from chrome that shouts. The chrome (a translucent fixed header, generous section rhythm, soft-bordered cards) recedes; the page is a canvas an editor paints on inside TinaCMS.
+Picture a deep-night observatory: the dome is open, the telescope is pointed at something worth seeing, and everything around it stays dark and quiet so your eyes can adjust. That is the posture of this design system. Content — the headline, the feature copy, the blog post — is the celestial object under examination. The surrounding chrome is the dome: present, purposeful, and unlit.
 
-Two things make this work rather than read as a default install. First, it is genuinely theme-aware: a first-class light and dark mode, switched by a `.dark` class on the root, with every token defined for both. Second, it is composed, not templated: pages are built from blocks (hero, features, stats, testimonial, CTA, content) at a wide `max-w-7xl` rhythm, each section able to carry its own background tint. The single largest risk is the obvious one, and PRODUCT.md names it: a neutral shadcn shell with filler content is exactly the **generic AI / SaaS template** this project must not be. The defense is not more color in the chrome; it is real content, deliberate type, and restraint. If the page looks generic, the fix is better words and images, not a louder UI.
+Personality arrives in the atmosphere and the seams. Starfields drift behind the header and footer at 15% opacity. An aurora — a single low-chroma radial glow, not a linear sweep — warms the hero from above. ConstellationDividers stitch sections together with a hand-drawn-feeling dot-and-line. A llama-naut mascot floats above the hero headline, wearing a helmet, waiting to drift into a 404 page. These motifs are placed sparingly, `aria-hidden`, and `pointer-events-none`; they add soul without obscuring a single word or blocking an editor click target.
+
+The palette is cosmic violet: hue 285 across all neutrals, light and dark. On the "daybreak" light surface (`oklch(0.99 0.004 285)`) the violet tint is almost imperceptible, a cool undertone rather than a color. The dark surface (`oklch(0.16 0.02 285)`) reads as deep space — not pure black, but the blue-black of a night sky. Primary violet (`oklch(0.52 0.20 285)` light / `oklch(0.70 0.16 285)` dark) is the single saturated accent: links, the primary CTA button, focus rings, and small motifs. It is never used as a flood. Dark mode is the canonical state; the light "daybreak" mode is a clean, desk-lamp alternative that shares the same violet logic.
 
 **Key Characteristics:**
-- Neutral OKLCH grayscale foundation; zero brand hue in the core palette.
+- Cosmic-violet accent (`oklch(0.52 0.20 285)` / `oklch(0.70 0.16 285)` dark); all neutrals tinted to hue 285.
 - First-class light and dark themes, every token defined for both.
-- Block-composed pages at a wide `max-w-7xl` (1280px) section rhythm.
-- Color is supplied by content: per-section tints, chart hues, Tina-orange icons.
-- shadcn/ui component vocabulary: Button (six variants), Card, translucent nav.
+- Starfield, aurora, and constellation atmospheric motifs — decorative, `aria-hidden`, `currentColor`-driven.
+- Llama-naut SVG mascot as a signature character on the hero and 404.
+- Content stays fully legible (WCAG AA) in both themes; motifs never reduce contrast.
 
 ## 2. Colors
 
-A zero-chroma neutral scale carrying the whole UI, with one saturated red reserved for destructive actions and a small chart palette for data. Brand color is intentionally absent from the chrome.
+The palette is a violet tint on every level of the neutral scale, with a saturated violet primary pulled from the same hue family.
 
 ### Primary
-- **Ink** (light `oklch(0.205 0 0)` / dark `oklch(0.922 0 0)`): The `--primary`. Default button fill and the strongest interactive surface. Near-black on light, near-white on dark; it inverts with the theme rather than staying a fixed color.
-- **Primary Foreground** (light `oklch(0.985 0 0)` / dark `oklch(0.205 0 0)`): Text on primary surfaces.
+- **Violet** (light `oklch(0.52 0.20 285)` / dark `oklch(0.70 0.16 285)`): The `--primary`. Default button fill, active focus ring, and the one allowed accent color anywhere in the chrome. On light surfaces it sits at a mid-dark perceptual weight; on dark surfaces it brightens to remain visible without washing out.
+- **Primary Foreground** (light `oklch(0.99 0.005 285)` / dark `oklch(0.16 0.02 285)`): Text on primary surfaces — near-white on the violet button in light mode, deep-space dark on the lighter-violet button in dark mode.
 
 ### Secondary
-- **Surface Gray** (light `oklch(0.97 0 0)` / dark `oklch(0.269 0 0)`): `--secondary`, `--muted`, and `--accent` all share this near-white (near-charcoal in dark) tone. Secondary buttons, muted panels, hover backgrounds.
-- **Muted Foreground** (light `oklch(0.556 0 0)` / dark `oklch(0.708 0 0)`): Secondary text, nav links at rest, card descriptions, captions.
+- **Indigo-tinted Surface** (light `oklch(0.96 0.01 285)` / dark `oklch(0.26 0.03 285)`): `--secondary`, `--muted`, and `--accent` all share this value. Near-white with a cool undertone in light; a lifted charcoal in dark. Used for secondary buttons, muted panels, and hover backgrounds.
+- **Muted Foreground** (light `oklch(0.48 0.03 285)` / dark `oklch(0.72 0.03 285)`): Secondary text — nav links at rest, card descriptions, captions. The violet tint is present here too, a ghost of hue 285 in the gray.
 
 ### Tertiary
-- **Destructive Red** (light `oklch(0.577 0.245 27.325)` / dark `oklch(0.704 0.191 22.216)`): Reserved exclusively for destructive actions and error states. Never decorative.
-- **Chart Palette** (`chart-1..5`, e.g. orange `oklch(0.646 0.222 41.116)`, teal, blue, gold, amber): The only saturated colors in the system, reserved for data visualization. `chart-1` is the Tina-adjacent orange.
+- **Destructive Red** (light `oklch(0.577 0.245 27.325)` / dark `oklch(0.70 0.19 22)`): Reserved exclusively for destructive actions and error states. Never decorative.
+- **Chart Palette** (`chart-1..5`, orange/teal/blue/gold/amber): The only other saturated colors in the system, reserved for data visualization.
 
 ### Neutral
-- **Canvas** (light `oklch(1 0 0)` / dark `oklch(0.145 0 0)`): `--background` and `--card`. The page and card surface.
-- **Foreground** (light `oklch(0.145 0 0)` / dark `oklch(0.985 0 0)`): Body and heading text.
-- **Border** (light `oklch(0.922 0 0)` / dark `oklch(1 0 0 / 10%)`): `--border` and `--input`. Applied globally; separation is border-driven, not shadow-driven.
-- **Ring** (light `oklch(0.708 0 0)` / dark `oklch(0.556 0 0)`): Focus-visible ring color.
+- **Deep-space Background** (light `oklch(0.99 0.004 285)` / dark `oklch(0.16 0.02 285)`): Page and card surfaces. Light reads as a whisper of violet; dark reads as deep space.
+- **Foreground** (light `oklch(0.20 0.03 285)` / dark `oklch(0.95 0.012 285)`): Body and heading text. The dark-mode foreground is slightly warm-violet, not pure white.
+- **Border** (light `oklch(0.90 0.012 285)` / dark `oklch(0.95 0.01 285 / 12%)`): Applied globally; separation is border-driven, not shadow-driven.
+- **Ring** (light `oklch(0.52 0.20 285)` / dark `oklch(0.70 0.16 285)`): Focus-visible ring color — matches primary, so focus reads as a violet halo.
 
 ### Named Rules
-**The No-Brand-Chrome Rule.** The core palette has no brand hue on purpose. Color enters a page through content: the editor's per-section background tint, chart colors, Tina-orange icons, and imagery. Do not paint the header, buttons, or borders Tina orange to "add brand"; that breaks the canvas.
+**The Rationed Violet Rule.** Violet (`--primary`) is the single accent color. It should cover at most ~10% of any screen: links, one CTA button, active/focus states, and small decorative motifs. Do not use it as a background flood, a hero gradient wash, or a card tint. Restraint is what makes it feel like craft rather than a theme kit.
 
-**The Theme-Parity Rule.** Every color token is defined for both light and dark. Never hardcode a hex that only works in one theme; reference the semantic token (`--primary`, `--muted-foreground`) so it inverts automatically.
-
-**The Saturation-Earns-Its-Place Rule.** The only saturated colors are destructive red (actions/errors) and the chart palette (data viz). A saturated color anywhere else is a mistake.
+**The Indigo-Tint Rule.** All neutrals are tinted toward hue 285, never pure gray, black, or white. This includes surfaces, borders, muted text, and shadows. The tint is subtle (chroma 0.004–0.03) on lighter values and more perceptible on darker ones. Introducing a zero-chroma gray anywhere breaks the tonal coherence.
 
 ## 3. Typography
 
 **Display / Body Font:** Inter (variable `--font-sans`, with `system-ui, sans-serif` fallback)
 **Alternates loaded:** Nunito (`--font-nunito`) and Lato (`--font-lato`) are available for content-driven overrides; Inter is the default everywhere.
 
-**Character:** Inter is the neutral, screen-native workhorse: it disappears so the content reads. Personality comes from scale jumps and weight, not from the typeface. Hero text uses `text-wrap: balance` so headlines break gracefully.
+**Character:** Inter disappears so the content reads. Personality comes from scale jumps and weight, not from the typeface. Hero text uses `text-wrap: balance` so headlines break gracefully. The violet accent on links and CTAs carries the theme into the type without changing the face.
 
 ### Hierarchy
-- **Display** (600, `clamp(3rem, 6vw, 5.25rem)`, line-height ~1.05, letter-spacing -0.02em): Hero `h1` only. The one oversized moment per page (`text-6xl` → `7xl` → `5.25rem`).
-- **Headline** (600, `clamp(2.25rem, 4vw, 3rem)`, line-height 1.1): Section `h2` (`text-4xl` → `lg:text-5xl`). Block titles.
-- **Title** (500-600, ~1.125rem, line-height 1.2): Card titles (`font-semibold leading-none`) and feature `h3` (`font-medium`).
-- **Body** (400, 1rem / `text-base`, line-height ~1.6): Paragraph copy. Taglines step up to `text-lg` at `max-w-2xl`. Long-form uses the Tailwind Typography `prose prose-lg` plugin.
-- **Label** (400, 0.875rem / `text-sm`): Nav links, card descriptions, feature body, captions. Carried in Muted Foreground.
+- **Display** (600, `clamp(3rem, 6vw, 5.25rem)`, line-height ~1.05, letter-spacing -0.02em): Hero `h1` only. The one oversized moment per page.
+- **Headline** (600, `clamp(2.25rem, 4vw, 3rem)`, line-height 1.1): Section `h2`. Block titles.
+- **Title** (500–600, ~1.125rem, line-height 1.2): Card titles and feature `h3`.
+- **Body** (400, 1rem, line-height ~1.6): Paragraph copy. Long-form uses `prose prose-lg`.
+- **Label** (400, 0.875rem): Nav links, card descriptions, captions — carried in Muted Foreground.
 
 ### Named Rules
-**The One-Big-Moment Rule.** Only the hero `h1` is oversized (up to 5.25rem). Section headings stop at `~3rem`. Don't let a second element compete with the hero for scale.
+**The One-Big-Moment Rule.** Only the hero `h1` is oversized (up to 5.25rem). Section headings stop at ~3rem. Don't let a second element compete with the hero for scale.
 
 **The Measure Rule.** Section width is wide (`max-w-7xl`), but text blocks are constrained: taglines to `max-w-2xl`, feature copy inside `max-w-5xl`. Never run body text the full 1280px.
 
 ## 4. Elevation
 
-A border-first system with restrained, low shadows. Separation is carried by `--border` applied globally (`* { @apply border-border }`), not by drop shadows. Shadows are soft and small, used to lift interactive and content objects a half-step, never to manufacture depth on flat panels. Depth inverts cleanly in dark mode (borders shift to `white / 10%`, shadows all but vanish). The one deliberate blur is the fixed header's translucency, a purposeful glass nav, not decorative glassmorphism.
+A border-first system with restrained, low shadows, plus a new atmosphere layer for cosmic personality. Separation is carried by `--border` applied globally (`* { @apply border-border }`), not by drop shadows. The one deliberate blur remains the fixed header's translucency.
 
 ### Shadow Vocabulary
-- **shadow-xs** (`0 1px 2px rgba(0,0,0,0.05)`): Buttons. A hairline lift so controls read as pressable.
+- **shadow-xs** (`0 1px 2px rgba(0,0,0,0.05)`): Buttons.
 - **shadow-sm** (`0 1px 3px rgba(0,0,0,0.1)`): Cards at rest.
-- **shadow-lg** (`0 10px 15px rgba(24,24,27,0.15)`): The hero image plate, paired with `ring-1 ring-background` and `inset-shadow-2xs`.
+- **shadow-lg** (`0 10px 15px rgba(24,24,27,0.15)`): Hero image plate.
 - **Header glass** (`backdrop-blur-3xl` over `bg-background/50`, `border-b`): The fixed nav. The single sanctioned blur.
 
+### Atmosphere Layer
+Decorative `aria-hidden` backdrops add depth without elevation:
+- **Starfield**: deterministic SVG star-dots at 10–20% opacity, with optional `twinkle` animation gated behind `prefers-reduced-motion: no-preference`. Applied behind the header, footer, and hero.
+- **Aurora**: a single soft radial gradient glow (`radial-gradient(closest-side, oklch(0.62 0.18 285 / 0.55), transparent)`) at 30–40% opacity. Positioned above the hero, pointing at the headline. Not a linear sweep.
+- **ConstellationDivider**: a five-point dot-and-polyline SVG used as a section seam between blocks.
+
 ### Named Rules
-**The Border-First Rule.** Reach for a 1px `--border` before a shadow. Cards, inputs, and sections separate by stroke; shadow is a small accent on top, never the primary divider.
+**The Border-First Rule.** Reach for a 1px `--border` before a shadow. Separation is by stroke; shadow is a small accent on top, never the primary divider.
 
 **The Glass-Once Rule.** The only backdrop blur is the fixed header. Do not add glass panels, blurred cards, or frosted overlays elsewhere.
+
+**The Aurora-Not-Sweep Rule.** The atmospheric glow is always a radial gradient (a single soft point source). Never a linear gradient swept across a hero or section background. A linear purple-to-magenta sweep is the generic SaaS anti-reference; the radial aurora is the intentional alternative.
 
 ## 5. Components
 
 ### Buttons (shadcn `cva`)
-- **Shape:** `rounded-md` (0.5rem). Sizes: default `h-9 px-4`, `sm h-8 px-3`, `lg h-10 px-6`, `icon size-9`. Weight `font-medium`, `text-sm`, `gap-2` for icon+label.
-- **Default:** `bg-primary text-primary-foreground shadow-xs`; hover `bg-primary/90`.
+- **Shape:** `rounded-md` (0.5rem). Sizes: default `h-9 px-4`, `sm h-8 px-3`, `lg h-10 px-6`, `icon size-9`.
+- **Default:** `bg-primary text-primary-foreground shadow-xs`; hover `bg-primary/90`. Violet fill in both themes.
 - **Outline:** `border bg-background shadow-xs`; hover `bg-accent text-accent-foreground`.
-- **Secondary:** `bg-secondary text-secondary-foreground`; hover `bg-secondary/80`.
-- **Ghost:** transparent; hover `bg-accent`. **Link:** `text-primary`, `underline-offset-4`, hover underline.
-- **Destructive:** `bg-destructive text-white`. Reserved for destructive actions.
-- **Focus:** `focus-visible:ring-[3px] ring-ring/50` with `border-ring`. Always visible.
-- **CTA pill pattern:** primary actions sit inside a `bg-foreground/10 rounded-[~16px] border p-0.5` wrapper with a `rounded-xl` button, giving the hero/CTA buttons a soft double-edge.
+- **Secondary/Ghost/Link:** as per the existing shadcn `cva` definitions.
+- **Focus:** `focus-visible:ring-[3px] ring-ring/50` — the ring is violet, matching `--ring` = `--primary`.
+- **CTA pill pattern:** primary actions sit inside a `bg-foreground/10 rounded-[~16px] border p-0.5` wrapper.
 
 ### Cards
 - **Shape:** `rounded-xl` (0.875rem), `border`, `bg-card`, `shadow-sm`, `py-6`, vertical `gap-6`.
-- **Anatomy:** `CardHeader` (`px-6 gap-1.5`), `CardTitle` (`font-semibold leading-none`), `CardDescription` (`text-muted-foreground text-sm`), `CardContent` (`px-6`), `CardFooter` (`px-6`).
-- **Feature grid variant:** a single Card split into a 3-column `divide-x` grid (stacks to `divide-y` on mobile). Each cell uses a **CardDecorator**: a 144px square with a 24px dotted grid and a radial fade, centering a 48px bordered icon tile. This is the signature content-card pattern; reach for it before inventing a new card.
+- **Feature grid variant:** a single Card split into a 3-column `divide-x` grid. Each cell uses a **CardDecorator** with a dotted grid and radial fade.
 
 ### Navigation
-- **Header:** `fixed`, full width, `border-b`, `bg-background/50 backdrop-blur-3xl`, inner `max-w-6xl px-6`, ~`h-20` (main content offsets with `pt-20`). Logo (Tina icon + name) at left, nav at right.
-- **Links:** `text-sm text-muted-foreground`, hover `text-accent-foreground`, `duration-150`. No underline, no active stripe; hover is a foreground-color shift only.
-- **Mobile:** hamburger toggles a `rounded-3xl border bg-background p-6 shadow-2xl` panel; the `lucide` Menu/X icons cross-fade and rotate (`duration-200`).
+- **Header:** `fixed`, full width, `border-b`, `bg-background/50 backdrop-blur-3xl`, inner `max-w-6xl px-6`. Contains the ThemeToggle at the right end of the actions group.
+- **Links:** `text-sm text-muted-foreground`, hover `text-accent-foreground`, `duration-150`.
+- **Mobile:** hamburger toggles a `rounded-3xl border bg-background p-6 shadow-2xl` panel.
+
+### Space Motifs
+All motif components live in `src/components/space/` and share these invariants: `aria-hidden="true"`, `pointer-events-none`, absolutely positioned by the consuming layout, and color-driven by `currentColor` or token classes so they adapt to both themes automatically.
+
+- **Starfield** (`Starfield.astro`): Deterministic pseudo-random SVG `<circle>` dots. Props: `count` (default 60), `twinkle` (boolean, default true). Twinkle uses the `star-twinkle` CSS class with a `--d` delay custom property; the animation is gated behind `prefers-reduced-motion: no-preference` in `global.css`. Applied to: header (count 40, no twinkle, 15% opacity), footer (count 50, 15% opacity), hero (count 70, 20% opacity).
+- **Aurora** (`Aurora.astro`): A single radial `blur-3xl` glow div. Positioned in the hero behind the content. Per the Aurora-Not-Sweep Rule, this is always radial.
+- **ConstellationDivider** (`ConstellationDivider.astro`): Five-node dot-and-polyline SVG. Used as a section seam between each pair of blocks via `Blocks.astro`.
+- **OrbitRings** (`OrbitRings.astro`): Three overlapping ellipses at `text-primary/20`, centered behind the CTA section.
+- **Planet** (`Planet.astro`): A circle + ring ellipse at `fill-primary/15` / `stroke-primary/30`, positioned as a corner accent behind the Stats section.
+- **LlamaNaut** (`LlamaNaut.astro`): The signature mascot — a clean llama-in-helmet SVG. Rendered above the hero headline and as the centerpiece of the 404 page. Sized via the `class` prop (default `size-40`).
+
+### ThemeToggle
+`ThemeToggle.astro`: a `size-9` icon button at the right end of the header nav. Shows a sun icon in dark mode, a moon icon in light. Persists preference to `localStorage` and applies `dark` class to `<html>` via an `is:inline` no-flash init script in `<head>`.
 
 ### Section / Block System
-- **Section:** `py-12 mx-auto max-w-7xl px-6`, wrapped in a selectable background (`bg-default` plus 20 editor-chosen Tailwind 50-tints: `bg-orange-50/80`, `bg-blue-50/80`, and so on). This tint picker is how editors introduce color per section.
-- **Blocks:** `hero` (centered headline + tagline + action pills + image plate), `features` (centered `h2` + feature-grid card), `cta` (centered title + description + action pills), plus `stats`, `testimonial`, `callout`, `content` (`prose prose-lg`), and `video`. Compose pages from these; do not hand-roll one-off section layouts.
+- **Section:** `py-12 mx-auto max-w-7xl px-6`. Per-section tint picker for editors.
+- **Blocks:** hero, features, stats, CTA, testimonial, callout, content, video. Separated by ConstellationDividers when composed in `Blocks.astro`.
 
 ### Inputs / Fields
-- **Style:** `border` (`--input`), `bg-background`, `rounded-md`, `text-sm`. **Focus:** the same `ring-[3px] ring-ring/50` as buttons. **Invalid:** `aria-invalid` shifts the ring to `destructive`.
+- **Style:** `border` (`--input`), `bg-background`, `rounded-md`, `text-sm`. Focus: `ring-[3px] ring-ring/50` — violet ring.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** reference semantic tokens (`bg-primary`, `text-muted-foreground`, `border-border`) so every element inverts correctly between light and dark, per The Theme-Parity Rule.
-- **Do** introduce color through content: the per-section tint picker, chart palette, Tina-orange icons, and real imagery, never through the chrome.
-- **Do** compose pages from the existing blocks (hero, features, stats, CTA, content) at the `max-w-7xl` rhythm.
-- **Do** separate with a 1px `--border` first; add `shadow-xs`/`shadow-sm` only as a small lift.
-- **Do** keep one oversized moment (the hero `h1`) per page and constrain text blocks to `max-w-2xl`/`max-w-5xl`.
-- **Do** give every control the visible `focus-visible:ring-[3px]` and respect `prefers-reduced-motion` on block entrance animations.
+- **Do** ration violet: use `--primary` for links, one CTA button, active/focus states, and small motifs only. Keep it to ~10% of screen area, per The Rationed Violet Rule.
+- **Do** keep content legible at WCAG AA in both light and dark themes. Body text, muted text, and interactive labels must all pass contrast. Motifs must not sit on top of readable text.
+- **Do** gate all animation (star twinkle, block entrance) behind `@media (prefers-reduced-motion: no-preference)`.
+- **Do** mark every decorative motif SVG `aria-hidden="true"` and `pointer-events-none` so it is invisible to assistive technology and cannot block editor interaction.
+- **Do** reference semantic tokens (`bg-primary`, `text-muted-foreground`, `border-border`) so elements invert correctly between light and dark, per The Theme-Parity Rule.
+- **Do** compose pages from the existing blocks at the `max-w-7xl` rhythm and separate sections with ConstellationDividers.
+- **Do** keep one oversized moment (the hero `h1`) per page and constrain text blocks to `max-w-2xl` / `max-w-5xl`.
 
 ### Don't:
-- **Don't** ship the raw shadcn default with filler copy: that is precisely the **generic AI / SaaS template** PRODUCT.md forbids (hero-metric blocks, identical icon-card grids, purple gradients, "trusted by" logo soup). Differentiate through content and type, not a louder UI.
-- **Don't** paint the chrome (header, buttons, borders) Tina orange to "add brand"; the No-Brand-Chrome Rule keeps the canvas neutral.
-- **Don't** use saturated color outside destructive actions and charts.
-- **Don't** add backdrop blur or glass anywhere but the fixed header (The Glass-Once Rule); no decorative glassmorphism.
-- **Don't** use `border-left` greater than 1px as a colored stripe on cards, list items, or callouts.
-- **Don't** hardcode `#000`/`#fff` or theme-specific hexes; consider tinting the neutrals a hair toward a hue if the pure-gray default feels sterile, but keep it a single source of truth.
-- **Don't** run body text the full 1280px width, and don't let a second element rival the hero for scale.
-- **Don't** lean on spring-bounce or long blur-in entrances as default motion; prefer a short ease-out, and gate all block choreography behind reduced-motion.
+- **Don't** use gradient text (`background-clip: text`) anywhere. It is unreadable on some display/OS combinations and is a visual marker of the generic SaaS template.
+- **Don't** use a flat purple→magenta linear gradient on a hero or section background. That is the exact anti-reference in PRODUCT.md. The aurora is a radial glow, not a linear sweep; the distinction is the whole point.
+- **Don't** add glassmorphism beyond the header. The Glass-Once Rule is explicit: one backdrop blur, one translucent panel, the fixed nav.
+- **Don't** let motifs reduce text contrast or block TinaCMS editor click targets. Motifs are atmosphere; content is the signal.
+- **Don't** use zero-chroma neutrals (pure `oklch(L 0 0)`). All surfaces and neutrals carry the 285 hue tint, per The Indigo-Tint Rule.
+- **Don't** hardcode `#000`/`#fff` or theme-specific values outside the token file; reference the semantic token so it inverts automatically.
+- **Don't** run body text the full 1280px width, and don't let any element other than the hero `h1` compete for display scale.
+- **Don't** animate without a reduced-motion gate. Spring-bounce or long blur-in entrances are off by default; prefer a short ease-out.
