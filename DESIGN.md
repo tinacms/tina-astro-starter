@@ -1,11 +1,11 @@
 ---
 name: TinaCMS Astro Starter
-description: A cosmic-violet, dark-capable space theme ("The Observatory") on a content-first Astro + TinaCMS starter.
+description: A deep-space, ember-accented, dark-capable space theme ("The Observatory") on a content-first Astro + TinaCMS starter.
 colors:
   background: "oklch(0.99 0.004 285)"
   foreground: "oklch(0.20 0.03 285)"
   card: "oklch(1 0.002 285)"
-  primary: "oklch(0.52 0.20 285)"
+  primary: "oklch(0.645 0.198 37)"
   primary-foreground: "oklch(0.99 0.005 285)"
   secondary: "oklch(0.96 0.01 285)"
   secondary-foreground: "oklch(0.30 0.04 285)"
@@ -16,7 +16,7 @@ colors:
   destructive: "oklch(0.577 0.245 27.325)"
   border: "oklch(0.90 0.012 285)"
   input: "oklch(0.90 0.012 285)"
-  ring: "oklch(0.52 0.20 285)"
+  ring: "oklch(0.645 0.198 37)"
   chart-orange: "oklch(0.646 0.222 41.116)"
   chart-teal: "oklch(0.6 0.118 184.704)"
   chart-blue: "oklch(0.398 0.07 227.392)"
@@ -111,10 +111,10 @@ Picture a deep-night observatory: the dome is open, the telescope is pointed at 
 
 Personality arrives in the atmosphere and the seams. Starfields drift behind the header and footer at 15% opacity. An aurora — a single low-chroma radial glow, not a linear sweep — warms the hero from above. ConstellationDividers stitch sections together with a hand-drawn-feeling dot-and-line. A llama-naut mascot floats above the hero headline, wearing a helmet, waiting to drift into a 404 page. These motifs are placed sparingly, `aria-hidden`, and `pointer-events-none`; they add soul without obscuring a single word or blocking an editor click target.
 
-The palette is cosmic violet: hue 285 across all neutrals, light and dark. On the "daybreak" light surface (`oklch(0.99 0.004 285)`) the violet tint is almost imperceptible, a cool undertone rather than a color. The dark surface (`oklch(0.16 0.02 285)`) reads as deep space — not pure black, but the blue-black of a night sky. Primary violet (`oklch(0.52 0.20 285)` light / `oklch(0.70 0.16 285)` dark) is the single saturated accent: links, the primary CTA button, focus rings, and small motifs. It is never used as a flood. Dark mode is the canonical state; the light "daybreak" mode is a clean, desk-lamp alternative that shares the same violet logic.
+The neutral palette is hue 285 across all surfaces, light and dark. On the "daybreak" light surface (`oklch(0.99 0.004 285)`) the indigo tint is almost imperceptible, a cool undertone rather than a color. The dark surface (`oklch(0.16 0.02 285)`) reads as deep space — not pure black, but the blue-black of a night sky. The single saturated accent is Tina ember orange (`oklch(0.645 0.198 37)` light / `oklch(0.70 0.18 40)` dark): links, the primary CTA button, focus rings, and small motifs. It is a warm solar glow against the deep-space surfaces, never used as a flood. Dark mode is the canonical state; the light "daybreak" mode is a clean, desk-lamp alternative that shares the same ember-on-indigo logic.
 
 **Key Characteristics:**
-- Cosmic-violet accent (`oklch(0.52 0.20 285)` / `oklch(0.70 0.16 285)` dark); all neutrals tinted to hue 285.
+- Tina ember orange accent (`oklch(0.645 0.198 37)` light / `oklch(0.70 0.18 40)` dark); all neutrals tinted to hue 285.
 - First-class light and dark themes, every token defined for both.
 - Starfield, aurora, and constellation atmospheric motifs — decorative, `aria-hidden`, `currentColor`-driven.
 - Llama-naut SVG mascot as a signature character on the hero and 404.
@@ -122,11 +122,11 @@ The palette is cosmic violet: hue 285 across all neutrals, light and dark. On th
 
 ## 2. Colors
 
-The palette is a violet tint on every level of the neutral scale, with a saturated violet primary pulled from the same hue family.
+The neutral palette is an indigo tint (hue 285) on every level of the surface scale, with a warm ember orange primary from a separate hue family — a deliberate warm-against-cool contrast.
 
 ### Primary
-- **Violet** (light `oklch(0.52 0.20 285)` / dark `oklch(0.70 0.16 285)`): The `--primary`. Default button fill, active focus ring, and the one allowed accent color anywhere in the chrome. On light surfaces it sits at a mid-dark perceptual weight; on dark surfaces it brightens to remain visible without washing out.
-- **Primary Foreground** (light `oklch(0.99 0.005 285)` / dark `oklch(0.16 0.02 285)`): Text on primary surfaces — near-white on the violet button in light mode, deep-space dark on the lighter-violet button in dark mode.
+- **Tina Ember Orange** (light `oklch(0.645 0.198 37)` / dark `oklch(0.70 0.18 40)`): The `--primary`. Default button fill, active focus ring, and the one allowed accent color anywhere in the chrome. A warm solar ember against the deep-space indigo-tinted surfaces. On light surfaces it reads as a vivid orange-amber; on dark surfaces it softens slightly to remain vibrant without washing out.
+- **Primary Foreground** (light `oklch(0.99 0.005 285)` / dark `oklch(0.16 0.02 285)`): Text on primary surfaces — near-white on the ember button in light mode, deep-space dark on the lighter ember button in dark mode.
 
 ### Secondary
 - **Indigo-tinted Surface** (light `oklch(0.96 0.01 285)` / dark `oklch(0.26 0.03 285)`): `--secondary`, `--muted`, and `--accent` all share this value. Near-white with a cool undertone in light; a lifted charcoal in dark. Used for secondary buttons, muted panels, and hover backgrounds.
@@ -140,10 +140,10 @@ The palette is a violet tint on every level of the neutral scale, with a saturat
 - **Deep-space Background** (light `oklch(0.99 0.004 285)` / dark `oklch(0.16 0.02 285)`): Page and card surfaces. Light reads as a whisper of violet; dark reads as deep space.
 - **Foreground** (light `oklch(0.20 0.03 285)` / dark `oklch(0.95 0.012 285)`): Body and heading text. The dark-mode foreground is slightly warm-violet, not pure white.
 - **Border** (light `oklch(0.90 0.012 285)` / dark `oklch(0.95 0.01 285 / 12%)`): Applied globally; separation is border-driven, not shadow-driven.
-- **Ring** (light `oklch(0.52 0.20 285)` / dark `oklch(0.70 0.16 285)`): Focus-visible ring color — matches primary, so focus reads as a violet halo.
+- **Ring** (light `oklch(0.645 0.198 37)` / dark `oklch(0.70 0.18 40)`): Focus-visible ring color — matches primary, so focus reads as an ember halo.
 
 ### Named Rules
-**The Rationed Violet Rule.** Violet (`--primary`) is the single accent color. It should cover at most ~10% of any screen: links, one CTA button, active/focus states, and small decorative motifs. Do not use it as a background flood, a hero gradient wash, or a card tint. Restraint is what makes it feel like craft rather than a theme kit.
+**The Rationed Ember Rule.** Tina ember orange (`--primary`) is the single accent color. It should cover at most ~10% of any screen: links, one CTA button, active/focus states, and small decorative motifs. Do not use it as a background flood, a hero gradient wash, or a card tint. Restraint is what makes it feel like craft rather than a theme kit.
 
 **The Indigo-Tint Rule.** All neutrals are tinted toward hue 285, never pure gray, black, or white. This includes surfaces, borders, muted text, and shadows. The tint is subtle (chroma 0.004–0.03) on lighter values and more perceptible on darker ones. Introducing a zero-chroma gray anywhere breaks the tonal coherence.
 
@@ -152,7 +152,7 @@ The palette is a violet tint on every level of the neutral scale, with a saturat
 **Display / Body Font:** Inter (variable `--font-sans`, with `system-ui, sans-serif` fallback)
 **Alternates loaded:** Nunito (`--font-nunito`) and Lato (`--font-lato`) are available for content-driven overrides; Inter is the default everywhere.
 
-**Character:** Inter disappears so the content reads. Personality comes from scale jumps and weight, not from the typeface. Hero text uses `text-wrap: balance` so headlines break gracefully. The violet accent on links and CTAs carries the theme into the type without changing the face.
+**Character:** Inter disappears so the content reads. Personality comes from scale jumps and weight, not from the typeface. Hero text uses `text-wrap: balance` so headlines break gracefully. The ember accent on links and CTAs carries the theme into the type without changing the face.
 
 ### Hierarchy
 - **Display** (600, `clamp(3rem, 6vw, 5.25rem)`, line-height ~1.05, letter-spacing -0.02em): Hero `h1` only. The one oversized moment per page.
@@ -179,7 +179,7 @@ A border-first system with restrained, low shadows, plus a new atmosphere layer 
 ### Atmosphere Layer
 Decorative `aria-hidden` backdrops add depth without elevation:
 - **Starfield**: deterministic SVG star-dots at 10–20% opacity, with optional `twinkle` animation gated behind `prefers-reduced-motion: no-preference`. Applied behind the header, footer, and hero.
-- **Aurora**: a single soft radial gradient glow (`radial-gradient(closest-side, oklch(0.62 0.18 285 / 0.55), transparent)`) at 30–40% opacity. Positioned above the hero, pointing at the headline. Not a linear sweep.
+- **Aurora**: a single soft radial gradient glow (`radial-gradient(closest-side, oklch(0.645 0.198 37 / 0.5), transparent)`) at 30–40% opacity. A warm ember glow positioned above the hero, pointing at the headline. Not a linear sweep.
 - **ConstellationDivider**: a five-point dot-and-polyline SVG used as a section seam between blocks.
 
 ### Named Rules
@@ -193,10 +193,10 @@ Decorative `aria-hidden` backdrops add depth without elevation:
 
 ### Buttons (shadcn `cva`)
 - **Shape:** `rounded-md` (0.5rem). Sizes: default `h-9 px-4`, `sm h-8 px-3`, `lg h-10 px-6`, `icon size-9`.
-- **Default:** `bg-primary text-primary-foreground shadow-xs`; hover `bg-primary/90`. Violet fill in both themes.
+- **Default:** `bg-primary text-primary-foreground shadow-xs`; hover `bg-primary/90`. Ember orange fill in both themes.
 - **Outline:** `border bg-background shadow-xs`; hover `bg-accent text-accent-foreground`.
 - **Secondary/Ghost/Link:** as per the existing shadcn `cva` definitions.
-- **Focus:** `focus-visible:ring-[3px] ring-ring/50` — the ring is violet, matching `--ring` = `--primary`.
+- **Focus:** `focus-visible:ring-[3px] ring-ring/50` — the ring is ember orange, matching `--ring` = `--primary`.
 - **CTA pill pattern:** primary actions sit inside a `bg-foreground/10 rounded-[~16px] border p-0.5` wrapper.
 
 ### Cards
@@ -226,12 +226,12 @@ All motif components live in `src/components/space/` and share these invariants:
 - **Blocks:** hero, features, stats, CTA, testimonial, callout, content, video. Separated by ConstellationDividers when composed in `Blocks.astro`.
 
 ### Inputs / Fields
-- **Style:** `border` (`--input`), `bg-background`, `rounded-md`, `text-sm`. Focus: `ring-[3px] ring-ring/50` — violet ring.
+- **Style:** `border` (`--input`), `bg-background`, `rounded-md`, `text-sm`. Focus: `ring-[3px] ring-ring/50` — ember orange ring.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** ration violet: use `--primary` for links, one CTA button, active/focus states, and small motifs only. Keep it to ~10% of screen area, per The Rationed Violet Rule.
+- **Do** ration the ember accent: use `--primary` for links, one CTA button, active/focus states, and small motifs only. Keep it to ~10% of screen area, per The Rationed Ember Rule.
 - **Do** keep content legible at WCAG AA in both light and dark themes. Body text, muted text, and interactive labels must all pass contrast. Motifs must not sit on top of readable text.
 - **Do** gate all animation (star twinkle, block entrance) behind `@media (prefers-reduced-motion: no-preference)`.
 - **Do** mark every decorative motif SVG `aria-hidden="true"` and `pointer-events-none` so it is invisible to assistive technology and cannot block editor interaction.
