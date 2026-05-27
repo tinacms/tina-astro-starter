@@ -16,10 +16,10 @@ const today = new Date();
 	<div class="tina-banner-content"><img src="/llama.svg" alt="Tina CMS Llama Logo" /><a href="https://tina.io" target="_blank" rel="noopener noreferrer">Powered by TinaCMS</a>
 	</div>
 </div>
-	<footer class="copyright-footer">
+	<footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground">
 		&copy; {today.getFullYear()}
 		<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
-		<div class="social-links">
+		<div class="mt-4 flex justify-center gap-4">
 			{contactLinks.map((link) => (
 				<IconLink
 					title={link.title}
@@ -32,29 +32,6 @@ const today = new Date();
 	</footer>
 
 <style>
-
-	.copyright-footer {
-		padding: 2em 1em 2em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
-	}
-
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-
-	.social-links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
-	}
 
 	.tina-footer {
 		display: flex;
