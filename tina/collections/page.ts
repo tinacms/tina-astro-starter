@@ -7,6 +7,7 @@ import { testimonialBlockSchema } from '../../src/components/blocks/testimonial.
 import { calloutBlockSchema } from '../../src/components/blocks/callout.template';
 import { contentBlockSchema } from '../../src/components/blocks/content.template';
 import { videoBlockSchema } from '../../src/components/blocks/video.template';
+import { splitBlockSchema } from '../../src/components/blocks/split.template';
 
 export const PageCollection: Collection = {
 	name: 'page',
@@ -36,6 +37,7 @@ export const PageCollection: Collection = {
 				contentBlockSchema as any,
 				testimonialBlockSchema as any,
 				videoBlockSchema as any,
+				splitBlockSchema as any,
 			],
 		},
 	],
