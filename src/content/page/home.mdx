@@ -1,60 +1,74 @@
 ---
 blocks:
   - _template: hero
-    headline: Build content-driven sites with Astro + TinaCMS
-    tagline: A polished, Git-backed starter with visual editing and composable blocks.
+    headline: The fastest way to build content-driven sites
+    tagline: Astro ships your pages with zero JavaScript by default. TinaCMS lets
+      you edit them visually, backed by Git. Build it fast, edit it in context,
+      own your content.
     actions:
       - label: Get Started
         type: button
         icon: rocket
-        link: /
-      - label: Read the docs
+        link: https://tina.io/docs/setup-overview/
+      - label: Star on GitHub
         type: link
-        link: https://tina.io/docs
+        icon: brand-github
+        link: https://github.com/tinacms/tinacms
   - _template: callout
-    text: Now with React-free visual editing
+    text: Now with React-free visual editing, powered by @tinacms/astro
     url: https://tina.io
   - _template: features
-    title: Everything you need
-    description: Composable, Git-backed, and editable in context.
+    title: Built for content, built for speed
+    description: Astro's server-first performance meets TinaCMS's visual editing.
     items:
-      - title: Visual editing
+      - title: Server-first performance
+        icon: bolt
+        text: Render on the server and send lightweight HTML to the browser, with
+          zero unnecessary JavaScript overhead.
+      - title: Visual editing for developers
         icon: edit
-        text: Click any field and edit it in place.
-      - title: Composable blocks
-        icon: layout-grid
-        text: Assemble pages from reusable sections.
-      - title: Git-backed
+        text: An open-source, headless CMS with built-in Git version control. Edit
+          content visually while keeping full developer control.
+      - title: Git-native content
         icon: brand-git
-        text: Content lives in your repository.
+        text: Your content lives in your repository as Markdown. Version it, review
+          it, own it.
   - _template: stats
-    title: TinaCMS by the numbers
-    description: An open-source headless CMS developers trust.
+    title: Performance you can measure
+    description: Astro leads the web on Core Web Vitals, and TinaCMS is trusted by
+      thousands of developers.
     stats:
-      - stat: 12K
+      - stat: 66%
+        type: Core Web Vitals pass rate
+      - stat: 0 KB
+        type: JavaScript by default
+      - stat: 13K+
         type: Stars on GitHub
-      - stat: 11K
-        type: Active Users
-      - stat: 22K
-        type: Powered Apps
   - _template: content
     body: |
-      ## Write in Markdown
+      ## Markdown is the answer
 
-      The content block renders rich text with the Tailwind Typography plugin, so prose looks great out of the box.
+      LLMs think in it. Your CMS should too. TinaCMS stores everything as Markdown in Git, so your content stays open, portable, and ready for whatever comes next.
   - _template: testimonial
     title: Loved by developers
     testimonials:
-      - quote: The visual editing experience is unmatched.
-        author: Jane Doe
-        role: Frontend Engineer
+      - quote: I shipped a fully editable marketing site in an afternoon. Astro's
+          speed plus Tina's visual editing is the combo I didn't know I needed.
+        author: Sam Rivera
+        role: Full-stack developer
   - _template: video
     url: https://www.youtube.com/watch?v=j8egYW7Jpgk
   - _template: cta
     title: Start building today
-    description: Ship a polished, editable site in minutes.
+    description: Spin up this starter with one command, then make it your own in the
+      visual editor.
     actions:
       - label: Get Started
         type: button
-        link: /
+        icon: rocket
+        link: https://tina.io/docs/setup-overview/
+      - label: View on GitHub
+        type: link
+        icon: brand-github
+        link: https://github.com/tinacms/tina-astro-starter
 ---
