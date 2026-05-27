@@ -14,7 +14,7 @@ const actions = (data.actions ?? []).filter(Boolean);
 	<div class="relative text-center sm:mx-auto lg:mr-auto">
 		<div data-tina-field={tinaField(data, 'image')} class="mx-auto mb-6 size-28 md:size-32">
 			{data.image?.src
-				? <img src={data.image.src} alt={data.image.alt ?? ''} class="size-full rounded-full object-cover" />
+				? <img src={data.image.src} alt={data.image.alt ?? ''} width="128" height="128" class="size-full rounded-full object-cover" />
 				: ''}
 		</div>
 		{data.headline && <h1 data-tina-field={tinaField(data, 'headline')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{data.headline}</h1>}
