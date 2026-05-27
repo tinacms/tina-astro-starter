@@ -13,16 +13,11 @@ const seo = config?.seo ?? null;
 const contactLinks = (config?.contactLinks ?? []).filter((item) => item !== null);
 const today = new Date();
 ---
-<div class="tina-footer">
-	<div class="tina-banner-content"><img src="/llama.svg" alt="Tina CMS Llama Logo" /><a href="https://tina.io" target="_blank" rel="noopener noreferrer">Powered by TinaCMS</a>
-	</div>
-</div>
-	<footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground relative overflow-hidden">
-		<Starfield count={50} class="text-foreground/15" />
-		<div class="relative">
-			&copy; {today.getFullYear()}
-			<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
-			<div class="mt-4 flex justify-center gap-4">
+<footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground relative overflow-hidden">
+	<Starfield count={50} class="text-foreground/15" />
+	<div class="relative flex flex-col items-center gap-6">
+		{contactLinks.length > 0 && (
+			<div class="flex justify-center gap-4">
 				{contactLinks.map((link) => (
 					<IconLink
 						title={link.title}
@@ -32,55 +27,21 @@ const today = new Date();
 					/>
 				))}
 			</div>
-		</div>
-	</footer>
-
-<style>
-
-	.tina-footer {
-		display: flex;
-		justify-content: center;
-		position: relative;
-		width: 100%;
-		overflow: hidden;
-		background-image: linear-gradient(60deg, #000000 0%,  #EC4815 50%, #000000 100%);
-		padding: 1.5em 0;
-	}
-
-	.tina-banner-content {
-		display: flex;
-		align-items: center;
-		gap: 0.5em;
-		font-size: 1.2em;
-		position: relative;
-		z-index: 2;
-	}
-
-	.tina-footer::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -50%;
-		width: 200%;
-		height: 100%;
-		background-image: linear-gradient(60deg, #1F1E24 25%,   #EC4815 50%, #1F1E24 75%);
-		transition: transform 1s ease-in-out;
-		z-index: 1;
-	}
-
-	.tina-footer:has(.tina-banner-content a:hover)::before {
-		transform: scaleX(2);
-	}
-
-	.tina-banner-content img {
-		width: 30px;
-		height: auto;
-	}
-
-	.tina-banner-content a {
-		color: white;
-		text-decoration: none;
-		padding-top: 0.5em;
-		font-weight: bold;
-	}
-</style>
+		)}
+		<p>
+			&copy; {today.getFullYear()}
+			<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
+		</p>
+		<a
+			href="https://tina.io"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="group inline-flex items-center gap-2.5 rounded-full border bg-card/60 py-1.5 pl-1.5 pr-4 text-xs font-medium text-muted-foreground shadow-xs transition-colors duration-200 hover:border-primary/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+		>
+			<span class="flex size-6 items-center justify-center rounded-full bg-primary transition-transform duration-300 group-hover:scale-105">
+				<img src="/llama.svg" alt="" aria-hidden="true" class="size-3.5" />
+			</span>
+			<span>Powered by <span class="font-semibold text-foreground">TinaCMS</span></span>
+		</a>
+	</div>
+</footer>
