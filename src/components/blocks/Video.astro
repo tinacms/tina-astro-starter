@@ -13,7 +13,11 @@ function toEmbed(url = '') {
 const src = data.url ? toEmbed(data.url) : null;
 const params = new URLSearchParams();
 if (data.autoPlay) { params.set('autoplay', '1'); params.set('mute', '1'); }
-if (data.loop) params.set('loop', '1');
+if (data.loop) {
+	params.set('loop', '1');
+	const ytId = src?.match(/embed\/([\w-]+)/)?.[1];
+	if (ytId) params.set('playlist', ytId);
+}
 const qs = params.toString();
 ---
 {src && (

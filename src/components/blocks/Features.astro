@@ -22,7 +22,7 @@ const items = (data.items ?? []).filter(Boolean);
 						<div class="relative mx-auto size-36">
 							<div aria-hidden class="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 							<div aria-hidden class="absolute inset-0 bg-radial from-transparent to-background to-75%"></div>
-							<div class="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
+							<div data-tina-field={tinaField(item, 'icon')} class="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
 								{item.icon && <Icon name={item.icon} class="size-6" />}
 							</div>
 						</div>
