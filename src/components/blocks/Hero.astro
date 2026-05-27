@@ -5,12 +5,12 @@ import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import Aurora from '../space/Aurora.astro';
 import Starfield from '../space/Starfield.astro';
-import type { Action, HeroBlock } from '../../lib/types/cms';
+import type { HeroBlock } from '../../lib/types/cms';
 
 interface Props { data: HeroBlock }
 
 const { data } = Astro.props;
-const actions = (data.actions ?? []).filter((a): a is Action => a !== null);
+const actions = (data.actions ?? []).filter(a => a !== null);
 ---
 <Section class="relative overflow-hidden">
 	<Aurora />

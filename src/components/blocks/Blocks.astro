@@ -10,45 +10,32 @@ import Stats from './Stats.astro';
 import Testimonial from './Testimonial.astro';
 import Video from './Video.astro';
 import ConstellationDivider from '../space/ConstellationDivider.astro';
-import type { CmsPage, PageBlock, PageBlockTypename } from '../../lib/types/cms';
+import type { CmsPage } from '../../lib/types/cms';
 
 interface Props {
 	data?: CmsPage | null;
 }
 
-/**
- * Map from a block's GraphQL `__typename` to the Astro component that
- * renders it. Each entry is widened to a generic renderer at the map type
- * — TypeScript would otherwise intersect every component's `data` prop
- * (since the map value is a union) and reduce it to `never`. The cast is
- * sound because we dispatch on `__typename` immediately below; the
- * underlying components keep their own narrow block prop types.
- */
-type BlockRenderer = (props: { data: PageBlock }) => unknown;
-
-const componentMap = {
-	PageBlocksCallout: Callout,
-	PageBlocksContent: Content,
-	PageBlocksCta: Cta,
-	PageBlocksFeatures: Features,
-	PageBlocksHero: Hero,
-	PageBlocksSplit: Split,
-	PageBlocksStats: Stats,
-	PageBlocksTestimonial: Testimonial,
-	PageBlocksVideo: Video,
-} as unknown as Record<PageBlockTypename, BlockRenderer>;
-
 const { data } = Astro.props;
-const blocks = (data?.blocks ?? []).filter((b): b is PageBlock => b !== null);
+const blocks = (data?.blocks ?? []).filter(b => b !== null);
 ---
 {blocks.map((block, i) => {
-	const Component = componentMap[block.__typename];
-	if (!Component) return null;
+	const rendered = (() => {
+		switch (block.__typename) {
+			case 'PageBlocksCallout': return <Callout data={block} />;
+			case 'PageBlocksContent': return <Content data={block} />;
+			case 'PageBlocksCta': return <Cta data={block} />;
+			case 'PageBlocksFeatures': return <Features data={block} />;
+			case 'PageBlocksHero': return <Hero data={block} />;
+			case 'PageBlocksSplit': return <Split data={block} />;
+			case 'PageBlocksStats': return <Stats data={block} />;
+			case 'PageBlocksTestimonial': return <Testimonial data={block} />;
+			case 'PageBlocksVideo': return <Video data={block} />;
+		}
+	})();
 	return (
 		<>
-			<div data-tina-field={tinaField(block)}>
-				<Component data={block} />
-			</div>
+			<div data-tina-field={tinaField(block)}>{rendered}</div>
 			{i < blocks.length - 1 && <ConstellationDivider class="my-2 opacity-70" />}
 		</>
 	);

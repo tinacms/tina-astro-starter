@@ -5,12 +5,12 @@ import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { cn } from '../../lib/cn';
-import type { Action, SplitBlock } from '../../lib/types/cms';
+import type { SplitBlock } from '../../lib/types/cms';
 
 interface Props { data: SplitBlock }
 
 const { data } = Astro.props;
-const actions = (data.actions ?? []).filter((a): a is Action => a !== null);
+const actions = (data.actions ?? []).filter(a => a !== null);
 ---
 <Section>
 	<div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16">

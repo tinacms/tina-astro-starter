@@ -6,12 +6,12 @@ import Card from '../ui/Card.astro';
 import CardHeader from '../ui/CardHeader.astro';
 import CardContent from '../ui/CardContent.astro';
 import Icon from '../ui/Icon.astro';
-import type { FeatureItem, FeaturesBlock } from '../../lib/types/cms';
+import type { FeaturesBlock } from '../../lib/types/cms';
 
 interface Props { data: FeaturesBlock }
 
 const { data } = Astro.props;
-const items = (data.items ?? []).filter((it): it is FeatureItem => it !== null);
+const items = (data.items ?? []).filter(it => it !== null);
 ---
 <Section>
 	<div class="mx-auto max-w-5xl px-6">

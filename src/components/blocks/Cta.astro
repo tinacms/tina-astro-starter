@@ -4,12 +4,12 @@ import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import OrbitRings from '../space/OrbitRings.astro';
-import type { Action, CtaBlock } from '../../lib/types/cms';
+import type { CtaBlock } from '../../lib/types/cms';
 
 interface Props { data: CtaBlock }
 
 const { data } = Astro.props;
-const actions = (data.actions ?? []).filter((a): a is Action => a !== null);
+const actions = (data.actions ?? []).filter(a => a !== null);
 ---
 <Section class="relative overflow-hidden">
 	<OrbitRings class="opacity-70" />

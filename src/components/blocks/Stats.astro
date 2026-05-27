@@ -2,12 +2,12 @@
 import { tinaField } from '@tinacms/astro/tina-field';
 import Section from '../ui/Section.astro';
 import Planet from '../space/Planet.astro';
-import type { StatItem, StatsBlock } from '../../lib/types/cms';
+import type { StatsBlock } from '../../lib/types/cms';
 
 interface Props { data: StatsBlock }
 
 const { data } = Astro.props;
-const stats = (data.stats ?? []).filter((s): s is StatItem => s !== null);
+const stats = (data.stats ?? []).filter(s => s !== null);
 ---
 <Section class="relative overflow-hidden">
 	<Planet class="absolute -right-10 -top-10 h-48 w-48 opacity-60" />
