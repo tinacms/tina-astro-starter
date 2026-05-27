@@ -1,5 +1,11 @@
 ---
 import Blocks from '../blocks/Blocks.astro';
+import type { PageQuery } from '../../../tina/__generated__/types';
+
+interface Props {
+	data?: PageQuery['page'] | null;
+}
+
 const { data } = Astro.props;
 ---
 {data && <Blocks data={data} />}

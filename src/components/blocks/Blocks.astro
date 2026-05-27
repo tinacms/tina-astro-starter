@@ -2,6 +2,11 @@
 import { tinaField } from '@tinacms/astro/tina-field';
 import Content from './Content.astro';
 import Cta from './Cta.astro';
+import type { PageQuery } from '../../../tina/__generated__/types';
+
+interface Props {
+	data?: PageQuery['page'] | null;
+}
 
 const componentMap: Record<string, any> = {
 	PageBlocksContent: Content,

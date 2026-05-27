@@ -2,16 +2,17 @@
 import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
 const { data } = Astro.props;
 const actions = (data.actions ?? []).filter(Boolean);
 ---
 <Section>
 	<div class="text-center">
-		<h2 class="text-balance text-4xl font-semibold lg:text-5xl">{data.title}</h2>
-		<p class="mt-4 text-muted-foreground">{data.description}</p>
+		<h2 class="text-balance text-4xl font-semibold lg:text-5xl" data-tina-field={tinaField(data, 'title')}>{data.title}</h2>
+		<p class="mt-4 text-muted-foreground" data-tina-field={tinaField(data, 'description')}>{data.description}</p>
 		<div class="mt-12 flex flex-wrap justify-center gap-4">
 			{actions.map((action: any) => (
-				<div class="bg-foreground/10 rounded-2xl border p-0.5">
+				<div class="bg-foreground/10 rounded-2xl border p-0.5" data-tina-field={tinaField(action)}>
 					<Button href={action.link} size="lg" variant={action.type === 'link' ? 'ghost' : 'default'} class="rounded-xl px-5 text-base">
 						{action.icon && <Icon name={action.icon} class="size-4" />}
 						<span class="text-nowrap">{action.label}</span>
