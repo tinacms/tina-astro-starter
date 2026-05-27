@@ -10,6 +10,7 @@ lerna-debug.log*
 # Tooling / agent output
 .playwright-mcp
 .impeccable
+.prototools
 
 # TinaCMS generated output (also covered by tina/.gitignore)
 tina/__generated__
