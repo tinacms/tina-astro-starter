@@ -41,6 +41,10 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Tina Cloud rewrites media URLs to assets.tina.io in production; warm the connection. -->
+<link rel="preconnect" href="https://assets.tina.io" crossorigin />
+<link rel="dns-prefetch" href="https://assets.tina.io" />
+
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
