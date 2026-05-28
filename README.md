@@ -74,3 +74,27 @@ This template ships with lockfiles ignored (see the **Package Manager Lock Files
 ## Learn more
 
 [TinaCMS docs](https://tina.io/docs) · [Astro docs](https://docs.astro.build) · [TinaCMS Discord](https://discord.gg/cG2UNREu)
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321` (site) and `localhost:4321/admin/` (TinaCMS) |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run build:local`     | Build with content indexed locally (no TinaCloud) |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## Why does `package.json` pin `react` and `react-dom`?
+
+The Astro site itself is React-free — `@tinacms/astro` ships React-free visual editing. The pinned `react` / `react-dom@^18.3.1` in `devDependencies` exist only so the TinaCMS admin UI (which is a React app, built at dev/CI time by `tinacms build` into `public/admin/`) gets a React version matching the `react-dom@^18.3.1` peer that `tinacms` requires.
+
+Without these pins, pnpm's `auto-install-peers` resolves `react@19.0.0-rc` (to satisfy `@vercel/analytics`'s wide optional peer range) and pairs it with `react-dom@18.3.1`, which crashes at module init with `Cannot read properties of undefined (reading 'ReactCurrentDispatcher')`. Don't remove these pins until TinaCMS declares `react` / `react-dom` as direct deps of `@tinacms/cli` ([tinacms#6985](https://github.com/tinacms/tinacms/issues/6985)) — once that lands, this workaround can go.
+
+## Credit
+
+This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
