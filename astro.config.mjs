@@ -18,6 +18,9 @@ export default defineConfig({
 	// Tina Cloud rewrites CMS image src to assets.tina.io; let Astro
 	// fetch those URLs at build time so <Image> can transcode + resize them.
 	image: {
+		// Astro 6 responsive images: auto-emit srcset so the browser picks a
+		// variant matched to the rendered box + DPR, not the full intrinsic size.
+		layout: 'constrained',
 		remotePatterns: [{ protocol: 'https', hostname: 'assets.tina.io' }],
 	},
 	vite: {
