@@ -1,0 +1,63 @@
+---
+/**
+ * Click-to-load YouTube facade. Renders only a thumbnail + play button so the
+ * page ships zero YouTube JS/cookies on load — the privacy-friendly
+ * `youtube-nocookie.com` iframe is injected on first click.
+ *
+ * Expects a positioned (relative) parent that controls sizing/aspect ratio;
+ * the facade and the loaded iframe both fill it via `absolute inset-0`.
+ */
+interface Props {
+	id: string;
+	/** Extra query params appended after `autoplay=1`, e.g. `&loop=1&playlist=<id>`. */
+	params?: string;
+}
+
+const { id, params = '' } = Astro.props;
+
+// Resolve the sharpest available poster at build time so the crisp image is in
+// the HTML on first paint — no client-side swap, no blurry flash. maxresdefault
+// (1280×720) only exists if the uploader provided an HD thumbnail; it 404s
+// otherwise, so fall back to hqdefault (always present). The fetch is cached per
+// id to avoid re-probing the same video across multiple instances.
+const posterCache = ((globalThis as any).__ytPosterCache ??= new Map<string, Promise<string>>());
+async function bestPoster(videoId: string): Promise<string> {
+	const hd = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+	const sd = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+	try {
+		const res = await fetch(hd, { method: 'HEAD' });
+		return res.ok ? hd : sd;
+	} catch {
+		return sd;
+	}
+}
+if (!posterCache.has(id)) posterCache.set(id, bestPoster(id));
+const poster = await posterCache.get(id);
+---
+<button
+	type="button"
+	class="yt-facade group absolute inset-0 flex h-full w-full cursor-pointer items-center justify-center border-0 bg-cover bg-center p-0"
+	aria-label="Play video"
+	data-id={id}
+	data-params={params}
+	style={`background-image:url(${poster})`}
+>
+	<span class="flex size-16 items-center justify-center rounded-full bg-black/70 text-white transition group-hover:scale-110 group-hover:bg-black/80">
+		<svg viewBox="0 0 24 24" fill="currentColor" class="size-7 translate-x-0.5" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+	</span>
+</button>
+
+<script>
+	// One delegated listener handles every facade across page navigations.
+	document.addEventListener('click', (e) => {
+		const btn = (e.target as HTMLElement)?.closest<HTMLElement>('.yt-facade');
+		if (!btn) return;
+		const iframe = document.createElement('iframe');
+		iframe.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.id}?autoplay=1${btn.dataset.params ?? ''}`;
+		iframe.title = 'YouTube video player';
+		iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+		iframe.allowFullscreen = true;
+		iframe.className = 'absolute inset-0 h-full w-full';
+		btn.replaceWith(iframe);
+	});
+</script>

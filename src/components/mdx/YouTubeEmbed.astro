@@ -1,4 +1,6 @@
 ---
+import YouTubeFacade from '../ui/YouTubeFacade.astro';
+
 interface Props {
   videoId: string;
 }
@@ -7,8 +9,8 @@ const { videoId } = Astro.props;
 
 /**
  * Accept a bare ID, an ID with a share suffix (`?si=...`), or a full
- * YouTube URL — and always emit a clean `/embed/<id>` source so a pasted
- * value never produces a malformed embed URL.
+ * YouTube URL — and always emit a clean `<id>` so a pasted value never
+ * produces a malformed embed URL.
  */
 function extractId(input: string): string {
   if (!input) return "";
@@ -20,7 +22,7 @@ function extractId(input: string): string {
 const id = extractId(videoId);
 ---
 {id && (
-  <div>
-    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${id}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <div class="relative aspect-video w-full overflow-hidden rounded-xl">
+    <YouTubeFacade id={id} />
   </div>
 )}
