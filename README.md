@@ -84,6 +84,12 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
+## Why does `package.json` pin `react` and `react-dom`?
+
+The Astro site itself is React-free — `@tinacms/astro` ships React-free visual editing. The pinned `react` / `react-dom@^18.3.1` in `devDependencies` exist only so the TinaCMS admin UI (which is a React app, built at dev/CI time by `tinacms build` into `public/admin/`) gets a React version matching the `react-dom@^18.3.1` peer that `tinacms` requires.
+
+Without these pins, pnpm's `auto-install-peers` resolves `react@19.0.0-rc` (to satisfy `@vercel/analytics`'s wide optional peer range) and pairs it with `react-dom@18.3.1`, which crashes at module init with `Cannot read properties of undefined (reading 'ReactCurrentDispatcher')`. Don't remove these pins until TinaCMS declares `react` / `react-dom` as direct deps of `@tinacms/cli` ([tinacms#6985](https://github.com/tinacms/tinacms/issues/6985)) — once that lands, this workaround can go.
+
 ## 👀 Want to learn more?
 
 Check out the [TinaCMS documentation](https://tina.io/docs) and the [Astro documentation](https://docs.astro.build) or jump into our [TinaCMS Discord server](https://discord.gg/cG2UNREu).
