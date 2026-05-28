@@ -53,8 +53,8 @@ node_modules/
 # Astro
 .astro
 
-# Don't allow lock files to be committed (This is for templates only)
-
+# TODO: After scaffolding from this template, DELETE the block below so your
+# chosen lockfile (we recommend pnpm-lock.yaml) is committed. See README → "Commit your lockfile".
 # Package Manager Lock Files
 package-lock.json
 pnpm-lock.yaml
