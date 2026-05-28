@@ -1,0 +1,33 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Section from '../ui/Section.astro';
+import type { VideoBlock } from '../../lib/data';
+
+interface Props { data: VideoBlock }
+
+const { data } = Astro.props;
+
+function toEmbed(url = '') {
+	const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]+)/);
+	if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
+	const vimeo = url.match(/vimeo\.com\/(\d+)/);
+	if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}`;
+	return url;
+}
+const src = data.url ? toEmbed(data.url) : null;
+const params = new URLSearchParams();
+if (data.autoPlay) { params.set('autoplay', '1'); params.set('mute', '1'); }
+if (data.loop) {
+	params.set('loop', '1');
+	const ytId = src?.match(/embed\/([\w-]+)/)?.[1];
+	if (ytId) params.set('playlist', ytId);
+}
+const qs = params.toString();
+---
+{src && (
+	<Section>
+		<div data-tina-field={tinaField(data, 'url')} class="relative mx-auto aspect-video w-full max-w-5xl overflow-hidden rounded-2xl border">
+			<iframe class="absolute inset-0 h-full w-full" src={qs ? `${src}?${qs}` : src} title="Video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+	</Section>
+)}

@@ -1,0 +1,18 @@
+---
+interface Props { count?: number; twinkle?: boolean; class?: string; }
+const { count = 60, twinkle = true, class: className = '' } = Astro.props;
+const frac = (n: number) => { const x = Math.sin(n) * 43758.5453; return Math.abs(x - Math.floor(x)); };
+// A 4-point sparkle star, centered at the origin with radius ~1.
+const STAR = 'M0-1C.2-.2.2-.2 1 0 .2.2.2.2 0 1-.2.2-.2.2-1 0-.2-.2-.2-.2 0-1Z';
+const stars = Array.from({ length: count }, (_, i) => ({
+	cx: (frac(i + 1) * 100).toFixed(2),
+	cy: (frac((i + 1) * 2.7) * 100).toFixed(2),
+	s: (frac((i + 1) * 5.3) * 1.3 + 0.5).toFixed(2),
+	d: (frac((i + 1) * 9.1) * 4).toFixed(2),
+}));
+---
+<svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class={`pointer-events-none absolute inset-0 h-full w-full ${className}`}>
+	{stars.map((s) => (
+		<path d={STAR} fill="currentColor" transform={`translate(${s.cx} ${s.cy}) scale(${s.s})`} class={twinkle ? 'star-twinkle' : ''} style={`--d:${s.d}s`} />
+	))}
+</svg>

@@ -1,0 +1,13 @@
+---
+import { Icon as Iconify } from 'astro-icon/components';
+
+interface Props {
+	/** Any Tabler icon name (without the `tabler:` prefix). */
+	name?: string | null;
+	class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const iconName = name ? `tabler:${name}` : null;
+---
+{iconName && <Iconify name={iconName} class={className ?? 'size-5'} />}

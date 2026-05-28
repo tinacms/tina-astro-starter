@@ -15,15 +15,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 ---
 
+<script is:inline>
+	(function () {
+		function isDark() {
+			try {
+				const stored = localStorage.getItem('theme');
+				return stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+			} catch (e) {
+				return false;
+			}
+		}
+		function apply() {
+			document.documentElement.classList.toggle('dark', isDark());
+		}
+		apply();
+		// ClientRouter swaps in the SSR'd <html> (no .dark) on navigation,
+		// so re-apply the persisted theme after each swap, before paint.
+		document.addEventListener('astro:after-swap', apply);
+	})();
+</script>
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
-
-<!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

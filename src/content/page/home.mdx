@@ -1,19 +1,81 @@
 ---
-seoTitle: Home
+seoTitle: TinaCMS + Astro
+blocks:
+  - headline: The fastest way to build content-driven sites
+    tagline: 'Astro ships your pages with zero JavaScript by default. TinaCMS lets you edit them visually, backed by Git. Build it fast, edit it in context, own your content.'
+    actions:
+      - label: Get Started
+        type: button
+        icon: rocket
+        link: 'https://tina.io/docs/frameworks/astro'
+      - label: Star on GitHub
+        type: link
+        icon: brand-github
+        link: 'https://github.com/tinacms/tinacms'
+    image:
+      src: /llamanaut.png
+    starfield: true
+    _template: hero
+  - text: 'Now with React-free visual editing, powered by @tinacms/astro'
+    url: 'https://tina.io'
+    _template: callout
+  - title: 'Built for content, built for speed'
+    description: Astro's server-first performance meets TinaCMS's visual editing.
+    items:
+      - icon: bolt
+        title: Server-first performance
+        text: |
+          Render on the server and send lightweight HTML to the browser, with zero unnecessary JavaScript overhead.
+      - icon: edit
+        title: Visual editing for developers
+        text: |
+          An open-source, headless CMS with built-in Git version control. Edit content visually while keeping full developer control.
+      - icon: brand-git
+        title: Git-native content
+        text: |
+          Your content lives in your repository as Markdown. Version it, review it, own it.
+    _template: features
+  - title: Performance you can measure
+    description: 'Astro leads the web on Core Web Vitals, and TinaCMS is trusted by thousands of developers.'
+    stats:
+      - stat: '#1'
+        type: framework for Core Web Vitals pass rate
+      - stat: 0 KB
+        type: JavaScript by default
+      - stat: 13K+
+        type: Stars on TinaCMS' GitHub
+    _template: stats
+  - body: |
+      ## Markdown is the answer
+
+      LLMs think in it. Your CMS should too. TinaCMS stores everything as Markdown in Git, so your content stays open, portable, and ready for whatever comes next.
+    _template: content
+  - title: Loved by developers and editors
+    description: The teams who ship on Astro and Tina keep coming back for the same reason. A fast site their whole team can actually edit.
+    testimonials:
+      - quote: 'I made a whole website and I don''t even have computer hacking skills. You just click the words right on the page and type new ones. Gosh, it''s flippin'' sweet.'
+        author: Napoleon Dynamite
+        role: 'Student, Preston High'
+      - quote: 'I love technology, and this is the sweetest setup I''ve found online. The content lives in Git, so nothing ever gets lost, not even my chat logs with LaFawnduh.'
+        author: Kip Dynamite
+        role: Online entrepreneur
+      - quote: 'I built my whole campaign site in one night. If you want all your wildest dreams to come true, ship it on Astro and Tina.'
+        author: Pedro Sánchez
+        role: Class president
+    _template: testimonial
+  - url: 'https://www.youtube.com/watch?v=j8egYW7Jpgk'
+    _template: video
+  - title: Start building today
+    description: 'Spin up this starter with one command, then make it your own in the visual editor.'
+    actions:
+      - label: Get Started
+        type: button
+        icon: rocket
+        link: 'https://tina.io/docs/setup-overview/'
+      - label: View on GitHub
+        type: link
+        icon: brand-github
+        link: 'https://github.com/tinacms/tina-astro-starter'
+    _template: cta
 ---
 
-# 🧑‍🚀 Hello, Astronaut!
-
-Welcome to the official [Astro](https://astro.build/) + [TinaCMS](https://tina.io/) starter template! This template serves as a lightweight, minimally-styled starting point for anyone looking to build a personal website, blog, or portfolio with Astro and TinaCMS.
-
-This template comes with a few integrations already configured in your `astro.config.mjs` file. You can customize this further with [Astro Integrations](https://astro.build/integrations) to add tools like Tailwind to your project.
-
-Here are a few ideas on how to get started with the template:
-
-* **Edit this page**: Navigate to `/admin/index.html` to update your homepage content in TinaCMS or manually edit `src/pages/index.astro` for full control.
-* **Site Header**: Customize the navigation items in TinaCMS under the **Config Collection** or via `src/components/Header.astro`.
-* **Site Footer**: Make it yours by adding your name or details in TinaCMS Global Config.
-* **Explore Blog Posts**: Check out sample posts in `src/content/blog` to see how content is structured or edit them in TinaCMS under the **Blog Collection**.
-* **Layout Customization**: Update the blog post page layout in `src/layouts/BlogPost.astro` for a unique look.
-
-Have fun! If you get stuck, remember to check out the [Astro documentation](https://docs.astro.build/en/getting-started/) or [TinaCMS documentation](https://tina.io/docs) for guidance. You can also join the [TinaCMS Discord](https://discord.com/invite/zumN63Ybpf) community to ask questions and connect with other users.

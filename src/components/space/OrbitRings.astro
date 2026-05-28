@@ -1,0 +1,10 @@
+---
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<svg aria-hidden="true" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" class={`pointer-events-none absolute inset-0 m-auto h-full w-full text-primary/20 ${className}`} fill="none" stroke="currentColor">
+	<ellipse cx="100" cy="100" rx="92" ry="40" stroke-width="0.5" />
+	<ellipse cx="100" cy="100" rx="78" ry="32" stroke-width="0.5" transform="rotate(60 100 100)" />
+	<ellipse cx="100" cy="100" rx="84" ry="36" stroke-width="0.5" transform="rotate(-35 100 100)" />
+	<circle cx="100" cy="100" r="2.5" fill="currentColor" stroke="none" class="text-primary/40" />
+</svg>

@@ -1,0 +1,8 @@
+---
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<svg aria-hidden="true" viewBox="0 0 100 100" class={`pointer-events-none ${className}`} fill="none">
+	<circle cx="50" cy="50" r="22" class="fill-primary/15" />
+	<ellipse cx="50" cy="50" rx="40" ry="12" class="stroke-primary/30" stroke-width="1.5" transform="rotate(-20 50 50)" />
+</svg>

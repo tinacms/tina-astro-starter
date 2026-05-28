@@ -1,0 +1,43 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { cn } from '../../lib/cn';
+import type { SplitBlock } from '../../lib/data';
+
+interface Props { data: SplitBlock }
+
+const { data } = Astro.props;
+const actions = (data.actions ?? []).filter(a => a !== null);
+---
+<Section>
+	<div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16">
+		<div class={cn('space-y-6', data.reverse && 'md:order-2')}>
+			{data.title && <h2 data-tina-field={tinaField(data, 'title')} class="text-balance text-3xl font-semibold lg:text-4xl">{data.title}</h2>}
+			{data.body && (
+				<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none text-muted-foreground">
+					<TinaMarkdown content={data.body} />
+				</div>
+			)}
+			{actions.length > 0 && (
+				<div class="flex flex-wrap gap-3 pt-2">
+					{actions.map((action) => (
+						<div data-tina-field={tinaField(action)} class="bg-foreground/10 rounded-2xl border p-0.5">
+							<Button href={action.link} size="lg" variant={action.type === 'link' ? 'ghost' : 'default'} class="rounded-xl px-5 text-base">
+								{action.icon && <Icon name={action.icon} class="size-4" />}
+								<span class="text-nowrap">{action.label}</span>
+							</Button>
+						</div>
+					))}
+				</div>
+			)}
+		</div>
+		{data.image?.src && (
+			<div data-tina-field={tinaField(data, 'image')} class="bg-background overflow-hidden rounded-2xl border p-2 shadow-lg">
+				<img src={data.image.src} alt={data.image.alt ?? ''} width="1200" height="900" class="aspect-[4/3] w-full rounded-xl border border-border/25 object-cover" />
+			</div>
+		)}
+	</div>
+</Section>

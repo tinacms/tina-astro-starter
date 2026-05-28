@@ -1,0 +1,93 @@
+---
+title: Writing with Markdown and MDX in Tina
+description: How Tina's rich-text editor maps to the Markdown and MDX it saves, with a tour of the formatting you can use in a post body.
+pubDate: 2026-05-06T09:00:00.000Z
+heroImage: /blog-placeholder-1.jpg
+---
+
+When you edit a post body in TinaCMS, you are using a rich-text editor: headings, lists, links, and quotes all behave the way they would in any document tool. Behind the scenes, Tina saves that body as Markdown (or MDX) in the file, so what you write stays portable and readable outside the CMS. This post doubles as a reference for the formatting that body supports and a demo of how it renders on this site.
+
+## Headings
+
+The body supports six levels of heading, from `<h1>` down to `<h6>`. Use them to give long posts a real structure that readers and search engines can follow.
+
+# H1
+
+## H2
+
+### H3
+
+#### H4
+
+##### H5
+
+###### H6
+
+## Paragraph text
+
+Body copy is the default. Tina stores it as plain Markdown paragraphs, and this starter renders it through the typography styles defined in `global.css`, so it stays legible in both light and dark themes. Keep paragraphs focused; a single idea each reads far better on screen than a wall of text.
+
+You can mark words as *italic*, **bold**, or `inline code` without leaving the editor, and Tina writes the matching Markdown for each.
+
+## Links
+
+Linking is how the posts in this series connect. A link to the [TinaCMS docs](https://tina.io/docs) looks like any other word in a sentence, but carries the reader somewhere useful.
+
+## Blockquotes
+
+Use a blockquote to set off a quotation or an aside from the surrounding text.
+
+> Content is the hero. The interface should recede so the writing carries the page.
+> You can use *Markdown syntax* inside a blockquote, too.
+
+## Lists
+
+Ordered lists are good for steps:
+
+1. Define a collection in the Tina schema.
+2. Add the fields your content needs.
+3. Edit the content in the sidebar and save.
+
+Unordered lists are good for sets of related points:
+
+- Markdown for portability
+- A rich-text editor for comfort
+- Git for history
+
+Lists can nest when the structure calls for it:
+
+- Content types
+  - Posts
+  - Pages
+- Assets
+  - Images
+  - Documents
+
+## Code blocks
+
+Fenced code blocks keep technical posts precise, and Tina preserves the language hint so syntax highlighting works:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example HTML5 Document</title>
+  </head>
+  <body>
+    <p>Test</p>
+  </body>
+</html>
+```
+
+## Tables
+
+Tables render from standard Markdown, which is handy for small comparisons:
+
+| Stored as | Edited as       | Lives in |
+| --------- | --------------- | -------- |
+| Markdown  | Rich-text       | Git      |
+| MDX       | Rich-text       | Git      |
+| JSON      | Structured form | Git      |
+
+That is the full range of formatting a post body can use. Write it however feels natural in the editor; Tina handles turning it into clean Markdown on the way to your repo.
