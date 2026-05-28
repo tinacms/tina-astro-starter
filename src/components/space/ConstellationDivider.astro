@@ -1,0 +1,9 @@
+---
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+const pts: Array<[number, number]> = [[20, 10], [110, 5], [200, 14], [290, 6], [380, 11]];
+---
+<svg aria-hidden="true" viewBox="0 0 400 20" class={`mx-auto h-5 w-full max-w-sm text-muted-foreground/40 ${className}`} fill="none" stroke="currentColor">
+	<polyline points={pts.map((p) => p.join(',')).join(' ')} stroke-width="0.75" />
+	{pts.map((p) => <circle cx={p[0]} cy={p[1]} r="2.2" fill="currentColor" stroke="none" />)}
+</svg>

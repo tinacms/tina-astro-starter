@@ -1,0 +1,44 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import CardHeader from '../ui/CardHeader.astro';
+import CardContent from '../ui/CardContent.astro';
+import Icon from '../ui/Icon.astro';
+import type { FeaturesBlock } from '../../lib/data';
+
+interface Props { data: FeaturesBlock }
+
+const { data } = Astro.props;
+const items = (data.items ?? []).filter(it => it !== null);
+---
+<Section>
+	<div class="mx-auto max-w-5xl px-6">
+		<div class="text-center">
+			<h2 data-tina-field={tinaField(data, 'title')} class="text-balance text-4xl font-semibold lg:text-5xl">{data.title}</h2>
+			<p data-tina-field={tinaField(data, 'description')} class="mt-4 text-muted-foreground">{data.description}</p>
+		</div>
+		<Card class="mx-auto mt-8 grid max-w-sm divide-y overflow-hidden md:mt-16 md:max-w-full md:grid-cols-3 md:divide-x md:divide-y-0 *:text-center">
+			{items.map((item) => (
+				<div data-tina-field={tinaField(item)}>
+					<CardHeader class="pb-3">
+						<div class="relative mx-auto size-36">
+							<div aria-hidden class="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+							<div aria-hidden class="absolute inset-0 bg-radial from-transparent to-background to-75%"></div>
+							<div data-tina-field={tinaField(item, 'icon')} class="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
+								{item.icon && <Icon name={item.icon} class="size-6" />}
+							</div>
+						</div>
+						<h3 data-tina-field={tinaField(item, 'title')} class="mt-6 font-medium">{item.title}</h3>
+					</CardHeader>
+					<CardContent class="text-sm pb-8 text-muted-foreground">
+						<div data-tina-field={tinaField(item, 'text')}>
+							<TinaMarkdown content={item.text} />
+						</div>
+					</CardContent>
+				</div>
+			))}
+		</Card>
+	</div>
+</Section>

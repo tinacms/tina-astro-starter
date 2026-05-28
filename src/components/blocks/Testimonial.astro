@@ -1,0 +1,36 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import CardContent from '../ui/CardContent.astro';
+import Avatar from '../ui/Avatar.astro';
+import type { TestimonialBlock, TestimonialItem } from '../../lib/data';
+
+interface Props { data: TestimonialBlock }
+
+const { data } = Astro.props;
+const testimonials = (data.testimonials ?? []).filter(
+	(t): t is TestimonialItem => t !== null,
+);
+const initials = (name?: string | null) => (name ?? '').split(' ').map((w) => w[0]).join('');
+---
+<Section>
+	<div class="mx-auto max-w-xl text-center">
+		<h2 data-tina-field={tinaField(data, 'title')} class="text-3xl font-semibold">{data.title}</h2>
+		<p data-tina-field={tinaField(data, 'description')} class="mt-6 text-muted-foreground">{data.description}</p>
+	</div>
+	<div class="mt-8 grid gap-6 md:mt-12 sm:grid-cols-2 lg:grid-cols-3">
+		{testimonials.map((t) => (
+			<Card class="h-full" data-tina-field={tinaField(t)}>
+				<CardContent class="grid grid-cols-[auto_1fr] gap-3">
+					<Avatar src={t.avatar} alt={t.author} fallback={initials(t.author)} />
+					<div>
+						<h3 data-tina-field={tinaField(t, 'author')} class="font-medium">{t.author}</h3>
+						<span data-tina-field={tinaField(t, 'role')} class="text-muted-foreground block text-sm tracking-wide">{t.role}</span>
+						<blockquote class="mt-3"><p data-tina-field={tinaField(t, 'quote')} class="text-muted-foreground">{t.quote}</p></blockquote>
+					</div>
+				</CardContent>
+			</Card>
+		))}
+	</div>
+</Section>

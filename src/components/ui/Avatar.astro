@@ -1,0 +1,15 @@
+---
+interface Props {
+	src?: string | null;
+	alt?: string | null;
+	fallback?: string | null;
+	class?: string;
+}
+
+const { src, alt, fallback, class: className } = Astro.props;
+---
+<span class={`relative flex size-9 shrink-0 overflow-hidden rounded-full bg-muted ${className ?? ''}`}>
+	{src
+		? <img src={src} alt={alt ?? ''} width="120" height="120" loading="lazy" class="aspect-square size-full object-cover" />
+		: <span class="flex size-full items-center justify-center text-xs font-medium text-muted-foreground">{fallback ?? ''}</span>}
+</span>

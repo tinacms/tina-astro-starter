@@ -1,0 +1,10 @@
+---
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<div aria-hidden="true" class={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
+	<div
+		class="absolute left-1/2 top-0 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-30 blur-3xl dark:opacity-40"
+		style="background: radial-gradient(closest-side, oklch(0.645 0.198 37 / 0.5), transparent);"
+	></div>
+</div>

@@ -1,0 +1,23 @@
+---
+title: Why TinaCMS?
+description: An open-source, Git-backed CMS that lets you edit content visually without giving up control of your files.
+pubDate: 2026-01-14T09:00:00.000Z
+heroImage: /blog-placeholder-3.jpg
+---
+
+Most content management systems ask you to make a trade. You either get a friendly editing interface and hand your content to a database you do not own, or you keep your content in the repo as Markdown and lose the visual editing your non-technical teammates need. TinaCMS refuses that trade.
+
+TinaCMS is an open-source CMS that stores your content as Markdown, MDX, and JSON files committed directly to your Git repository. There is no separate content database to sync, back up, or migrate away from later. The files in `src/content` are the single source of truth, and Tina is the editing layer on top of them.
+
+## What you actually get
+
+- **Visual editing in context.** Editors click directly on the text and images they want to change, on the real page, and watch updates appear as they type.
+- **A typed content schema.** You define collections and fields in code, and Tina generates the editing forms and a GraphQL API to match.
+- **Git as your backend.** Every save is a commit, so your content carries the same history, branching, and review workflow as your code.
+- **Framework freedom.** Tina works with Astro, Next.js, Hugo, and more. This starter pairs it with Astro for fast, content-first pages.
+
+## Who it is for
+
+Tina fits teams where developers own the build and writers own the words. Developers get a schema they control and content that never leaves the repo. Writers get an interface that feels like editing the live site, not filling out a form in an unfamiliar dashboard.
+
+The rest of this blog walks through the pieces that make that possible: [editing in context](/blog/visual-editing/), [modeling your content](/blog/content-modeling/), and [keeping everything in Git](/blog/git-backed-content/).

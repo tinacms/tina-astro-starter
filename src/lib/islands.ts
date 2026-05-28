@@ -8,6 +8,7 @@ import type { IslandRegistry } from '@tinacms/astro/experimental';
 import type { QueryResult } from '@tinacms/astro/data';
 
 import type { BlogQuery, ConfigQuery, PageQuery } from '../../tina/__generated__/types';
+import type { CmsBlog, CmsConfig, CmsPage } from './data';
 import PageBody from '../components/islands/PageBody.astro';
 import BlogBody from '../components/islands/BlogBody.astro';
 import Header from '../components/Header.astro';
@@ -20,7 +21,7 @@ export const islands: IslandRegistry = {
 		component: PageBody,
 		wrapper: { tag: 'main' },
 		propsFromData: (data) => ({
-			data: (data as QueryResult<PageQuery>).data?.page,
+			data: (data as QueryResult<PageQuery>).data?.page as CmsPage | undefined,
 		}),
 	},
 	blog: {
@@ -28,7 +29,7 @@ export const islands: IslandRegistry = {
 		component: BlogBody,
 		wrapper: { tag: 'article' },
 		propsFromData: (data) => ({
-			data: (data as QueryResult<BlogQuery>).data?.blog,
+			data: (data as QueryResult<BlogQuery>).data?.blog as CmsBlog | undefined,
 		}),
 	},
 	global: {
@@ -36,7 +37,7 @@ export const islands: IslandRegistry = {
 		component: Header,
 		wrapper: { tag: 'div' },
 		propsFromData: (data) => ({
-			config: (data as QueryResult<ConfigQuery>).data?.config,
+			config: (data as QueryResult<ConfigQuery>).data?.config as CmsConfig | undefined,
 		}),
 	},
 	'global-footer': {
@@ -44,7 +45,7 @@ export const islands: IslandRegistry = {
 		component: Footer,
 		wrapper: { tag: 'div' },
 		propsFromData: (data) => ({
-			config: (data as QueryResult<ConfigQuery>).data?.config,
+			config: (data as QueryResult<ConfigQuery>).data?.config as CmsConfig | undefined,
 		}),
 	},
 };

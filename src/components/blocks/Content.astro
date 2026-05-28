@@ -1,0 +1,15 @@
+---
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import Section from '../ui/Section.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { ContentBlock } from '../../lib/data';
+
+interface Props { data: ContentBlock }
+
+const { data } = Astro.props;
+---
+<Section class="prose prose-lg max-w-none">
+	<div class="mx-auto max-w-3xl" data-tina-field={tinaField(data, 'body')}>
+		<TinaMarkdown content={data.body} />
+	</div>
+</Section>

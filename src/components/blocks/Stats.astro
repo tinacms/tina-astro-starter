@@ -1,0 +1,28 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Section from '../ui/Section.astro';
+import Planet from '../space/Planet.astro';
+import type { StatsBlock } from '../../lib/data';
+
+interface Props { data: StatsBlock }
+
+const { data } = Astro.props;
+const stats = (data.stats ?? []).filter(s => s !== null);
+---
+<Section class="relative overflow-hidden">
+	<Planet class="absolute -right-10 -top-10 h-48 w-48 opacity-60" />
+	<div class="relative mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
+		<div class="relative z-10 mx-auto max-w-xl space-y-6 text-center">
+			<h2 data-tina-field={tinaField(data, 'title')} class="text-4xl font-medium lg:text-5xl">{data.title}</h2>
+			<p data-tina-field={tinaField(data, 'description')} class="text-muted-foreground">{data.description}</p>
+		</div>
+		<div class="grid divide-y *:text-center md:grid-cols-3 md:divide-x md:divide-y-0">
+			{stats.map((stat) => (
+				<div data-tina-field={tinaField(stat)} class="space-y-4 py-4">
+					<div data-tina-field={tinaField(stat, 'stat')} class="text-5xl font-bold">{stat.stat}</div>
+					<p data-tina-field={tinaField(stat, 'type')} class="text-muted-foreground">{stat.type}</p>
+				</div>
+			))}
+		</div>
+	</div>
+</Section>

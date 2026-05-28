@@ -1,0 +1,39 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import Aurora from '../space/Aurora.astro';
+import Starfield from '../space/Starfield.astro';
+import type { HeroBlock } from '../../lib/data';
+
+interface Props { data: HeroBlock }
+
+const { data } = Astro.props;
+const actions = (data.actions ?? []).filter(a => a !== null);
+---
+<Section class="relative overflow-hidden">
+	<Aurora />
+	{data.starfield !== false && <Starfield count={70} class="text-foreground/20" />}
+	<div class="relative text-center sm:mx-auto lg:mr-auto">
+		<div data-tina-field={tinaField(data, 'image')} class="mx-auto mb-6 size-56 md:size-72">
+			{data.image?.src
+				? <img src={data.image.src} alt={data.image.alt ?? ''} width="288" height="288" class="size-full rounded-full object-cover" />
+				: ''}
+		</div>
+		{data.headline && <h1 data-tina-field={tinaField(data, 'headline')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{data.headline}</h1>}
+		{data.tagline && <p data-tina-field={tinaField(data, 'tagline')} class="mx-auto mt-8 max-w-2xl text-balance text-lg text-muted-foreground">{data.tagline}</p>}
+		{actions.length > 0 && (
+			<div class="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row">
+				{actions.map((action) => (
+					<div data-tina-field={tinaField(action)} class="bg-foreground/10 rounded-2xl border p-0.5">
+						<Button href={action.link} size="lg" variant={action.type === 'link' ? 'ghost' : 'default'} class="rounded-xl px-5 text-base">
+							{action.icon && <Icon name={action.icon} class="size-4" />}
+							<span class="text-nowrap">{action.label}</span>
+						</Button>
+					</div>
+				))}
+			</div>
+		)}
+	</div>
+</Section>

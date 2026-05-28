@@ -1,0 +1,29 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+import type { CalloutBlock } from '../../lib/data';
+
+interface Props { data: CalloutBlock }
+
+const { data } = Astro.props;
+---
+<Section class="py-6">
+	{data.url ? (
+		<a href={data.url} data-tina-field={tinaField(data, 'url')} class="hover:bg-background bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md transition-colors duration-300">
+			<span data-tina-field={tinaField(data, 'text')} class="text-foreground text-sm">{data.text}</span>
+			<span class="block h-4 w-0.5 border-l bg-background"></span>
+			<div class="bg-background flex size-6 items-center justify-center rounded-full">
+				<Icon name="arrow-right" class="size-3" />
+			</div>
+		</a>
+	) : (
+		<div data-tina-field={tinaField(data, 'text')} class="bg-muted mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md">
+			<span class="text-foreground text-sm">{data.text}</span>
+			<span class="block h-4 w-0.5 border-l bg-background"></span>
+			<div class="bg-background flex size-6 items-center justify-center rounded-full">
+				<Icon name="arrow-right" class="size-3" />
+			</div>
+		</div>
+	)}
+</Section>

@@ -15,14 +15,23 @@
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/vercel": "^10.0.7",
+    "@fontsource-variable/inter": "^5.2.8",
     "@iconify-json/tabler": "^1.2.35",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.3.0",
     "@tinacms/astro": "^0.4.0",
     "astro": "^6.3.7",
-    "astro-icon": "^1.1.5"
+    "astro-icon": "^1.1.5",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0",
+    "tailwind-variants": "^3.2.2",
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@tinacms/cli": "^2.4.0",
     "@types/node": "^25.9.1",
-    "tinacms": "^3.8.2"
+    "tinacms": "^3.8.2",
+    "typescript": "^6.0.3"
   }
 }

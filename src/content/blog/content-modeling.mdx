@@ -1,0 +1,46 @@
+---
+title: Modeling content with Tina collections
+description: Define your content shape once in the Tina schema, and get editing forms, validation, and a typed API for free.
+pubDate: 2026-03-10T09:00:00.000Z
+updatedDate: 2026-05-20T09:00:00.000Z
+heroImage: /blog-placeholder-2.jpg
+---
+
+In Tina, your content model is code. You describe the shape of a piece of content once, in the `tina/` directory, and Tina turns that description into three things at once: the editing forms writers use, the validation that keeps content clean, and a typed GraphQL API your pages query.
+
+## Collections and fields
+
+A collection maps a content type to a folder of files. This starter's blog collection is a good example to read:
+
+```typescript
+export const BlogCollection = {
+  name: "blog",
+  label: "Blogs",
+  path: "src/content/blog",
+  format: "mdx",
+  fields: [
+    { type: "string", name: "title", label: "Title", isTitle: true, required: true },
+    { type: "string", name: "description", label: "Description" },
+    { type: "datetime", name: "pubDate", label: "Publication Date" },
+    { type: "image", name: "heroImage", label: "Hero Image" },
+    { type: "rich-text", name: "body", label: "Body", isBody: true },
+  ],
+};
+```
+
+Every field you see in the editor sidebar comes from this list. Mark a field `required` and Tina enforces it. Mark one `isTitle` and it becomes the document's display name. Mark one `isBody` and its content becomes the Markdown body of the file rather than frontmatter.
+
+## Field types do the heavy lifting
+
+Tina ships a rich set of field types so the editing experience matches the data:
+
+- `string` and `rich-text` for text, with the latter giving a full WYSIWYG editor.
+- `datetime`, `boolean`, and `number` for structured values, each with a fitting input.
+- `image` for media, wired to your configured asset store.
+- `object` and `reference` for nesting and for linking one document to another.
+
+## Why model it this way
+
+Because the schema is the source of truth, the form, the stored file, and the typed query result can never drift apart. Add a field to the collection and it appears in the editor, in the file's frontmatter, and in the generated types in the same change. Your editors get guardrails, and you get content that is safe to query without defensive checks everywhere.
+
+Once your content is modeled, the natural question is where it actually lives. The answer is [your Git repository](/blog/git-backed-content/).

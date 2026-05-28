@@ -8,8 +8,8 @@ import { islands } from '../lib/islands';
 export async function getStaticPaths() {
 	const pages = await listPages();
 	return pages
-		.map((node) => node._sys?.relativePath?.replace(/\.mdx?$/, '') ?? '')
-		.filter((slug) => slug && slug !== 'home')
+		.map((node) => node._sys.filename)
+		.filter((slug) => slug !== 'home')
 		.map((slug) => ({ params: { slug } }));
 }
 
