@@ -1,6 +1,8 @@
 This is a [Tina CMS](https://tina.io/) starter project.
 
-## Getting Started
+Edit your site visually in the browser, ship it as fast static HTML.
+
+## Getting started
 
 Create the project:
 
@@ -8,10 +10,10 @@ Create the project:
 pnpm dlx create-tina-app@latest --template tina-astro-starter
 ```
 
-Install the project's dependencies:
+Install dependencies:
 
 > [!NOTE]
-> **[Do you know the best package manager for Node.js?](https://www.ssw.com.au/rules/best-package-manager-for-node)** Using the right package manager can greatly enhance your development workflow. We recommend using pnpm for its speed and efficient handling of dependencies. Learn more about why pnpm might be the best choice for your projects by checking out this rule from SSW.
+> **[Which package manager is best for Node.js?](https://www.ssw.com.au/rules/best-package-manager-for-node)** The right one makes a real difference to your workflow. We recommend pnpm for its speed and efficient dependency handling — this SSW rule explains why.
 
 ```sh
 pnpm install
@@ -29,18 +31,18 @@ pnpm dev
 
 ## Features 
 
-- Visual editing via [`@tinacms/astro`](https://www.npmjs.com/package/@tinacms/astro) — vanilla-JS bridge, no React in the page tree
-- Tailwind CSS v4 block builder: Hero, CTA, Features, Stats, Testimonial, Callout, Content, Split, Video
+- Visual editing via [`@tinacms/astro`](https://www.npmjs.com/package/@tinacms/astro) — a vanilla-JS bridge, with no React in the page tree
+- Tailwind CSS v4 block builder: Hero, CTA, Features, Stats, Testimonial, Callout, Content, Split, and Video
 - Light/dark theme toggle with a Tina-ember space theme
-- Markdown & MDX with `<TinaMarkdown>` rich-text rendering
+- Markdown and MDX with `<TinaMarkdown>` rich-text rendering
 - Collections for Pages, Blog, and global Config
 - Astro view transitions, SEO meta, OpenGraph, sitemap, and RSS
-- Icons via [`astro-icon`](https://github.com/natemoo-re/astro-icon) + Tabler set
+- Icons via [`astro-icon`](https://github.com/natemoo-re/astro-icon) and the Tabler set
 
-## Getting started
+## A note on React
 
-> **Note:** `react` and `react-dom@^18.3.1` are pinned in `devDependencies` only for the TinaCMS admin UI build — the site itself ships zero React. Without the pin, pnpm resolves `react@19` against `react-dom@18` and the admin crashes at init. Tracked in [tinacms#6985](https://github.com/tinacms/tinacms/issues/6985); remove the pin once that lands.
+`react` and `react-dom@^18.3.1` are pinned in `devDependencies` for the TinaCMS admin UI build only — the site itself ships zero React. Without the pin, pnpm resolves `react@19` against `react-dom@18` and the admin crashes on init. This is tracked in [tinacms#6985](https://github.com/tinacms/tinacms/issues/6985); remove the pin once that lands.
 
-## 👀 Want to learn more?
+## Want to learn more?
 
-Check out the [TinaCMS documentation](https://tina.io/docs) and the [Astro documentation](https://docs.astro.build) or jump into our [TinaCMS Discord server](https://discord.gg/cG2UNREu).
+Read the [TinaCMS documentation](https://tina.io/docs) and the [Astro documentation](https://docs.astro.build), or come and say hello in the [TinaCMS Discord server](https://discord.gg/cG2UNREu).
