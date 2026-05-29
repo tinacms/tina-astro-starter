@@ -6,8 +6,18 @@
    not the prefers-color-scheme media query. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Metric-matched Arial fallback so the Inter swap doesn't reflow text (CLS). */
+@font-face {
+	font-family: 'Inter Fallback';
+	src: local('Arial');
+	ascent-override: 90.44%;
+	descent-override: 22.52%;
+	line-gap-override: 0%;
+	size-adjust: 107.12%;
+}
+
 @theme inline {
-	--font-sans: 'Inter Variable', system-ui, sans-serif;
+	--font-sans: 'Inter Variable', 'Inter Fallback', system-ui, sans-serif;
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
@@ -45,7 +55,7 @@
 	--card-foreground: oklch(0.20 0.03 285);
 	--popover: oklch(1 0.002 285);
 	--popover-foreground: oklch(0.20 0.03 285);
-	--primary: oklch(0.645 0.198 37);
+	--primary: oklch(0.57 0.198 37);
 	--primary-foreground: oklch(0.99 0.005 285);
 	--secondary: oklch(0.96 0.01 285);
 	--secondary-foreground: oklch(0.30 0.04 285);
@@ -56,7 +66,7 @@
 	--destructive: oklch(0.577 0.245 27.325);
 	--border: oklch(0.90 0.012 285);
 	--input: oklch(0.90 0.012 285);
-	--ring: oklch(0.645 0.198 37);
+	--ring: oklch(0.57 0.198 37);
 	--chart-1: oklch(0.646 0.222 41.116);
 	--chart-2: oklch(0.6 0.118 184.704);
 	--chart-3: oklch(0.398 0.07 227.392);

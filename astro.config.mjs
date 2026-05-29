@@ -15,6 +15,14 @@ export default defineConfig({
 	adapter: vercel(),
 	redirects: { '/home': '/' },
 	integrations: [mdx(), sitemap(), icon(), tina()],
+	// Tina Cloud rewrites CMS image src to assets.tina.io; let Astro
+	// fetch those URLs at build time so <Image> can transcode + resize them.
+	image: {
+		// Astro 6 responsive images: auto-emit srcset so the browser picks a
+		// variant matched to the rendered box + DPR, not the full intrinsic size.
+		layout: 'constrained',
+		remotePatterns: [{ protocol: 'https', hostname: 'assets.tina.io' }],
+	},
 	vite: {
 		plugins: [tailwindcss(), tinaAdminDevRedirect()],
 		// Bundle @tinacms/astro into the SSR build instead of resolving it
