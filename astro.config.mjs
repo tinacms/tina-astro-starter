@@ -15,6 +15,12 @@ export default defineConfig({
 	adapter: vercel(),
 	redirects: { '/home': '/' },
 	integrations: [mdx(), sitemap(), icon(), tina()],
+	build: {
+		// Inline the (~10 KiB) bundled CSS into a <style> in <head> instead of a
+		// separate render-blocking <link>. Astro's default ('auto') only inlines
+		// stylesheets under ~4 KiB, leaving ours blocking first paint on mobile.
+		inlineStylesheets: 'always',
+	},
 	// Tina Cloud rewrites CMS image src to assets.tina.io; let Astro
 	// fetch those URLs at build time so <Image> can transcode + resize them.
 	image: {
