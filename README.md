@@ -23,9 +23,11 @@ Start the dev server, then edit visually at `localhost:4321/admin/`:
 pnpm dev
 ```
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+![homepage](./public/home-page.png)
 
-## Features
+**Figure: Homepage UI**
+
+## Features 
 
 - Visual editing via [`@tinacms/astro`](https://www.npmjs.com/package/@tinacms/astro) — vanilla-JS bridge, no React in the page tree
 - Tailwind CSS v4 block builder: Hero, CTA, Features, Stats, Testimonial, Callout, Content, Split, Video
