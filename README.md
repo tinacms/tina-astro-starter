@@ -25,6 +25,8 @@ pnpm dev
 
 ![homepage](./public/home-page.png)
 
+**Figure: Homepage UI**
+
 ## Features 
 
 - Visual editing via [`@tinacms/astro`](https://www.npmjs.com/package/@tinacms/astro) — vanilla-JS bridge, no React in the page tree
