@@ -1,4 +1,4 @@
-This is a [Tina CMS](https://tina.io/) starter project.
+This is a [TinaCMS](https://tina.io/) starter project.
 
 Edit your site visually in the browser, ship it as fast static HTML.
 
