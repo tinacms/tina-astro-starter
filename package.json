@@ -39,5 +39,8 @@
     "react-dom": "^18.3.1",
     "tinacms": "^3.8.2",
     "typescript": "^6.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3", "core-js", "esbuild", "protobufjs", "sharp"]
   }
 }
