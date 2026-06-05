@@ -14,16 +14,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/mdx": "^6.0.2",
     "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/vercel": "^10.0.7",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^10.0.8",
     "@fontsource-variable/inter": "^5.2.8",
     "@iconify-json/tabler": "^1.2.35",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.3.0",
-    "@tinacms/astro": "^0.4.0",
-    "astro": "^6.3.7",
+    "@tinacms/astro": "^0.4.1",
+    "astro": "^6.4.4",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
     "sharp": "^0.34.5",
@@ -33,11 +33,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@tinacms/cli": "^2.4.0",
+    "@tinacms/cli": "^2.4.4",
     "@types/node": "^25.9.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tinacms": "^3.8.2",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tinacms": "^3.9.1",
     "typescript": "^6.0.3"
   }
 }
