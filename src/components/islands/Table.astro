@@ -1,0 +1,55 @@
+---
+/**
+ * Renders a TinaCMS rich-text `table` node.
+ *
+ * `@tinacms/astro`'s default renderer has no branch for table nodes, so the
+ * MDX table (`table` -> `tr` -> `td`) parsed by `@tinacms/mdx` falls through
+ * to nothing. `BlogBody.astro` intercepts top-level `table` nodes and hands
+ * them here. Cells render through `TinaMarkdown` so inline formatting (bold,
+ * italic, code, links) inside a cell keeps working. TinaCMS does not mark a
+ * header row, so by GFM convention the first row is treated as the header.
+ */
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+
+interface TableCell {
+	children: unknown[];
+}
+interface TableRow {
+	children?: TableCell[];
+}
+interface TableNode {
+	children?: TableRow[];
+}
+
+interface Props {
+	node: TableNode;
+}
+
+const { node } = Astro.props;
+const rows = node.children ?? [];
+const [headRow, ...bodyRows] = rows;
+---
+{rows.length > 0 && (
+	<table>
+		{headRow?.children && (
+			<thead>
+				<tr>
+					{headRow.children.map((cell) => (
+						<th><TinaMarkdown content={cell.children} /></th>
+					))}
+				</tr>
+			</thead>
+		)}
+		{bodyRows.length > 0 && (
+			<tbody>
+				{bodyRows.map((row) => (
+					<tr>
+						{(row.children ?? []).map((cell) => (
+							<td><TinaMarkdown content={cell.children} /></td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		)}
+	</table>
+)}
