@@ -1,0 +1,22 @@
+---
+/**
+ * Renderer for the `cta` rich-text template (blog body).
+ *
+ * Custom templates are dispatched by `@tinacms/astro` via their template
+ * `name` and rendered with their fields spread as props — so this receives
+ * `{ title }` directly (NOT a `node`, which is the contract for the built-in
+ * `table` override). The field set mirrors `tina/collections/blog.ts`; add a
+ * field there and to `Props` here to surface it.
+ *
+ * `not-prose` opts the callout out of the surrounding `.prose` typography so
+ * it keeps its own spacing rather than inheriting paragraph styles.
+ */
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+<aside class="not-prose my-8 rounded-2xl border bg-muted/40 p-6 text-center">
+	<p class="text-lg font-semibold tracking-tight">{title}</p>
+</aside>

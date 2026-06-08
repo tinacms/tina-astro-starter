@@ -44,6 +44,17 @@ export const BlogCollection: Collection = {
       name: "body",
       label: "Body",
       isBody: true,
+      templates: [
+        {
+          name: "cta",
+          fields: [
+            {
+              name: 'title',
+              type: "string"
+            }
+          ]
+        }
+      ]
     },
   ],
 }

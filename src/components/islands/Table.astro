@@ -1,51 +1,59 @@
 ---
 /**
- * Renders a TinaCMS rich-text `table` node.
+ * Custom `table` override for `<TinaMarkdown components={{ table: Table }} />`.
  *
- * `@tinacms/astro`'s default renderer has no branch for table nodes, so the
- * MDX table (`table` -> `tr` -> `td`) parsed by `@tinacms/mdx` falls through
- * to nothing. `BlogBody.astro` intercepts top-level `table` nodes and hands
- * them here. Cells render through `TinaMarkdown` so inline formatting (bold,
- * italic, code, links) inside a cell keeps working. TinaCMS does not mark a
- * header row, so by GFM convention the first row is treated as the header.
+ * `@tinacms/astro`'s built-in table renderer drops every row into a single
+ * `<tbody>` with hard-coded inline borders, so it never gets a header row and
+ * its colours ignore the theme. This override promotes the first row to a
+ * `<thead>` (the GFM convention these posts are authored with) and emits plain
+ * semantic markup, letting the `prose` typography plugin style it with the
+ * theme-aware `--tw-prose-*-borders` tokens (so it inverts in dark mode).
+ *
+ * The override receives the whole `table` node (the node-based contract
+ * `@tinacms/astro` passes to a `components.table` component). Cells render
+ * through `TinaMarkdown` so inline formatting (bold, italic, code, links)
+ * keeps working; the paragraph each cell wraps its content in is unwrapped to
+ * its inline nodes so a cell is `<td>text</td>`, not `<td><p>text</p></td>`.
  */
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
-
-interface TableCell {
-	children: unknown[];
-}
-interface TableRow {
-	children?: TableCell[];
-}
-interface TableNode {
-	children?: TableRow[];
-}
+import type {
+	InlineElement,
+	TableCellElement,
+	TableElement,
+} from '@tinacms/astro/types';
 
 interface Props {
-	node: TableNode;
+	node: TableElement;
 }
 
 const { node } = Astro.props;
-const rows = node.children ?? [];
-const [headRow, ...bodyRows] = rows;
+
+const align = node.props?.align ?? [];
+const [headRow, ...bodyRows] = node.children ?? [];
+
+// Each cell wraps its content in a paragraph; unwrap to the inline nodes so the
+// cell renders its text directly rather than inside a nested `<p>`.
+const cellContent = (cell: TableCellElement): InlineElement[] =>
+	(cell?.children ?? []).flatMap((paragraph) => paragraph?.children ?? []);
+
+const alignStyle = (i: number) =>
+	align[i] ? `text-align:${align[i]}` : undefined;
 ---
-{rows.length > 0 && (
+{headRow && (
 	<table>
-		{headRow?.children && (
-			<thead>
-				<tr>
-					{headRow.children.map((cell) => (
-						<th><TinaMarkdown content={cell.children} /></th>
-					))}
-				</tr>
-			</thead>
-		)}
+		<thead>
+			<tr>
+				{headRow.children.map((cell, i) => (
+					<th style={alignStyle(i)}><TinaMarkdown content={cellContent(cell)} /></th>
+				))}
+			</tr>
+		</thead>
 		{bodyRows.length > 0 && (
 			<tbody>
 				{bodyRows.map((row) => (
 					<tr>
-						{(row.children ?? []).map((cell) => (
-							<td><TinaMarkdown content={cell.children} /></td>
+						{row.children.map((cell, i) => (
+							<td style={alignStyle(i)}><TinaMarkdown content={cellContent(cell)} /></td>
 						))}
 					</tr>
 				))}

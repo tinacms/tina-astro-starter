@@ -3,7 +3,7 @@ import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsBlog } from '../../lib/data';
 import FormattedDate from '../FormattedDate.astro';
-import Table from './Table.astro';
+import { richTextComponents } from '../mdx/rich-text-components';
 
 interface Props {
 	data?: CmsBlog | null;
@@ -36,10 +36,7 @@ const bodyNodes = Array.isArray(body) ? body : (body?.children ?? []);
 		</div>
 		{data.body && (
 			<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
-				{bodyNodes.map((node) => node.type === 'table'
-						? <Table node={node} />
-						: <TinaMarkdown content={[node]} />
-					)}
+		<TinaMarkdown content={data.body} components={richTextComponents} />
 			</div>
 		)}
 	</div>

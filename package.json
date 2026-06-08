@@ -22,7 +22,7 @@
     "@iconify-json/tabler": "^1.2.35",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.3.0",
-    "@tinacms/astro": "^0.4.1",
+    "@tinacms/astro": "^0.5.0",
     "astro": "^6.4.4",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
