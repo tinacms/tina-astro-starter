@@ -6,11 +6,11 @@ import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import Aurora from '../space/Aurora.astro';
 import Starfield from '../space/Starfield.astro';
-import type { HeroBlock } from '../../lib/data';
+import type { HeroBlock, CmsPage } from '../../lib/data';
 
-interface Props { data: HeroBlock }
+interface Props { data: HeroBlock; page: CmsPage }
 
-const { data } = Astro.props;
+const { data, page } = Astro.props;
 const actions = (data.actions ?? []).filter(a => a !== null);
 ---
 <Section class="relative overflow-hidden">
@@ -22,7 +22,7 @@ const actions = (data.actions ?? []).filter(a => a !== null);
 				? <Image src={data.image.src} alt={data.image.alt ?? ''} width={576} height={576} sizes="(min-width: 768px) 288px, 224px" format="webp" quality={80} fetchpriority="high" loading="eager" decoding="async" class="size-full rounded-full object-cover" />
 				: ''}
 		</div>
-		{data.headline && <h1 data-tina-field={tinaField(data, 'headline')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{data.headline}</h1>}
+		{page.title && <h1 data-tina-field={tinaField(page, 'title')} class="mt-8 text-balance text-6xl md:text-7xl xl:text-[5.25rem] font-semibold tracking-tight">{page.title}</h1>}
 		{data.tagline && <p data-tina-field={tinaField(data, 'tagline')} class="mx-auto mt-8 max-w-2xl text-balance text-lg text-muted-foreground">{data.tagline}</p>}
 		{actions.length > 0 && (
 			<div class="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row">

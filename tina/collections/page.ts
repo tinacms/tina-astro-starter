@@ -19,17 +19,28 @@ export const PageCollection: Collection = {
 	},
 	fields: [
 		{
-			name: 'seoTitle',
-			label: 'Title',
+			name: 'title',
+			label: 'Page Title',
 			type: 'string',
 			isTitle: true,
 			required: true,
+			description:
+				"The page's name. Renders as the on-page heading (inside the Hero block, if there is one) and is used as the default browser-tab and SEO title. Set Meta Title below only when you want a different value in the browser tab.",
+		},
+		{
+			name: 'seoTitle',
+			label: 'Meta Title (browser tab override)',
+			type: 'string',
+			description:
+				"Optional. Overrides the browser-tab and search-result title for this page. Leave blank to use the Page Title above.",
 		},
 		{
 			type: 'object',
 			list: true,
 			name: 'blocks',
-			label: 'Sections',
+			label: 'Page Sections',
+			description:
+				"The visible content of the page below the heading. Start with a Hero block to give the page a large illustrated heading; otherwise the Page Title above renders as a plain heading.",
 			ui: { visualSelector: true },
 			templates: [
 				heroBlockSchema,

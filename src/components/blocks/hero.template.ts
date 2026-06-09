@@ -5,7 +5,6 @@ export const heroBlockSchema: Template = {
 	name: 'hero',
 	label: 'Hero',
 	fields: [
-		{ type: 'string', label: 'Headline', name: 'headline' },
 		{ type: 'string', label: 'Tagline', name: 'tagline' },
 		{
 			type: 'object', label: 'Actions', name: 'actions', list: true,
@@ -29,7 +28,6 @@ export const heroBlockSchema: Template = {
 	ui: {
 		defaultItem: {
 			tagline: "Here's some text above the other text",
-			headline: 'Astro + TinaCMS, ready to ship',
 			starfield: true,
 		},
 	},

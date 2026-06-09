@@ -18,7 +18,13 @@ interface Props {
 
 const { data } = Astro.props;
 const blocks = (data?.blocks ?? []).filter(b => b !== null);
+const startsWithHero = blocks[0]?.__typename === 'PageBlocksHero';
 ---
+{data?.title && !startsWithHero && (
+	<div class="mx-auto max-w-6xl px-6 pt-24 pb-2">
+		<h1 data-tina-field={tinaField(data, 'title')} class="text-balance text-4xl font-semibold tracking-tight md:text-5xl">{data.title}</h1>
+	</div>
+)}
 {blocks.map((block, i) => {
 	const rendered = (() => {
 		switch (block.__typename) {
@@ -26,7 +32,7 @@ const blocks = (data?.blocks ?? []).filter(b => b !== null);
 			case 'PageBlocksContent': return <Content data={block} />;
 			case 'PageBlocksCta': return <Cta data={block} />;
 			case 'PageBlocksFeatures': return <Features data={block} />;
-			case 'PageBlocksHero': return <Hero data={block} />;
+			case 'PageBlocksHero': return data ? <Hero data={block} page={data} /> : null;
 			case 'PageBlocksSplit': return <Split data={block} />;
 			case 'PageBlocksStats': return <Stats data={block} />;
 			case 'PageBlocksTestimonial': return <Testimonial data={block} />;
