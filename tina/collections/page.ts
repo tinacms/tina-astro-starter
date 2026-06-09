@@ -20,16 +20,20 @@ export const PageCollection: Collection = {
 	fields: [
 		{
 			name: 'seoTitle',
-			label: 'Title',
+			label: 'Meta Title (SEO)',
 			type: 'string',
 			isTitle: true,
 			required: true,
+			description:
+				"Shown in the browser tab and search results — not on the page itself. To change the heading visitors see at the top of the page, edit the Headline of the page's Hero block (if it has one) in Page Sections below.",
 		},
 		{
 			type: 'object',
 			list: true,
 			name: 'blocks',
-			label: 'Sections',
+			label: 'Page Sections',
+			description:
+				"The visible content of the page. When the page starts with a Hero block, its Headline is the main on-page heading — edit that to change what visitors see at the top.",
 			ui: { visualSelector: true },
 			templates: [
 				heroBlockSchema,
