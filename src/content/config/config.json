@@ -34,6 +34,11 @@
       "title": "GitHub",
       "link": "https://github.com/tinacms/tinacms",
       "icon": "tabler:brand-github"
+    },
+    {
+      "title": "Discord",
+      "link": "https://tina.io/discord",
+      "icon": "tabler:brand-discord"
     }
   ]
 }
