@@ -1,11 +1,11 @@
 ---
-title: Writing with Markdown and MDX in Tina
-description: How Tina's rich-text editor maps to the Markdown and MDX it saves, with a tour of the formatting you can use in a post body.
+title: Writing with Markdown and MDX in TinaCMS
+description: How the TinaCMS rich-text editor maps to the Markdown and MDX it saves, with a tour of the formatting you can use in a post body.
 pubDate: 2026-05-06T09:00:00.000Z
 heroImage: /blog-placeholder-1.jpg
 ---
 
-When you edit a post body in TinaCMS, you are using a rich-text editor: headings, lists, links, and quotes all behave the way they would in any document tool. Behind the scenes, Tina saves that body as Markdown (or MDX) in the file, so what you write stays portable and readable outside the CMS. This post doubles as a reference for the formatting that body supports and a demo of how it renders on this site.
+When you edit a post body in TinaCMS, you are using a rich-text editor: headings, lists, links, and quotes all behave the way they would in any document tool. Behind the scenes, TinaCMS saves that body as Markdown (or MDX) in the file, so what you write stays portable and readable outside the CMS. This post doubles as a reference for the formatting that body supports and a demo of how it renders on this site.
 
 ## Headings
 
@@ -25,9 +25,9 @@ The body supports six levels of heading, from `<h1>` down to `<h6>`. Use them to
 
 ## Paragraph text
 
-Body copy is the default. Tina stores it as plain Markdown paragraphs, and this starter renders it through the typography styles defined in `global.css`, so it stays legible in both light and dark themes. Keep paragraphs focused; a single idea each reads far better on screen than a wall of text.
+Body copy is the default. TinaCMS stores it as plain Markdown paragraphs, and this starter renders it through the typography styles defined in `global.css`, so it stays legible in both light and dark themes. Keep paragraphs focused; a single idea each reads far better on screen than a wall of text.
 
-You can mark words as *italic*, **bold**, or `inline code` without leaving the editor, and Tina writes the matching Markdown for each.
+You can mark words as *italic*, **bold**, or `inline code` without leaving the editor, and TinaCMS writes the matching Markdown for each.
 
 ## Links
 
@@ -44,7 +44,7 @@ Use a blockquote to set off a quotation or an aside from the surrounding text.
 
 Ordered lists are good for steps:
 
-1. Define a collection in the Tina schema.
+1. Define a collection in the TinaCMS schema.
 2. Add the fields your content needs.
 3. Edit the content in the sidebar and save.
 
@@ -65,7 +65,7 @@ Lists can nest when the structure calls for it:
 
 ## Code blocks
 
-Fenced code blocks keep technical posts precise, and Tina preserves the language hint so syntax highlighting works:
+Fenced code blocks keep technical posts precise, and TinaCMS preserves the language hint so syntax highlighting works:
 
 ```html
 <!doctype html>
@@ -90,4 +90,4 @@ Tables render from standard Markdown, which is handy for small comparisons:
 | MDX       | Rich-text       | Git      |
 | JSON      | Structured form | Git      |
 
-That is the full range of formatting a post body can use. Write it however feels natural in the editor; Tina handles turning it into clean Markdown on the way to your repo.
+That is the full range of formatting a post body can use. Write it however feels natural in the editor; TinaCMS handles turning it into clean Markdown on the way to your repo.
