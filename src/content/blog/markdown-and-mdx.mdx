@@ -90,4 +90,12 @@ Tables render from standard Markdown, which is handy for small comparisons:
 | MDX       | Rich-text       | Git      |
 | JSON      | Structured form | Git      |
 
+## Embedded components
+
+MDX lets a post body call out to real components. This starter ships one as a demo — a YouTube embed defined in `src/components/mdx/YouTubeEmbed.astro` and registered as a template on the blog body field. Editors insert it from the rich-text toolbar; the renderer mounts the real Astro component:
+
+<YouTubeEmbed videoId="j8egYW7Jpgk" />
+
+Add your own components by following the same three-step pattern (`.astro` file, `.template.ts` template, then register on both the schema's `templates` array and the renderer's `components` map). Anything Astro can render is fair game.
+
 That is the full range of formatting a post body can use. Write it however feels natural in the editor; TinaCMS handles turning it into clean Markdown on the way to your repo.

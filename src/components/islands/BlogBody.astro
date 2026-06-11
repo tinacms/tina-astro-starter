@@ -3,12 +3,18 @@ import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsBlog } from '../../lib/data';
 import FormattedDate from '../FormattedDate.astro';
+import YouTubeEmbed from '../mdx/YouTubeEmbed.astro';
 
 interface Props {
 	data?: CmsBlog | null;
 }
 
 const { data } = Astro.props;
+
+// Custom MDX components available inside the rich-text body. The key
+// must match the template `name` in tina/collections/blog.ts (`YouTubeEmbed`),
+// which is also the tag editors write in the saved MDX.
+const components = { YouTubeEmbed };
 ---
 {data?.heroImage && (
 	<div data-tina-field={tinaField(data, 'heroImage')} class="mx-auto max-w-4xl px-6">
@@ -30,7 +36,7 @@ const { data } = Astro.props;
 		</div>
 		{data.body && (
 			<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
-				<TinaMarkdown content={data.body} />
+				<TinaMarkdown content={data.body} components={components} />
 			</div>
 		)}
 	</div>
