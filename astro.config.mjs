@@ -6,13 +6,29 @@ import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 import tailwindcss from '@tailwindcss/vite';
+import node from '@astrojs/node';
 import vercel from '@astrojs/vercel';
+import cloudflare from '@astrojs/cloudflare';
+import netlify from '@astrojs/netlify';
+
+// Host-neutral: every content page prerenders to static HTML, and the one
+// on-demand route (/tina-island, the visual-editing endpoint) is served by
+// whichever host built the site. Detected from each platform's own build
+// env var; falls back to a portable Node server for any other host.
+const adapter = process.env.VERCEL
+	? vercel()
+	: process.env.CF_PAGES
+		? cloudflare()
+		: process.env.NETLIFY
+			? netlify()
+			: node({ mode: 'standalone' });
 
 // https://astro.build/config
 export default defineConfig({
-	site: process.env.SITE_URL || `https://${process.env.VERCEL_URL}`,
+	// Set SITE_URL on your host to your production URL.
+	site: process.env.SITE_URL || 'http://localhost:4321',
 	output: 'static',
-	adapter: vercel(),
+	adapter,
 	redirects: { '/home': '/' },
 	integrations: [mdx(), sitemap(), icon(), tina()],
 	build: {
