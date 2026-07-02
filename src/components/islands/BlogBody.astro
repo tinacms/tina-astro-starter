@@ -2,9 +2,8 @@
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsBlog } from '../../lib/data';
-import CodeBlock from '../mdx/CodeBlock.astro';
 import FormattedDate from '../FormattedDate.astro';
-import YouTubeEmbed from '../mdx/YouTubeEmbed.astro';
+import { mdxComponents } from '../mdx/components';
 
 interface Props {
 	data?: CmsBlog | null;
@@ -12,12 +11,8 @@ interface Props {
 
 const { data } = Astro.props;
 
-// Custom MDX components available inside the rich-text body. The key
-// must match the template `name` in tina/collections/blog.ts (`YouTubeEmbed`),
-// which is also the tag editors write in the saved MDX.
-// `code_block` overrides the renderer's default plain `<pre><code>` with a
-// Shiki-highlighted block (see CodeBlock.astro).
-const components = { YouTubeEmbed, code_block: CodeBlock };
+// Custom renderers for the rich-text body (YouTubeEmbed + Shiki code_block),
+// shared with the page blocks — see mdx/components.ts.
 ---
 {data?.heroImage && (
 	<div data-tina-field={tinaField(data, 'heroImage')} class="mx-auto max-w-4xl px-6">
@@ -39,7 +34,7 @@ const components = { YouTubeEmbed, code_block: CodeBlock };
 		</div>
 		{data.body && (
 			<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
-				<TinaMarkdown content={data.body} components={components} />
+				<TinaMarkdown content={data.body} components={mdxComponents} />
 			</div>
 		)}
 	</div>

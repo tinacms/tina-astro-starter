@@ -2,12 +2,9 @@
 import { Code } from 'astro:components';
 
 /**
- * Renders `code_block` rich-text nodes with real syntax highlighting.
- *
- * The `@tinacms/astro` renderer passes each fenced code block here as
- * `{ value, lang }`. Astro's built-in `<Code>` runs Shiki at build time,
- * so the output is coloured, static HTML with zero client-side JavaScript —
- * matching the rest of the starter's zero-JS production output.
+ * `code_block` override for `@tinacms/astro`'s renderer, which passes each
+ * fenced block as `{ value, lang }`. Astro's `<Code>` runs Shiki at build
+ * time, so output is coloured static HTML with zero client-side JS.
  */
 interface Props {
   value?: string;
