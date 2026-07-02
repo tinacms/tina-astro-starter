@@ -2,6 +2,7 @@
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsBlog } from '../../lib/data';
+import CodeBlock from '../mdx/CodeBlock.astro';
 import FormattedDate from '../FormattedDate.astro';
 import YouTubeEmbed from '../mdx/YouTubeEmbed.astro';
 
@@ -14,7 +15,9 @@ const { data } = Astro.props;
 // Custom MDX components available inside the rich-text body. The key
 // must match the template `name` in tina/collections/blog.ts (`YouTubeEmbed`),
 // which is also the tag editors write in the saved MDX.
-const components = { YouTubeEmbed };
+// `code_block` overrides the renderer's default plain `<pre><code>` with a
+// Shiki-highlighted block (see CodeBlock.astro).
+const components = { YouTubeEmbed, code_block: CodeBlock };
 ---
 {data?.heroImage && (
 	<div data-tina-field={tinaField(data, 'heroImage')} class="mx-auto max-w-4xl px-6">

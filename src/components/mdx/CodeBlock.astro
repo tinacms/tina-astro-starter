@@ -1,0 +1,19 @@
+---
+import { Code } from 'astro:components';
+
+/**
+ * Renders `code_block` rich-text nodes with real syntax highlighting.
+ *
+ * The `@tinacms/astro` renderer passes each fenced code block here as
+ * `{ value, lang }`. Astro's built-in `<Code>` runs Shiki at build time,
+ * so the output is coloured, static HTML with zero client-side JavaScript —
+ * matching the rest of the starter's zero-JS production output.
+ */
+interface Props {
+  value?: string;
+  lang?: string;
+}
+
+const { value = '', lang } = Astro.props;
+---
+<Code code={value} lang={(lang as any) || 'plaintext'} />
