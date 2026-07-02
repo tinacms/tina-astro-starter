@@ -1,11 +1,6 @@
 ---
 import { Code } from 'astro:components';
 
-/**
- * `code_block` override for `@tinacms/astro`'s renderer, which passes each
- * fenced block as `{ value, lang }`. Astro's `<Code>` runs Shiki at build
- * time, so output is coloured static HTML with zero client-side JS.
- */
 interface Props {
   value?: string;
   lang?: string;

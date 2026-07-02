@@ -10,9 +10,6 @@ interface Props {
 }
 
 const { data } = Astro.props;
-
-// Custom renderers for the rich-text body (YouTubeEmbed + Shiki code_block),
-// shared with the page blocks — see mdx/components.ts.
 ---
 {data?.heroImage && (
 	<div data-tina-field={tinaField(data, 'heroImage')} class="mx-auto max-w-4xl px-6">
