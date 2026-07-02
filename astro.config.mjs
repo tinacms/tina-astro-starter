@@ -13,15 +13,18 @@ import netlify from '@astrojs/netlify';
 
 // Host-neutral: every content page prerenders to static HTML, and the one
 // on-demand route (/tina-island, the visual-editing endpoint) is served by
-// whichever host built the site. Detected from each platform's own build
-// env var; falls back to a portable Node server for any other host.
-const adapter = process.env.VERCEL
-	? vercel()
-	: process.env.CF_PAGES
-		? cloudflare()
-		: process.env.NETLIFY
-			? netlify()
-			: node({ mode: 'standalone' });
+// whichever host built the site. VERCEL / CF_PAGES / NETLIFY are set
+// automatically by each platform's build — nothing to configure — and any
+// other host falls back to a portable Node server.
+function getAdapter() {
+	if (process.env.VERCEL) return vercel();
+	if (process.env.CF_PAGES) return cloudflare();
+	if (process.env.NETLIFY) return netlify();
+
+	return node({ mode: 'standalone' });
+}
+
+const adapter = getAdapter();
 
 // https://astro.build/config
 export default defineConfig({
