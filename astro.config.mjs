@@ -13,12 +13,20 @@ import netlify from '@astrojs/netlify';
 
 // Host-neutral: every content page prerenders to static HTML, and the one
 // on-demand route (/tina-island, the visual-editing endpoint) is served by
-// whichever host built the site. VERCEL / CF_PAGES / NETLIFY are set
-// automatically by each platform's build — nothing to configure — and any
-// other host falls back to a portable Node server.
+// whichever host built the site. Each platform sets its own build env var
+// automatically — nothing to configure — and any other host (including a
+// local `wrangler deploy`) falls back to a portable Node server. Set
+// DEPLOY_ADAPTER to force a specific adapter when no env var applies.
 function getAdapter() {
+	switch (process.env.DEPLOY_ADAPTER) {
+		case 'vercel': return vercel();
+		case 'cloudflare': return cloudflare();
+		case 'netlify': return netlify();
+		case 'node': return node({ mode: 'standalone' });
+	}
 	if (process.env.VERCEL) return vercel();
-	if (process.env.CF_PAGES) return cloudflare();
+	// CF_PAGES = Cloudflare Pages CI; WORKERS_CI = Cloudflare Workers Builds CI.
+	if (process.env.WORKERS_CI || process.env.CF_PAGES) return cloudflare();
 	if (process.env.NETLIFY) return netlify();
 
 	return node({ mode: 'standalone' });
@@ -26,10 +34,23 @@ function getAdapter() {
 
 const adapter = getAdapter();
 
+// Prefer an explicit SITE_URL; otherwise use the URL the platform injects so
+// zero-config deploys still emit absolute URLs (sitemap, RSS, OpenGraph).
+// Cloudflare Workers exposes no such var — set SITE_URL there for correct
+// canonicals. Local builds fall back to localhost.
+function getSiteUrl() {
+	if (process.env.SITE_URL) return process.env.SITE_URL;
+	if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+	if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+	if (process.env.CF_PAGES_URL) return process.env.CF_PAGES_URL;
+	if (process.env.NETLIFY && process.env.URL) return process.env.URL;
+
+	return 'http://localhost:4321';
+}
+
 // https://astro.build/config
 export default defineConfig({
-	// Set SITE_URL on your host to your production URL.
-	site: process.env.SITE_URL || 'http://localhost:4321',
+	site: getSiteUrl(),
 	output: 'static',
 	adapter,
 	redirects: { '/home': '/' },
