@@ -2,6 +2,7 @@
 import { tinaField } from '@tinacms/astro/tina-field';
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import Section from '../ui/Section.astro';
+import { mdxComponents } from '../mdx/components';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { cn } from '../../lib/cn';
@@ -18,7 +19,7 @@ const actions = (data.actions ?? []).filter(a => a !== null);
 			{data.title && <h2 data-tina-field={tinaField(data, 'title')} class="text-balance text-3xl font-semibold lg:text-4xl">{data.title}</h2>}
 			{data.body && (
 				<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none text-muted-foreground">
-					<TinaMarkdown content={data.body} />
+					<TinaMarkdown content={data.body} components={mdxComponents} />
 				</div>
 			)}
 			{actions.length > 0 && (

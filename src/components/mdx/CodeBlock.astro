@@ -1,0 +1,11 @@
+---
+import { Code } from 'astro:components';
+
+interface Props {
+  value?: string;
+  lang?: string;
+}
+
+const { value = '', lang } = Astro.props;
+---
+<Code code={value} lang={(lang as any) || 'plaintext'} />
