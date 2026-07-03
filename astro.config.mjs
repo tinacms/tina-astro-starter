@@ -18,21 +18,23 @@ import netlify from '@astrojs/netlify';
 // local `wrangler deploy`) falls back to a portable Node server. Set
 // DEPLOY_ADAPTER to force a specific adapter when no env var applies.
 function getAdapter() {
+	const nodeStandalone = node({ mode: 'standalone' });
 	switch (process.env.DEPLOY_ADAPTER) {
 		case 'vercel': return vercel();
 		case 'cloudflare': return cloudflare();
 		case 'netlify': return netlify();
-		case 'node': return node({ mode: 'standalone' });
+		case 'node': return nodeStandalone;
+		case undefined: break; // no override -> auto-detect below
+		default:
+			console.warn(`[astro.config] Unknown DEPLOY_ADAPTER "${process.env.DEPLOY_ADAPTER}" - ignoring and auto-detecting.`);
 	}
 	if (process.env.VERCEL) return vercel();
 	// CF_PAGES = Cloudflare Pages CI; WORKERS_CI = Cloudflare Workers Builds CI.
 	if (process.env.WORKERS_CI || process.env.CF_PAGES) return cloudflare();
 	if (process.env.NETLIFY) return netlify();
 
-	return node({ mode: 'standalone' });
+	return nodeStandalone;
 }
-
-const adapter = getAdapter();
 
 // Prefer an explicit SITE_URL; otherwise use the URL the platform injects so
 // zero-config deploys still emit absolute URLs (sitemap, RSS, OpenGraph).
@@ -52,7 +54,7 @@ function getSiteUrl() {
 export default defineConfig({
 	site: getSiteUrl(),
 	output: 'static',
-	adapter,
+	adapter: getAdapter(),
 	redirects: { '/home': '/' },
 	integrations: [mdx(), sitemap(), icon(), tina()],
 	build: {
