@@ -65,4 +65,6 @@ deno.lock
 
 # builds
 .vercel
+.netlify
+.wrangler
 dist

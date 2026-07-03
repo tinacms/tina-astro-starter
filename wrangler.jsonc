@@ -1,0 +1,8 @@
+{
+	// Cloudflare config — only read when deploying to Cloudflare Pages/Workers;
+	// other hosts ignore this file. `nodejs_compat` exposes `node:async_hooks`,
+	// which the Tina visual-editing island route (AsyncLocalStorage) needs.
+	"name": "tina-astro-starter",
+	"compatibility_date": "2026-06-01",
+	"compatibility_flags": ["nodejs_compat"]
+}
