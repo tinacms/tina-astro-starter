@@ -25,7 +25,7 @@
     "@iconify-json/tabler": "^1.2.35",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.3.0",
-    "@tinacms/astro": "^0.5.0",
+    "@tinacms/astro": "^0.5.1",
     "astro": "^6.4.4",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
@@ -36,11 +36,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@tinacms/cli": "^2.4.4",
+    "@tinacms/cli": "^2.5.3",
     "@types/node": "^25.9.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "tinacms": "^3.9.1",
+    "tinacms": "^3.10.0",
     "typescript": "^6.0.3",
     "vite": "^7.3.2"
   }
