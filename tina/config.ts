@@ -7,7 +7,9 @@ import { PageCollection } from "./collections/page";
 const branch =
   process.env.GITHUB_BRANCH ||
   process.env.VERCEL_GIT_COMMIT_REF ||
-  process.env.HEAD ||
+  process.env.WORKERS_CI_BRANCH || // Cloudflare Workers Builds
+  process.env.CF_PAGES_BRANCH || // Cloudflare Pages
+  process.env.HEAD || // Netlify
   "main";
 
 export default defineConfig({
