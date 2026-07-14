@@ -6,10 +6,6 @@ import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 import tailwindcss from '@tailwindcss/vite';
-import node from '@astrojs/node';
-import vercel from '@astrojs/vercel';
-import cloudflare from '@astrojs/cloudflare';
-import netlify from '@astrojs/netlify';
 
 // Host-neutral: every content page prerenders to static HTML, and the one
 // on-demand route (/tina-island, the visual-editing endpoint) is served by
@@ -17,13 +13,25 @@ import netlify from '@astrojs/netlify';
 // automatically — nothing to configure — and any other host (including a
 // local `wrangler deploy`) falls back to a portable Node server. Set
 // DEPLOY_ADAPTER to force a specific adapter when no env var applies.
-function getAdapter() {
-	const nodeStandalone = node({ mode: 'standalone' });
+async function getAdapter() {
+	// Lazy-load each adapter so only the selected platform's package is
+	// imported. A static top-level `import '@astrojs/cloudflare'` transitively
+	// loads `workerd`, which throws "Unsupported platform" at import time on
+	// platforms it ships no binary for (e.g. win32-arm64) — crashing `astro
+	// dev`/`build` before this function ever runs, even though local dev never
+	// selects Cloudflare. Dynamic import() defers each package to the branch
+	// that actually uses it. See https://github.com/tinacms/tinacms/issues/7190.
+	const vercel = async () => (await import('@astrojs/vercel')).default();
+	const cloudflare = async () => (await import('@astrojs/cloudflare')).default();
+	const netlify = async () => (await import('@astrojs/netlify')).default();
+	const nodeStandalone = async () =>
+		(await import('@astrojs/node')).default({ mode: 'standalone' });
+
 	switch (process.env.DEPLOY_ADAPTER) {
 		case 'vercel': return vercel();
 		case 'cloudflare': return cloudflare();
 		case 'netlify': return netlify();
-		case 'node': return nodeStandalone;
+		case 'node': return nodeStandalone();
 		case undefined: break; // no override -> auto-detect below
 		default:
 			console.warn(`[astro.config] Unknown DEPLOY_ADAPTER "${process.env.DEPLOY_ADAPTER}" - ignoring and auto-detecting.`);
@@ -33,7 +41,7 @@ function getAdapter() {
 	if (process.env.WORKERS_CI || process.env.CF_PAGES) return cloudflare();
 	if (process.env.NETLIFY) return netlify();
 
-	return nodeStandalone;
+	return nodeStandalone();
 }
 
 // Prefer an explicit SITE_URL; otherwise use the URL the platform injects so
@@ -54,7 +62,7 @@ function getSiteUrl() {
 export default defineConfig({
 	site: getSiteUrl(),
 	output: 'static',
-	adapter: getAdapter(),
+	adapter: await getAdapter(),
 	redirects: { '/home': '/' },
 	integrations: [mdx(), sitemap(), icon(), tina()],
 	build: {
