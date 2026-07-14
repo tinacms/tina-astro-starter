@@ -14,13 +14,6 @@ import tailwindcss from '@tailwindcss/vite';
 // local `wrangler deploy`) falls back to a portable Node server. Set
 // DEPLOY_ADAPTER to force a specific adapter when no env var applies.
 async function getAdapter() {
-	// Lazy-load each adapter so only the selected platform's package is
-	// imported. A static top-level `import '@astrojs/cloudflare'` transitively
-	// loads `workerd`, which throws "Unsupported platform" at import time on
-	// platforms it ships no binary for (e.g. win32-arm64) — crashing `astro
-	// dev`/`build` before this function ever runs, even though local dev never
-	// selects Cloudflare. Dynamic import() defers each package to the branch
-	// that actually uses it. See https://github.com/tinacms/tinacms/issues/7190.
 	const vercel = async () => (await import('@astrojs/vercel')).default();
 	const cloudflare = async () => (await import('@astrojs/cloudflare')).default();
 	const netlify = async () => (await import('@astrojs/netlify')).default();
