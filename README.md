@@ -47,9 +47,15 @@ The starter is host-neutral — it isn't tied to any one platform. Every content
 
 Set `SITE_URL` to your production URL — it feeds the sitemap, RSS, and OpenGraph tags; see `.env.example`. Most platforms inject their own deploy URL as a fallback, but Cloudflare Workers exposes none, so set `SITE_URL` there to avoid `localhost` canonicals.
 
+### Before your first deploy: TinaCloud credentials
+
+The default `pnpm build` compiles the CMS against TinaCloud, so it needs your project credentials. Without them it fails fast with `ERR_MISSING_CLOUD_CREDS`. Create a project at [app.tina.io](https://app.tina.io), then set `PUBLIC_TINA_CLIENT_ID` and `TINA_TOKEN` (see `.env.example`) in your host's environment variables.
+
+To build without TinaCloud — a purely local/offline build with no auth — run `pnpm build:local` instead, which skips the cloud checks.
+
 ## A note on React
 
-`react` and `react-dom@^18.3.1` are pinned in `devDependencies` for the TinaCMS admin UI build only — the site itself ships zero React. Without the pin, pnpm resolves `react@19` against `react-dom@18` and the admin crashes on init. This is tracked in [tinacms#6985](https://github.com/tinacms/tinacms/issues/6985); remove the pin once that lands.
+`react` and `react-dom` are both pinned to the same version (`^19.2.7`) in `devDependencies` for the TinaCMS admin UI build only — the site itself ships zero React. The pin keeps the two packages locked in lockstep; without it, pnpm's peer auto-install can pair mismatched `react` / `react-dom` versions and the admin crashes on init (`Cannot read properties of undefined (reading 'ReactCurrentDispatcher')`). This is tracked in [tinacms#6985](https://github.com/tinacms/tinacms/issues/6985); remove the pin once Tina declares `react` / `react-dom` as direct dependencies.
 
 ## Want to learn more?
 
